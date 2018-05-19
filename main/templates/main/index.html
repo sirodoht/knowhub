@@ -1,0 +1,69 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}KnowHub.app – Your remote company’s home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>This is your remote company’s home</h1>
+        <div class="hero-content-text">
+            Enable your remote employees’ connectedness,
+            <br>by letting them know what’s happening inside the company
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="features-content">
+        <h2>Features</h2>
+        <div class="features-content-grid">
+            <div class="features-content-grid-item">
+                <div class="features-content-grid-item-title">People directory</div>
+                <div class="features-content-grid-item-description">
+                    A list with everyone working in the company, their role, and profile.
+                </div>
+            </div>
+            <div class="features-content-grid-item">
+                <div class="features-content-grid-item-title">Announcements and news</div>
+                <div class="features-content-grid-item-description">
+                    Make announcements and spread news without interrupting your employees’ flow.
+                </div>
+            </div>
+            <div class="features-content-grid-item">
+                <div class="features-content-grid-item-title">Calendar<span>soon</span></div>
+                <div class="features-content-grid-item-description">
+                    How could it be your company home without your Google Calendar?
+                </div>
+            </div>
+            <div class="features-content-grid-item">
+                <div class="features-content-grid-item-title">Resources<span>soon</span></div>
+                <div class="features-content-grid-item-description">
+                    Wiki-style docs ranging from tech architecture overview to business developments tips.
+                </div>
+            </div>
+            <div class="features-content-grid-item">
+                <div class="features-content-grid-item-title">Questions<span>soon</span></div>
+                <div class="features-content-grid-item-description">
+                    Questions and answers. Searchable, indexable, tagable. Unlike those that happen in a chat.
+                </div>
+            </div>
+        </div>
+        <div class="features-content-pricing">
+            All features with $2/month per user.
+        </div>
+    </div>
+</section>
+
+<section class="screenshots">
+    <h2>And this is how it looks...</h2>
+    <img src="{% static '/images/screenshot-company.png' %}" alt="company screenshot" width="1000px">
+</section>
+
+<section class="cta">
+    <a href="#" class="cta-link">
+        Get started →
+    </a>
+</section>
+{% endblock %}
