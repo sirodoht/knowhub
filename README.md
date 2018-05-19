@@ -1,8 +1,7 @@
-# Soc Records
+# KnowHub.app
 
-> KnowHub.app: Distributed home for remote companies
+> Distributed home for remote companies
 
 ## License
 
 © Fugue Stateless Ltd
-
