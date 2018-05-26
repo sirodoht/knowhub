@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -180,3 +181,11 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
+
+
+# Sentry
+# https://docs.sentry.io/clients/python/integrations/django/
+
+RAVEN_CONFIG = {
+    'dsn': 'https://21f9e6380dc54ee9afca66a3eaa5681d:375f9fd8fd154aff9205b4fa39a3fdeb@sentry.io/1214179',
+}
