@@ -18,4 +18,7 @@ urlpatterns = [
 
     # /logout/
     path('logout/', views.logout, name='logout'),
+
+    # /init/
+    path('init/', views.company_new, name='company_new'),
 ]
