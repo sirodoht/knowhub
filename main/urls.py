@@ -10,8 +10,8 @@ urlpatterns = [
     # /
     path('', views.index, name='index'),
 
-    # /login/
-    path('login/', views.login, name='login'),
+    # /entrance/
+    path('entrance/', views.login, name='login'),
 
     # /auth/
     path('auth/', views.token_post, name='auth'),
