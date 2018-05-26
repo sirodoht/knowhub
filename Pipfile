@@ -13,6 +13,7 @@ django-dotenv = "*"
 "psycopg2-binary" = "*"
 shortuuid = "*"
 stripe = "*"
+raven = "*"
 
 [dev-packages]
 
