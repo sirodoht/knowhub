@@ -11,6 +11,7 @@ isort = "*"
 dj-database-url = "*"
 django-dotenv = "*"
 "psycopg2-binary" = "*"
+shortuuid = "*"
 
 [dev-packages]
 
