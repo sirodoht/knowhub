@@ -5,7 +5,7 @@
 {% block title %}Sign in - KnowHub.app{% endblock %}
 
 {% block scaffold %}
-    <section class="login">
+    <section class="ritual">
         <a href="{% url 'main:index' %}">
             <img src="{% static '/images/logo.svg' %}" alt="logo" width="48px" height="48px">
         </a>
@@ -13,8 +13,16 @@
         <h1>Sign in to KnowHub.app</h1>
 
         {% if next %}
-            <div class="login-alert">
+            <div class="ritual-alert">
                 To proceed please sign in.
+            </div>
+        {% endif %}
+
+        {% if messages %}
+            <div class="ritual-alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
             </div>
         {% endif %}
 
@@ -35,6 +43,5 @@
 
             <input type="submit" value="Sign in">
         </form>
-
     </section>
 {% endblock %}
