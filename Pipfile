@@ -12,6 +12,7 @@ dj-database-url = "*"
 django-dotenv = "*"
 "psycopg2-binary" = "*"
 shortuuid = "*"
+stripe = "*"
 
 [dev-packages]
 
