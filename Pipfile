@@ -9,11 +9,11 @@ whitenoise = "*"
 uwsgi = "*"
 isort = "*"
 dj-database-url = "*"
-django-dotenv = "*"
 "psycopg2-binary" = "*"
 shortuuid = "*"
 stripe = "*"
 raven = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

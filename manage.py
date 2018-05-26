@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import os
 import sys
+from pathlib import Path
 
 import dotenv
 
 if __name__ == "__main__":
-    dotenv.read_dotenv()
+    dotenv.load_dotenv(Path('.') / '.env')
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "knowhub.settings")
     try:
