@@ -8,6 +8,7 @@ ADD Pipfile* /code/
 WORKDIR /code
 RUN pipenv install --system --ignore-pipfile
 
+ADD CHECKS /code/
 ADD * /code/
 
 WORKDIR /code
