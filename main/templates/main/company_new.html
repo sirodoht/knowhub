@@ -1,0 +1,31 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Sign in - KnowHub.app{% endblock %}
+
+{% block scaffold %}
+    <section class="ritual">
+        <img src="{% static '/images/logo.svg' %}" alt="logo" width="48px" height="48px">
+
+        <h1>Create your company</h1>
+
+        <form action="{% url 'main:company_new' %}" method="post">
+            {{ form.non_field_errors }}
+
+            <label for="id_name">Company name</label>
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="text" name="name" maxlength="300" required id="id_name">
+
+            {% csrf_token %}
+
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <input type="submit" value="Continue">
+        </form>
+    </section>
+{% endblock %}
