@@ -11,7 +11,7 @@
 
     <title>{% block title %}{% endblock %}</title>
 
-    <link rel="stylesheet" href="{% static '/styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 </head>
 <body>
@@ -19,7 +19,7 @@
     <header>
         <div class="header-brand">
             <a href="{% url 'main:index' %}" class="header-brand-link">
-                <img src="{% static '/images/logo.svg' %}" alt="logo" width="30px" height="30px">
+                <img src="{% static 'images/logo.svg' %}" alt="logo" width="30px" height="30px">
                 <span>KnowHub.app</span>
             </a>
         </div>
