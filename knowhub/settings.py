@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from logging.handlers import SysLogHandler
 
 import dj_database_url
 
