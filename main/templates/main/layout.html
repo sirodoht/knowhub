@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 </head>
 <body>
+    {% block scaffold %}
     <header>
         <div class="header-brand">
             <a href="{% url 'main:index' %}" class="header-brand-link">
@@ -46,5 +47,6 @@
             </div>
         </div>
     </footer>
+    {% endblock %}
 </body>
 </html>
