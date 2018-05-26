@@ -31,7 +31,7 @@ def login(request):
 @require_http_methods(['HEAD', 'GET', 'POST'])
 def token_post(request):
     if request.user.is_authenticated:
-        messages.error(request, 'You are already logged in.')
+        messages.error(request, 'You are already signed in.')
         return redirect(settings.LOGIN_REDIRECT_URL)
 
     if request.GET.get('d'):
@@ -39,20 +39,20 @@ def token_post(request):
         user = authenticate(token=request.GET['d'])
         if user is not None:
             dj_login(request, user)
-            messages.success(request, 'Login successful.')
+            messages.success(request, 'Sign in successful.')
             return redirect(settings.LOGIN_REDIRECT_URL)
         else:
-            messages.error(request, 'The login link was invalid or has expired. Please try to log in again.')
+            messages.error(request, 'The sign in link was invalid or has expired. Please try to sign in again.')
     elif request.method == 'POST':
         # The user has submitted the email form.
         form = EmailForm(request.POST)
         if form.is_valid():
             email_login_link(request, form.cleaned_data['email'])
-            messages.success(request, 'Login email sent! Please check your inbox and click on the link.')
+            messages.success(request, 'Email sent! Please check your inbox and click on the link to sign in.')
         else:
             messages.error(request, 'The email address was invalid. Please check the address and try again.')
     else:
-        messages.error(request, 'The login link was invalid or has expired. Please try to log in again.')
+        messages.error(request, 'The sign in link was invalid or has expired. Please try to sign in again.')
 
     return redirect(settings.LOGIN_URL)
 
