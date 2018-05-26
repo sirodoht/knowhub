@@ -186,7 +186,9 @@ if not DEBUG:
 # https://docs.sentry.io/clients/python/integrations/django/
 
 RAVEN_CONFIG = {
-    'dsn': 'https://21f9e6380dc54ee9afca66a3eaa5681d:375f9fd8fd154aff9205b4fa39a3fdeb@sentry.io/1214179',
+    'dsn': os.getenv('SENTRY_DSN'),
+}
+
 
 # Logging
 # https://docs.djangoproject.com/en/2.0/topics/logging/
