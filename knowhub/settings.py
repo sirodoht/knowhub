@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from logging.handlers import SysLogHandler
 
 import dj_database_url
 
@@ -34,6 +35,7 @@ ALLOWED_HOSTS = [
     'knowhub.app',
 ]
 
+ADMINS = [('Theodore', 'theodorekeloglou@gmail.com')]
 
 # Application definition
 
@@ -185,4 +187,48 @@ if not DEBUG:
 
 RAVEN_CONFIG = {
     'dsn': 'https://21f9e6380dc54ee9afca66a3eaa5681d:375f9fd8fd154aff9205b4fa39a3fdeb@sentry.io/1214179',
+
+# Logging
+# https://docs.djangoproject.com/en/2.0/topics/logging/
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'formatters': {
+        'verbose': {
+            'format': '[contactor] %(levelname)s %(asctime)s %(message)s'
+        },
+    },
+    'handlers': {
+        # Send all messages to console
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+        # Warning messages are sent to admin emails
+        'mail_admins': {
+            'level': 'WARNING',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+        # critical errors are logged to sentry
+        'sentry': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'raven.contrib.django.handlers.SentryHandler',
+        },
+    },
+    'loggers': {
+        # This is the "catch all" logger
+        '': {
+            'handlers': ['console', 'syslog', 'mail_admins', 'sentry'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    }
 }
