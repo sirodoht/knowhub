@@ -78,6 +78,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'knowhub.wsgi.application'
 
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+AUTH_TOKEN_DURATION = 30 * 60  # = 1800 = 30 min in seconds
+
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -133,3 +139,17 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# Authentication backends
+# https://docs.djangoproject.com/en/2.0/topics/auth/customizing/
+
+AUTHENTICATION_BACKENDS = (
+    'main.auth_backends.EmailTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
+# Session
+# https://docs.djangoproject.com/en/2.0/topics/http/sessions/
+
+SESSION_COOKIE_AGE = 31449600  # 60 * 60 * 24 * 7 * 52 = 1 year in seconds
