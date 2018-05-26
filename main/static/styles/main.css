@@ -180,6 +180,8 @@ html, body {
     font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 16px;
     text-rendering: optimizeLegibility;
+    height: 100%;
+    color: #101010;
 }
 
 a {
@@ -341,4 +343,72 @@ section {
 a.footer-content-right-item {
     margin-left: 20px;
     color: #aab7c4;
+}
+
+.login {
+    background: #f9f9f9;
+    text-align: center;
+    box-sizing: border-box;
+    min-height: 100%;
+}
+
+.login > h1 {
+    font-size: 24px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.login > form {
+    box-sizing: border-box;
+    width: 340px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #d8dee2;
+    border-radius: 2px;
+    margin: auto;
+}
+
+.login label {
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    text-align: left;
+    margin-bottom: 7px;
+}
+
+.login input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 34px;
+    padding: 6px 8px;
+    font-size: 16px;
+    line-height: 20px;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+}
+
+.login input[type="submit"] {
+    cursor: pointer;
+    margin-top: 15px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+}
+
+.login input[type="submit"]:hover {
+    background: #fe9f00;
+}
+
+.login-alert {
+    box-sizing: border-box;
+    width: 340px;
+    margin: auto;
+    padding: 15px 20px;
+    text-align: center;
+    border: 1px solid #d8dee2;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    font-size: 14px;
 }
