@@ -25,8 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', 'secret')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True if os.environ.get('NODEBUG') is None else False
-DEBUG = False
+DEBUG = True if os.environ.get('NODEBUG') is None else False
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -47,8 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'raven.contrib.django.raven_compat',
 ]
+
+if not DEBUG:
+    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
