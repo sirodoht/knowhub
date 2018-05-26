@@ -8,12 +8,15 @@ from django.views.decorators.http import require_http_methods, require_safe
 
 from knowhub import settings
 
-from .forms import EmailForm
+from .forms import CompanyForm, EmailForm
 from .helpers import email_login_link
+from .models import Company
 
 
 def index(request):
     if request.user.is_authenticated:
+        if not request.user.profile.company:
+            return redirect('main:company_new')
         return render(request, 'main/dashboard.html')
     else:
         return render(request, 'main/index.html')
@@ -63,3 +66,21 @@ def logout(request):
     dj_logout(request)
     messages.success(request, 'You have been logged out.')
     return redirect(settings.LOGOUT_REDIRECT_URL)
+
+
+@require_http_methods(['HEAD', 'GET', 'POST'])
+@login_required
+def company_new(request):
+    if request.method == 'POST':
+        form = CompanyForm(request.POST)
+        if form.is_valid():
+            new_company = form.save()
+            request.user.profile.company = new_company
+            request.user.save()
+            return redirect('main:index')
+    else:
+        form = CompanyForm()
+
+    return render(request, 'main/company_new.html', {
+        'form': form,
+    })
