@@ -1,0 +1,14 @@
+Hello,
+
+This email contains your secret knowhub.app login link. Click it to continue.
+
+This link will expire in 30 minutes.
+
+Click to log in:{% if 'localhost' in current_site.domain or '127.0.0.1' in current_site.domain %}
+http://{{ current_site.domain }}{% url 'main:auth' %}?d={{ data }}
+{% else %}
+https://{{ current_site.domain }}{% url 'main:auth' %}?d={{ data }}
+{% endif %}
+
+Later,
+<3
