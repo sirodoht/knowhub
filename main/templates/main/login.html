@@ -1,32 +1,27 @@
 {% extends 'main/layout.html' %}
 
-{% block title %}Login - KnowHub.app{% endblock %}
+{% load static %}
 
-{% block content %}
-    <div class="section">
+{% block title %}Sign in - KnowHub.app{% endblock %}
+
+{% block scaffold %}
+    <section class="login">
+        <a href="{% url 'main:index' %}">
+            <img src="{% static '/images/logo.svg' %}" alt="logo" width="48px" height="48px">
+        </a>
+
+        <h1>Sign in to KnowHub.app</h1>
+
         {% if next %}
-            {% if user.is_authenticated %}
-                <p class="alert">
-                    Your account doesn't have access to this page.
-                    To proceed please login with an account that has access.
-                </p>
-            {% endif %}
+            <div class="login-alert">
+                To proceed please sign in.
+            </div>
         {% endif %}
-
-        <div class="section-title">Login</div>
-
-        <p>
-            Enter your email and we'll send a session link to login in fashion with no useless passwords.
-        </p>
-
-        <p>
-            You will stay logged in until you choose to log out.
-        </p>
 
         <form action="{% url 'main:auth' %}" method="post">
             {{ form.non_field_errors }}
 
-            <label for="id_email" class="section-label">Email</label>
+            <label for="id_email" class="section-label">Enter your email to login <abbr title="No passwords ™">in fashion</abbr></label>
             {% if form.email.errors %}
                 {% for error in form.email.errors %}
                     <div class="form-error">{{ error|escape }}</div>
@@ -38,8 +33,8 @@
 
             <input type="hidden" name="next" value="{{ next }}">
 
-            <input type="submit" value="login">
+            <input type="submit" value="Sign in">
         </form>
 
-    </div>
+    </section>
 {% endblock %}
