@@ -234,3 +234,10 @@ LOGGING = {
         },
     }
 }
+
+
+# Stripe
+# https://stripe.com/docs/development
+
+STRIPE_PUBLIC = os.environ.get('STRIPE_PUBLIC')
+STRIPE_SECRET = os.environ.get('STRIPE_SECRET')
