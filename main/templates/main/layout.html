@@ -16,6 +16,25 @@
 </head>
 <body>
     {% block scaffold %}
+    {% if request.user.is_authenticated %}
+    <header class="header-authed">
+        <div class="header-brand">
+            <a href="{% url 'main:index' %}" class="header-brand-link-authed">
+                <img src="{% static 'images/logo.svg' %}" alt="logo" width="30px" height="30px">
+            </a>
+        </div>
+        <nav class="nav-authed">
+            <a href="{% url 'main:index' %}" class="nav-item-authed nav-item-active-authed">Company</a>
+            <a href="{% url 'main:index' %}" class="nav-item-authed">Resources</a>
+            <a href="{% url 'main:index' %}" class="nav-item-authed">Questions</a>
+        </nav>
+        <div class="header-profile">
+            <a href="{% url 'main:index' %}" class="header-brand-link-authed">
+                <img src="{% static 'images/logo.svg' %}" alt="logo" width="30px" height="30px">
+            </a>
+        </div>
+    </header>
+    {% else %}
     <header>
         <div class="header-brand">
             <a href="{% url 'main:index' %}" class="header-brand-link">
@@ -33,6 +52,7 @@
             {% endif %}
         </nav>
     </header>
+    {% endif %}
 
     {% block content %}
     {% endblock %}
