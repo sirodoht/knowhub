@@ -1,0 +1,90 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Sign in - KnowHub.app{% endblock %}
+
+{% block scaffold %}
+    <section class="ritual">
+        <img src="{% static 'images/logo.svg' %}" alt="logo" width="48px" height="48px">
+
+        <h1>Add your billing info</h1>
+
+        {% csrf_token %}
+
+        <div class="ritual-body">
+            <div class="ritual-notice">
+                You need to setup your billing info in order to start your 30 days trial.
+            </div>
+            <button id="add-card">Add card</button>
+        </div>
+    </section>
+
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script src="{% static 'scripts/axios.min.js' %}"></script>
+    <script>
+        (function () {
+            function getCsrf() {
+                var inputElems = document.querySelectorAll('input');
+                var csrfToken = '';
+                var i = 0;
+                for (i = 0; i < inputElems.length; i++) {
+                    if (inputElems[i].name === 'csrfmiddlewaretoken') {
+                        csrfToken = inputElems[i].value;
+                        break;
+                    }
+                }
+                return csrfToken;
+            }
+
+            var handler = StripeCheckout.configure({
+                key: 'pk_test_nKErTzQhoq1U9rn6Q5c5W0qt',
+                email: '{{ request.user.email }}',
+                image: 'https://fuguestateless.com/images/mark-negative.svg',
+                locale: 'auto',
+                token: function (token) {
+                    console.log('token:', token);
+                    var url = '/billing/customer/';
+                    axios
+                        .post(
+                            url,
+                            {
+                                token: token.id,
+                            },
+                            {
+                                headers: {
+                                    'X-CSRFToken': getCsrf(),
+                                },
+                            },
+                        )
+                        .then(function (res) {
+                            if (res.status === 200) {
+                                window.location.href = '/';
+                            }
+                        })
+                        .catch(function (err) {
+                            console.log('Error: ' + err);
+                            console.log('Please contact us at hi@avocadojobs.com or at @AvocadoJobs on Twitter.');
+                            throw err;
+                        });
+                },
+            });
+
+            document.getElementById('add-card').addEventListener('click', function () {
+                // Open Checkout
+                handler.open({
+                    name: 'Fugue Stateless, Ltd.',
+                    description: 'Subscription for KnowHub.app',
+                    panelLabel: 'Add card',
+                });
+            })
+
+            // Close Checkout on page navigation:
+            window.addEventListener('popstate', function () {
+                console.log('does thi run popsatee');
+                document.getElementById('loading').style.display = 'none';
+                handler.close();
+            });
+        })()
+    </script>
+{% endblock %}
