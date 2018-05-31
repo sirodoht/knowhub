@@ -1,3 +1,5 @@
+import json
+
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as dj_login
@@ -8,6 +10,7 @@ from django.views.decorators.http import require_http_methods, require_safe
 
 from knowhub import settings
 
+from . import billing
 from .forms import CompanyForm, EmailForm
 from .helpers import email_login_link
 from .models import Company
@@ -17,6 +20,8 @@ def index(request):
     if request.user.is_authenticated:
         if not request.user.profile.company:
             return redirect('main:company_new')
+        if request.user.profile.is_admin and not request.user.profile.stripe_id:
+            return redirect('main:billing_setup')
         return render(request, 'main/dashboard.html')
     else:
         return render(request, 'main/index.html')
@@ -77,10 +82,28 @@ def company_new(request):
             new_company = form.save()
             request.user.profile.company = new_company
             request.user.save()
-            return redirect('main:index')
+            return redirect('main:billing_setup')
     else:
         form = CompanyForm()
 
     return render(request, 'main/company_new.html', {
         'form': form,
     })
+
+
+@require_http_methods(['HEAD', 'GET', 'POST'])
+@login_required
+def billing_setup(request):
+    return render(request, 'main/billing_setup.html')
+
+
+@require_http_methods(['HEAD', 'GET', 'POST'])
+@login_required
+def billing_customer(request):
+    if request.method == 'POST':
+        body = request.body.decode('utf-8')
+        data = json.loads(body)
+        stripe_customer = billing.customer_create(request.user.email, data['token'])
+        request.user.profile.stripe_id = stripe_customer.id
+        request.user.save()
+        return redirect('main:index')
