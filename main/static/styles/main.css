@@ -193,6 +193,11 @@ header {
     justify-content: space-between;
 }
 
+.header-authed {
+    width: 1000px;
+    margin: auto;
+}
+
 .header-brand {
     display: flex;
 }
@@ -202,6 +207,13 @@ header {
     color: #ffa918;
     display: flex;
     margin: 10px;
+}
+
+.header-brand-link-authed {
+    font-size: 20px;
+    color: #ffa918;
+    display: flex;
+    margin: 15px 0;
 }
 
 .header-brand-link > span {
@@ -216,6 +228,10 @@ nav {
     align-items: center;
 }
 
+.nav-authed {
+    margin: 0;
+}
+
 .nav-item {
     display: flex;
     font-size: 16px;
@@ -227,6 +243,18 @@ nav {
 
 .nav-item:last-child {
     color: #0808ff;
+}
+
+.nav-item-authed {
+    display: flex;
+    font-size: 16px;
+    color: #aab7c4;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.nav-item-active-authed {
+    color: #ffa918;
 }
 
 .hero {
@@ -345,6 +373,21 @@ a.footer-content-right-item {
     color: #aab7c4;
 }
 
+button {
+    cursor: pointer;
+    padding-top: 8px;
+    padding-bottom: 7px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+}
+
+button:hover {
+    background: #fe9f00;
+}
+
 .ritual {
     background: #f9f9f9;
     text-align: center;
@@ -401,6 +444,22 @@ a.footer-content-right-item {
     background: #fe9f00;
 }
 
+.ritual-body {
+    box-sizing: border-box;
+    width: 340px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #d8dee2;
+    border-radius: 2px;
+    margin: auto;
+    line-height: 1.4;
+}
+
+.ritual-notice {
+    color: #696969;
+    margin-bottom: 20px;
+}
+
 .ritual-alert {
     box-sizing: border-box;
     width: 340px;
@@ -411,4 +470,34 @@ a.footer-content-right-item {
     border-radius: 2px;
     margin-bottom: 15px;
     font-size: 14px;
+    line-height: 1.4;
+}
+
+.loader,
+.loader:after {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.loader {
+    margin: 60px auto;
+    font-size: 5px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 6px solid rgba(255, 169, 24, 0.2);
+    border-right: 6px solid rgba(255, 169, 24, 0.2);
+    border-bottom: 6px solid rgba(255, 169, 24, 0.2);
+    border-left: 6px solid #ffa918;
+    transform: translateZ(0);
+    animation: loading 0.9s infinite linear;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
