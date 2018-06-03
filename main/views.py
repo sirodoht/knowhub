@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as dj_login
 from django.contrib.auth import logout as dj_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_safe
@@ -23,7 +24,10 @@ def index(request):
             return redirect('main:company_new')
         if request.user.profile.is_admin and not request.user.profile.stripe_id:
             return redirect('main:billing_setup')
-        return render(request, 'main/dashboard.html')
+        people = User.objects.all().filter(profile__company=request.user.profile.company)
+        return render(request, 'main/dashboard.html', {
+            'people': people,
+        })
     else:
         return render(request, 'main/index.html')
 
