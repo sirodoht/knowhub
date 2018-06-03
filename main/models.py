@@ -7,6 +7,9 @@ from django.dispatch import receiver
 class Company(models.Model):
     name = models.CharField(max_length=300)
 
+    def __str__(self):
+        return self.name
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
