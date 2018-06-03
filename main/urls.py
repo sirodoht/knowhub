@@ -27,4 +27,7 @@ urlpatterns = [
 
     # /billing/customer/
     path('billing/customer/', views.billing_customer, name='billing_customer'),
+
+    # /invite/
+    path('invite/', views.invite, name='invite'),
 ]
