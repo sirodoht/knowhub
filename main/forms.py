@@ -12,3 +12,9 @@ class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = ['name']
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email']
