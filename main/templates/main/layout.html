@@ -17,19 +17,19 @@
 <body>
     {% block scaffold %}
     {% if request.user.is_authenticated %}
-    <header class="header-authed">
+    <header>
         <div class="header-brand">
-            <a href="{% url 'main:index' %}" class="header-brand-link-authed">
+            <a href="{% url 'main:index' %}" class="header-brand-link">
                 <img src="{% static 'images/logo.svg' %}" alt="logo" width="30px" height="30px">
             </a>
         </div>
-        <nav class="nav-authed">
-            <a href="{% url 'main:index' %}" class="nav-item-authed nav-item-active-authed">Company</a>
-            <a href="{% url 'main:index' %}" class="nav-item-authed">Resources</a>
-            <a href="{% url 'main:index' %}" class="nav-item-authed">Questions</a>
+        <nav>
+            <a href="{% url 'main:index' %}" class="nav-item nav-item-active">Company</a>
+            <a href="{% url 'main:index' %}" class="nav-item">Resources</a>
+            <a href="{% url 'main:index' %}" class="nav-item">Questions</a>
         </nav>
         <div class="header-profile">
-            <a href="{% url 'main:index' %}" class="header-brand-link-authed">
+            <a href="{% url 'main:index' %}">
                 <img src="{% static 'images/logo.svg' %}" alt="logo" width="30px" height="30px">
             </a>
         </div>
@@ -47,8 +47,8 @@
             <a href="{% url 'main:index' %}" class="nav-item">Dashboard</a>
             <a href="{% url 'main:logout' %}" class="nav-item">Log out</a>
             {% else %}
-            <a href="{% url 'main:login' %}" class="nav-item">Sign in</a>
-            <a href="{% url 'main:login' %}" class="nav-item">Get started →</a>
+            <a href="{% url 'main:login' %}" class="nav-item nav-item-special">Sign in</a>
+            <a href="{% url 'main:login' %}" class="nav-item nav-item-cta">Get started →</a>
             {% endif %}
         </nav>
     </header>

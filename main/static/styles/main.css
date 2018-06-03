@@ -191,9 +191,6 @@ a {
 header {
     display: flex;
     justify-content: space-between;
-}
-
-.header-authed {
     width: 1000px;
     margin: auto;
 }
@@ -203,13 +200,6 @@ header {
 }
 
 .header-brand-link {
-    font-size: 20px;
-    color: #ffa918;
-    display: flex;
-    margin: 10px;
-}
-
-.header-brand-link-authed {
     font-size: 20px;
     color: #ffa918;
     display: flex;
@@ -226,9 +216,6 @@ nav {
     display: flex;
     margin-right: 40px;
     align-items: center;
-}
-
-.nav-authed {
     margin: 0;
 }
 
@@ -236,25 +223,24 @@ nav {
     display: flex;
     font-size: 16px;
     font-weight: 500;
-    color: #ffa918;
-    margin-top: 10px;
-    margin-left: 30px;
+    color: #aab7c4;
+    margin: 10px 15px;
 }
 
-.nav-item:last-child {
+.nav-item-active {
+    color: #ffa918;
+}
+
+.nav-item-special {
+    color: #ffa918;
+}
+
+.nav-item-cta {
     color: #0808ff;
 }
 
-.nav-item-authed {
-    display: flex;
-    font-size: 16px;
-    color: #aab7c4;
-    margin-left: 15px;
-    margin-right: 15px;
-}
-
-.nav-item-active-authed {
-    color: #ffa918;
+.header-profile {
+    margin: 15px 0;
 }
 
 .hero {
