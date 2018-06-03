@@ -26,7 +26,7 @@ class Profile(models.Model):
     agenda = models.TextField(max_length=600, blank=True, null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
 
 
 @receiver(post_save, sender=User)
