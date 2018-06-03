@@ -19,7 +19,9 @@
             <button id="add-card">Add card</button>
         </div>
     </section>
+{% endblock %}
 
+{% block scripts %}
     <script src="https://checkout.stripe.com/checkout.js"></script>
     <script src="{% static 'scripts/axios.min.js' %}"></script>
     <script>
@@ -85,6 +87,6 @@
                 document.getElementById('loading').style.display = 'none';
                 handler.close();
             });
-        })()
+        })();
     </script>
 {% endblock %}
