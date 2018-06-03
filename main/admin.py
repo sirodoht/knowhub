@@ -7,7 +7,7 @@ from . import models
 
 # User
 class KnowhubAdmin(UserAdmin):
-    list_display = ('username', 'email', 'date_joined', 'last_login', 'id',)
+    list_display = ("username", "email", "date_joined", "last_login", "id")
 
 
 admin.site.unregister(User)
@@ -16,7 +16,7 @@ admin.site.register(User, KnowhubAdmin)
 
 # Profile
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'company', 'stripe_id', 'id',)
+    list_display = ("user", "company", "stripe_id", "id")
 
 
 admin.site.register(models.Profile, ProfileAdmin)
@@ -24,7 +24,7 @@ admin.site.register(models.Profile, ProfileAdmin)
 
 # Company
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'id',)
+    list_display = ("name", "id")
 
 
 admin.site.register(models.Company, CompanyAdmin)

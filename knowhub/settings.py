@@ -22,69 +22,65 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'secret')
+SECRET_KEY = os.environ.get("SECRET_KEY", "secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.environ.get('NODEBUG') is None else False
+DEBUG = True if os.environ.get("NODEBUG") is None else False
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'knowhub.app',
-]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "knowhub.app"]
 
-ADMINS = [('Theodore', 'theodorekeloglou@gmail.com')]
+ADMINS = [("Theodore", "theodorekeloglou@gmail.com")]
 
 # Application definition
 
 INSTALLED_APPS = [
-    'main.apps.MainConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
-    'django.contrib.staticfiles',
+    "main.apps.MainConfig",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
+    "django.contrib.staticfiles",
 ]
 
 if not DEBUG:
-    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
+    INSTALLED_APPS.append("raven.contrib.django.raven_compat")
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'knowhub.urls'
+ROOT_URLCONF = "knowhub.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ]
         },
-    },
+    }
 ]
 
-WSGI_APPLICATION = 'knowhub.wsgi.application'
+WSGI_APPLICATION = "knowhub.wsgi.application"
 
-LOGIN_URL = '/entrance'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = "/entrance"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 AUTH_TOKEN_DURATION = 30 * 60  # = 1800 = 30 min in seconds
 
@@ -92,40 +88,30 @@ AUTH_TOKEN_DURATION = 30 * 60  # = 1800 = 30 min in seconds
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-    }
-}
+DATABASES = {"default": {"ENGINE": "django.db.backends.postgresql"}}
 
 db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+DATABASES["default"].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = False
 
@@ -137,30 +123,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '_static')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "_static")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Email
 # https://docs.djangoproject.com/en/2.0/topics/email/
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'email-smtp.eu-west-1.amazonaws.com'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = "email-smtp.eu-west-1.amazonaws.com"
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 
-DEFAULT_FROM_EMAIL = 'hi@knowhub.app'
+DEFAULT_FROM_EMAIL = "hi@knowhub.app"
 
 
 # Authentication backends
 # https://docs.djangoproject.com/en/2.0/topics/auth/customizing/
 
 AUTHENTICATION_BACKENDS = (
-    'main.auth_backends.EmailTokenBackend',
-    'django.contrib.auth.backends.ModelBackend',
+    "main.auth_backends.EmailTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
 )
 
 
@@ -176,7 +162,7 @@ SESSION_COOKIE_AGE = 31449600  # 60 * 60 * 24 * 7 * 52 = 1 year in seconds
 if not DEBUG:
     SECURE_CONTENT_TYPE_NOSNIFF = False
     SECURE_BROWSER_XSS_FILTER = False
-    X_FRAME_OPTIONS = 'DENY'
+    X_FRAME_OPTIONS = "DENY"
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
     SECURE_SSL_REDIRECT = False
@@ -185,59 +171,48 @@ if not DEBUG:
 # Sentry
 # https://docs.sentry.io/clients/python/integrations/django/
 
-RAVEN_CONFIG = {
-    'dsn': os.getenv('SENTRY_DSN'),
-}
+RAVEN_CONFIG = {"dsn": os.getenv("SENTRY_DSN")}
 
 
 # Logging
 # https://docs.djangoproject.com/en/2.0/topics/logging/
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
+    "formatters": {
+        "verbose": {"format": "[contactor] %(levelname)s %(asctime)s %(message)s"}
     },
-    'formatters': {
-        'verbose': {
-            'format': '[contactor] %(levelname)s %(asctime)s %(message)s'
-        },
-    },
-    'handlers': {
+    "handlers": {
         # Send all messages to console
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        },
+        "console": {"level": "DEBUG", "class": "logging.StreamHandler"},
         # Warning messages are sent to admin emails
-        'mail_admins': {
-            'level': 'WARNING',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler',
+        "mail_admins": {
+            "level": "WARNING",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
         },
         # critical errors are logged to sentry
-        'sentry': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'raven.contrib.django.handlers.SentryHandler',
+        "sentry": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "raven.contrib.django.handlers.SentryHandler",
         },
     },
-    'loggers': {
+    "loggers": {
         # This is the "catch all" logger
-        '': {
-            'handlers': ['console', 'mail_admins', 'sentry'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    }
+        "": {
+            "handlers": ["console", "mail_admins", "sentry"],
+            "level": "DEBUG",
+            "propagate": False,
+        }
+    },
 }
 
 
 # Stripe
 # https://stripe.com/docs/development
 
-STRIPE_PUBLIC = os.environ.get('STRIPE_PUBLIC')
-STRIPE_SECRET = os.environ.get('STRIPE_SECRET')
+STRIPE_PUBLIC = os.environ.get("STRIPE_PUBLIC")
+STRIPE_SECRET = os.environ.get("STRIPE_SECRET")

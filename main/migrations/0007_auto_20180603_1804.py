@@ -5,14 +5,10 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('main', '0006_profile_photo_url'),
-    ]
+    dependencies = [("main", "0006_profile_photo_url")]
 
     operations = [
         migrations.RenameField(
-            model_name='profile',
-            old_name='photo_url',
-            new_name='photo',
-        ),
+            model_name="profile", old_name="photo_url", new_name="photo"
+        )
     ]

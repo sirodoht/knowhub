@@ -5,7 +5,7 @@ from knowhub import settings
 
 
 class MainConfig(AppConfig):
-    name = 'main'
+    name = "main"
 
     def ready(self):
         stripe.api_key = settings.STRIPE_SECRET

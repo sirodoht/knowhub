@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('main', '0003_profile_is_owner'),
-    ]
+    dependencies = [("main", "0003_profile_is_owner")]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='stripe_id',
+            model_name="profile",
+            name="stripe_id",
             field=models.CharField(blank=True, max_length=50, null=True),
-        ),
+        )
     ]

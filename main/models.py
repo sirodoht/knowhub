@@ -14,7 +14,7 @@ class Company(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
-    photo = models.ImageField(default='images/profile.svg')
+    photo = models.ImageField(default="images/profile.svg")
     is_admin = models.BooleanField(default=False)
     stripe_id = models.CharField(max_length=50, blank=True, null=True)
     role = models.CharField(max_length=300, blank=True, null=True)

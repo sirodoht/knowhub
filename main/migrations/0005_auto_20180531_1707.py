@@ -5,14 +5,10 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('main', '0004_profile_stripe_id'),
-    ]
+    dependencies = [("main", "0004_profile_stripe_id")]
 
     operations = [
         migrations.RenameField(
-            model_name='profile',
-            old_name='is_owner',
-            new_name='is_admin',
-        ),
+            model_name="profile", old_name="is_owner", new_name="is_admin"
+        )
     ]
