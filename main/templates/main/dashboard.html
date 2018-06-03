@@ -2,9 +2,23 @@
 
 {% load static %}
 
-{% block title %}KnowHub.app – Your remote company’s home{% endblock %}
+{% block title %}Company - KnowHub.app{% endblock %}
 
 {% block content %}
-    <section>
+    <section class="people">
+        <h2>Humans</h2>
+        <div class="people-grid">
+            {% for person in people %}
+            <div class="people-grid-item">
+                <div class="people-grid-item-text">
+                    <div class="people-grid-item-text-name">{{ person.get_full_name }}</div>
+                    <div class="people-grid-item-text-role">{{ person.profile.role|default:"&nbsp;" }}</div>
+                </div>
+                <div class="people-grid-item-photo">
+                    <img src="static/{{ person.profile.photo.url }}" alt="user photo" width="48px">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </section>
 {% endblock %}
