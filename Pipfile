@@ -16,6 +16,7 @@ raven = "*"
 python-dotenv = "*"
 pillow = "*"
 black = "*"
+"flake8" = "*"
 
 [dev-packages]
 
