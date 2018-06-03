@@ -214,7 +214,6 @@ header {
 
 nav {
     display: flex;
-    margin-right: 40px;
     align-items: center;
     margin: 0;
 }
@@ -486,4 +485,111 @@ button:hover {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.addition {
+    width: 400px;
+    margin: auto auto 200px;
+}
+
+.addition h1 {
+    font-size: 32px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+
+.addition-label {
+    font-size: 16px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 7px;
+}
+
+.addition-input[type="email"] {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 34px;
+    padding: 7px 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    line-height: 20px;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #d1d5da;
+    border-radius: 2px;
+}
+
+.addition-input[type="email"]::placeholder {
+    color: #bbb;
+}
+
+.addition-input[type="submit"] {
+    display: flex;
+    margin-left: auto;
+    margin-top: 50px;
+    cursor: pointer;
+    padding: 10px 30px;
+    border-radius: 3px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+}
+
+.addition-input[type="submit"]:hover {
+    background: #fe9f00;
+}
+
+.addition-more {
+    cursor: pointer;
+    color: #ffa918;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.addition-more:hover {
+    text-decoration: underline;
+}
+
+.people {
+    width: 1000px;
+    margin: auto;
+}
+
+.people h2 {
+    font-size: 26px;
+    color: #ffa918;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.people-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: 34px;
+    grid-row-gap: 22px;
+}
+
+.people-grid-item {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ffa918;
+    border-radius: 2px;
+    padding: 20px 24px;
+}
+
+.people-grid-item-text {
+    margin-bottom: 10px;
+}
+
+.people-grid-item-text-name {
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.people-grid-item-text-role {
+    color: #828282;
+    font-size: 14px;
 }
