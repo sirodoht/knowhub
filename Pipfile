@@ -15,6 +15,7 @@ stripe = "*"
 raven = "*"
 python-dotenv = "*"
 pillow = "*"
+black = "*"
 
 [dev-packages]
 
