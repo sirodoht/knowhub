@@ -5,13 +5,14 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as dj_login
 from django.contrib.auth import logout as dj_logout
 from django.contrib.auth.decorators import login_required
+from django.forms import formset_factory
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_safe
 
 from knowhub import settings
 
 from . import billing
-from .forms import CompanyForm, EmailForm
+from .forms import CompanyForm, EmailForm, UserForm
 from .helpers import email_login_link
 from .models import Company
 
@@ -107,3 +108,22 @@ def billing_customer(request):
         request.user.profile.stripe_id = stripe_customer.id
         request.user.save()
         return redirect('main:index')
+
+
+@require_http_methods(['HEAD', 'GET', 'POST'])
+@login_required
+def invite(request):
+    UserFormSet = formset_factory(UserForm, max_num=100, extra=100)
+    if request.method == 'POST':
+        formset = UserFormSet(request.POST, prefix='user')
+        if formset.is_valid():
+            # for form in formset:
+            #     send email to form.cleaned_data['email']
+            #     print('form.cleaned_data[email]:', form.cleaned_data)
+            return redirect('main:index')
+    else:
+        formset = UserFormSet(prefix='user')
+
+    return render(request, 'main/invite.html', {
+        'formset': formset,
+    })
