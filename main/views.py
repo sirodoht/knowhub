@@ -134,3 +134,9 @@ def invite(request):
         formset = UserFormSet(prefix="user")
 
     return render(request, "main/invite.html", {"formset": formset})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def profile(request):
+    return render(request, "main/profile.html")

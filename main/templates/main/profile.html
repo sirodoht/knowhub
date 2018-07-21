@@ -1,0 +1,31 @@
+{% extends 'main/scaffold.html' %}
+
+{% load static %}
+
+{% block title %}Company - KnowHub.app{% endblock %}
+
+{% block content %}
+    <section class="profile">
+        <img src="{% static 'images/profile.svg' %}" alt="profile photo" width="240px">
+        <h1>Eleanor Becker</h1>
+        <div class="profile-role">CEO</div>
+        <div class="profile-details">
+            <div class="profile-details-line">
+                <div class="profile-details-line-key">Email</div>
+                <div class="profile-details-line-value">eleanor@lemoncorp.com</div>
+            </div>
+            <div class="profile-details-line">
+                <div class="profile-details-line-key">Slack</div>
+                <div class="profile-details-line-value">eleanor</div>
+            </div>
+            <div class="profile-details-line">
+                <div class="profile-details-line-key">Local Time</div>
+                <div class="profile-details-line-value">12:23 PM</div>
+            </div>
+            <div class="profile-details-line">
+                <div class="profile-details-line-key">Location</div>
+                <div class="profile-details-line-value">Bangkok – UTC-7</div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

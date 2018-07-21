@@ -15,4 +15,5 @@ urlpatterns = [
     path("billing/", views.billing_setup, name="billing_setup"),
     path("billing/customer/", views.billing_customer, name="billing_customer"),
     path("invite/", views.invite, name="invite"),
+    path("profile/", views.profile, name="profile"),
 ]
