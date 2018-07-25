@@ -16,8 +16,8 @@
 
         <img class="profile-photo" src="{{ request.user.profile.photo }}" alt="profile photo" width="240px">
 
-        <h1>Eleanor Becker</h1>
-        <div class="profile-role">CEO</div>
+        <h1>{{ request.user.first_name }} {{ request.user.last_name }}</h1>
+        <div class="profile-role">{{ request.user.profile.role|default:"" }}</div>
         <div class="profile-details">
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Email</div>
@@ -40,6 +40,9 @@
         <div>
             <br>
             <a href="{% url 'main:settings' request.user.profile.company.route %}">Update profile & settings</a>
+            <br>
+            <br>
+            <a href="{% url 'main:logout' %}">Logout</a>
         </div>
     </section>
 {% endblock %}

@@ -571,7 +571,7 @@ button:hover {
 
 .people-grid {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 34px;
     grid-row-gap: 22px;
 }
