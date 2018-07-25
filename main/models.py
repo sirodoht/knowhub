@@ -7,6 +7,7 @@ from django.dispatch import receiver
 class Company(models.Model):
     name = models.CharField(max_length=300)
     route = models.CharField(max_length=50, unique=True, null=True, default=None)
+    logo = models.ImageField(default="/static/images/logo.svg")
 
     def __str__(self):
         return self.name
