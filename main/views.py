@@ -163,9 +163,22 @@ def profile_photo(request, route):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def user_settings(request, route):
+def company_logo(request, route):
     if request.method == "POST":
-        form = SettingsForm(
+        body = request.body.decode("utf-8")
+        data = json.loads(body)
+        request.user.profile.company.logo = data["logo_url"]
+        request.user.profile.company.save()
+        return redirect(
+            "main:settings_company", request.user.profile.company.route
+        )
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def settings_user(request, route):
+    if request.method == "POST":
+        form = UserSettingsForm(
             request.POST,
             instance=request.user,
             initial={"slack": request.user.profile.slack},
@@ -173,10 +186,10 @@ def user_settings(request, route):
         if form.is_valid():
             request.user.profile.slack = form.cleaned_data["slack"]
             request.user.save()
-            messages.success(request, "Settings updated!")
+            messages.success(request, "User settings updated!")
             return redirect("main:profile", route, request.user.username)
     else:
-        form = SettingsForm(
+        form = UserSettingsForm(
             instance=request.user, initial={"slack": request.user.profile.slack}
         )
 
