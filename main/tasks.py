@@ -6,13 +6,10 @@ from knowhub import settings
 
 
 @shared_task
-def invite(data):
+def invite_task(data):
     send_mail(
-        data['cult_name'] + ' announcement: ' + data['event_title'] + ' event',
-        render_to_string(
-            'main/invite_email.txt',
-            {'data': data},
-        ),
+        "Invitation for " + data["company_name"] + " at KnowHub.app",
+        render_to_string("main/invite_email.txt", {"data": data}),
         settings.DEFAULT_FROM_EMAIL,
-        [data['member_email']],
+        [data["email"]],
     )

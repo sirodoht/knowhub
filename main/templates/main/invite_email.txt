@@ -1,12 +1,9 @@
 Howdy,
 
-You have been invited to {{ company.name }} at KnowHub.app!
+You have been invited to join {{ data.company_name|safe }} at KnowHub.app!
 
-Click here to join:{% if 'localhost' in current_site.domain or '127.0.0.1' in current_site.domain %}
-http://{{ current_site.domain }}{% url 'main:auth' %}?d={{ data }}
-{% else %}
-https://{{ current_site.domain }}{% url 'main:auth' %}?d={{ data }}
-{% endif %}
+Click here to accept:
+{{ data.invitation_url|safe }}
 
 Later,
 <3

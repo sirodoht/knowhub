@@ -12,6 +12,7 @@ urlpatterns = [
     path("auth/", views.token_post, name="auth"),
     path("logout/", views.logout, name="logout"),
     path("init/", views.company_new, name="company_new"),
+    path("invitation/", views.invite_verify, name="invite_verify"),
     path("<slug:route>/", views.company, name="company"),
     path("<slug:route>/billing/", views.billing_setup, name="billing_setup"),
     path(

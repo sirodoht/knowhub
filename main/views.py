@@ -12,9 +12,10 @@ from django.views.decorators.http import require_http_methods, require_safe
 from knowhub import settings
 
 from . import billing
+from .forms import CompanyForm, EmailForm, SettingsForm, UserForm
+from .helpers import email_login_link, get_invite_data, verify_invite_data
 from .models import Company
-from .forms import CompanyForm, EmailForm, UserForm, SettingsForm
-from .helpers import email_login_link, email_invite_link, verify_invite_data
+from .tasks import invite_task
 
 
 def index(request):
@@ -93,7 +94,7 @@ def token_post(request):
 @login_required
 def logout(request):
     dj_logout(request)
-    messages.success(request, "You have been logged out.")
+    # messages.success(request, "You have been logged out.")
     return redirect(settings.LOGOUT_REDIRECT_URL)
 
 
@@ -137,33 +138,6 @@ def billing_customer(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def invite(request, route):
-    company = Company.objects.get(route=route)
-    UserFormSet = formset_factory(UserForm, max_num=100, extra=100)
-    if request.method == "POST":
-        formset = UserFormSet(request.POST, prefix="user")
-        if formset.is_valid():
-            for form in formset:
-                if 'email' in form.cleaned_data:
-                    email_invite_link(request, form.cleaned_data['email'], company)
-            messages.success(
-                request,
-                "Invites sent!",
-            )
-            return redirect("main:index")
-        else:
-            messages.error(
-                request,
-                "Invalid email address.",
-            )
-    else:
-        formset = UserFormSet(prefix="user")
-
-    return render(request, "main/invite.html", {"formset": formset, "company": company})
-
-
-@require_http_methods(["HEAD", "GET", "POST"])
-@login_required
 def profile(request, route, username):
     if not username:
         company = Company.objects.get(route=route)
@@ -182,12 +156,14 @@ def profile_photo(request, route):
         data = json.loads(body)
         request.user.profile.photo = data["photo_url"]
         request.user.save()
-        return redirect("main:profile", request.user.profile.company.route)
+        return redirect(
+            "main:profile", request.user.profile.company.route, request.user.username
+        )
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def settings(request, route):
+def user_settings(request, route):
     if request.method == "POST":
         form = SettingsForm(
             request.POST,
@@ -208,28 +184,41 @@ def settings(request, route):
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
-def verify_invite(request):
+@login_required
+def invite(request, route):
+    company = Company.objects.get(route=route)
+    UserFormSet = formset_factory(UserForm, max_num=100, extra=100)
+    if request.method == "POST":
+        formset = UserFormSet(request.POST, prefix="user")
+        if formset.is_valid():
+            for form in formset:
+                if "email" in form.cleaned_data:
+                    data = get_invite_data(request, form.cleaned_data["email"], company)
+                    invite_task.delay(data)
+            messages.success(request, "Invites sent!")
+            return redirect("main:index")
+        else:
+            messages.error(request, "Invalid email address.")
+    else:
+        formset = UserFormSet(prefix="user")
+
+    return render(request, "main/invite.html", {"formset": formset, "company": company})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+def invite_verify(request):
     if request.user.is_authenticated:
         messages.error(request, "You are already registered.")
         return redirect(settings.LOGIN_REDIRECT_URL)
 
     if request.GET.get("d"):
-        # The user has clicked an invite link.
         user = verify_invite_data(token=request.GET["d"])
-
         if user is not None:
-            dj_login(request, user)
-            messages.success(request, "Sign in successful.")
-            return redirect(settings.LOGIN_REDIRECT_URL)
+            messages.success(request, "Your account was created succesfully.")
+            return redirect(settings.LOGIN_URL)
         else:
-            messages.error(
-                request,
-                "The sign in link was invalid or has expired. Please try to sign in again.",
-            )
+            messages.error(request, "Invalid invite link.")
     else:
-        messages.error(
-            request,
-            "Invalid invite link.",
-        )
+        messages.error(request, "Invalid invite link.")
 
     return redirect(settings.LOGIN_URL)

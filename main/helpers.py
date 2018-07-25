@@ -3,13 +3,16 @@ import json
 import time
 
 import shortuuid
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
-from django.core.signing import Signer
+from django.core.signing import BadSignature, Signer
 from django.template.loader import render_to_string
 
 from knowhub import settings
+
+from .models import Company
 
 
 def email_login_link(request, email):
@@ -35,6 +38,7 @@ def email_login_link(request, email):
 
 def generate_username(email):
     username = email.split("@")[0]
+    username = username.replace("+", "-")
 
     # check if exists
     if User.objects.filter(username=username).count():
@@ -46,39 +50,46 @@ def generate_username(email):
     return username
 
 
-def email_invite_link(request, email, company):
+def get_invite_data(request, email, company):
     current_site = get_current_site(request)
 
     email = email.lower().strip()
-    data = {"t": int(time.time()), "e": email}
-    data = json.dumps(data).encode("utf8")
-    data = Signer().sign(base64.b64encode(data).decode("utf8"))
+    info = {"c": company.route, "e": email}
+    info = json.dumps(info).encode("utf8")
+    signed_info = Signer().sign(base64.b64encode(info).decode("utf8"))
 
-    send_mail(
-        "You have been invited to KnowHub.app",
-        render_to_string(
-            "main/invite_email.txt",
-            {"current_site": current_site, "company": company, "data": data},
-            request=request,
-        ),
-        settings.DEFAULT_FROM_EMAIL,
-        [email],
-    )
+    domain = get_current_site(request).domain
+    invitation_url = domain + "/invitation/?d=" + signed_info
+    if "localhost" in domain or "127.0.0.1" in domain:
+        invitation_url = "http://" + invitation_url
+    else:
+        invitation_url = "https://" + invitation_url
+
+    data = {
+        "email": email,
+        "company_name": company.name,
+        "invitation_url": invitation_url,
+        "signed_info": signed_info,
+    }
+
+    return data
 
 
 def verify_invite_data(token=None):
     try:
         data = Signer().unsign(token)
     except BadSignature:
-        return False
+        return
 
     data = json.loads(base64.b64decode(data).decode("utf8"))
 
     User = get_user_model()
+    company = Company.objects.get(route=data["c"])
 
     user, created = User.objects.get_or_create(email=data["e"])
     if created:
         user.username = generate_username(data["e"])
+        user.profile.company = company
         user.save()
 
     return user
