@@ -44,3 +44,41 @@ def generate_username(email):
         username += uuid
 
     return username
+
+
+def email_invite_link(request, email, company):
+    current_site = get_current_site(request)
+
+    email = email.lower().strip()
+    data = {"t": int(time.time()), "e": email}
+    data = json.dumps(data).encode("utf8")
+    data = Signer().sign(base64.b64encode(data).decode("utf8"))
+
+    send_mail(
+        "You have been invited to KnowHub.app",
+        render_to_string(
+            "main/invite_email.txt",
+            {"current_site": current_site, "company": company, "data": data},
+            request=request,
+        ),
+        settings.DEFAULT_FROM_EMAIL,
+        [email],
+    )
+
+
+def verify_invite_data(token=None):
+    try:
+        data = Signer().unsign(token)
+    except BadSignature:
+        return False
+
+    data = json.loads(base64.b64decode(data).decode("utf8"))
+
+    User = get_user_model()
+
+    user, created = User.objects.get_or_create(email=data["e"])
+    if created:
+        user.username = generate_username(data["e"])
+        user.save()
+
+    return user

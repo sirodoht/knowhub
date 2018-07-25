@@ -12,7 +12,7 @@ from .helpers import generate_username
 
 class EmailTokenBackend:
     """
-    Code stolen from https://github.com/skorokithakis/django-tokenauth
+    Code stolen from https://github.com/skorokithakis/django-tokenauth/tree/v0.1.0
     """
 
     def get_user(self, user_id):

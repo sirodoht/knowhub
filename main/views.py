@@ -14,7 +14,7 @@ from knowhub import settings
 from . import billing
 from .models import Company
 from .forms import CompanyForm, EmailForm, UserForm, SettingsForm
-from .helpers import email_login_link
+from .helpers import email_login_link, email_invite_link, verify_invite_data
 
 
 def index(request):
@@ -143,10 +143,19 @@ def invite(request, route):
     if request.method == "POST":
         formset = UserFormSet(request.POST, prefix="user")
         if formset.is_valid():
-            # for form in formset:
-            #     send email to form.cleaned_data['email']
-            #     print('form.cleaned_data[email]:', form.cleaned_data)
+            for form in formset:
+                if 'email' in form.cleaned_data:
+                    email_invite_link(request, form.cleaned_data['email'], company)
+            messages.success(
+                request,
+                "Invites sent!",
+            )
             return redirect("main:index")
+        else:
+            messages.error(
+                request,
+                "Invalid email address.",
+            )
     else:
         formset = UserFormSet(prefix="user")
 
@@ -196,3 +205,31 @@ def settings(request, route):
         )
 
     return render(request, "main/settings.html", {"form": form})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+def verify_invite(request):
+    if request.user.is_authenticated:
+        messages.error(request, "You are already registered.")
+        return redirect(settings.LOGIN_REDIRECT_URL)
+
+    if request.GET.get("d"):
+        # The user has clicked an invite link.
+        user = verify_invite_data(token=request.GET["d"])
+
+        if user is not None:
+            dj_login(request, user)
+            messages.success(request, "Sign in successful.")
+            return redirect(settings.LOGIN_REDIRECT_URL)
+        else:
+            messages.error(
+                request,
+                "The sign in link was invalid or has expired. Please try to sign in again.",
+            )
+    else:
+        messages.error(
+            request,
+            "Invalid invite link.",
+        )
+
+    return redirect(settings.LOGIN_URL)
