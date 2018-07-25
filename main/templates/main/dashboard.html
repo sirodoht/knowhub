@@ -6,18 +6,18 @@
 
 {% block content %}
     <section class="people">
-        <h2>Humans</h2>
+        <h2>Humans Directory</h2>
         <div class="people-grid">
             {% for person in people %}
-            <div class="people-grid-item">
+            <a class="people-grid-item" href="{% url 'main:profile' request.user.profile.company.route request.user.username %}">
                 <div class="people-grid-item-text">
                     <div class="people-grid-item-text-name">{{ person.get_full_name }}</div>
                     <div class="people-grid-item-text-role">{{ person.profile.role|default:"&nbsp;" }}</div>
                 </div>
                 <div class="people-grid-item-photo">
-                    <img src="static/{{ person.profile.photo.url }}" alt="user photo" width="48px">
+                    <img src="{{ person.profile.photo }}" alt="user photo" width="48px">
                 </div>
-            </div>
+            </a>
             {% endfor %}
         </div>
     </section>
