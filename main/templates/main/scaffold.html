@@ -25,12 +25,12 @@
         </div>
         <nav>
             <a href="{% url 'main:index' %}" class="nav-item nav-item-active">Company</a>
-            <a href="{% url 'main:index' %}" class="nav-item">Resources</a>
-            <a href="{% url 'main:index' %}" class="nav-item">Questions</a>
+            <!-- <a href="{% url 'main:index' %}" class="nav-item">Resources</a> -->
+            <!-- <a href="{% url 'main:index' %}" class="nav-item">Questions</a> -->
         </nav>
         <div class="header-profile">
-            <a href="{% url 'main:index' %}">
-                <img src="{% static 'images/logo.svg' %}" alt="logo" width="30px" height="30px">
+            <a href="{% url 'main:profile' request.user.profile.company.route request.user.username %}">
+                <img class="header-profile-photo" src="{{ request.user.profile.photo }}" alt="logo" width="30px" height="30px">
             </a>
         </div>
     </header>
@@ -68,10 +68,9 @@
             </div>
         </div>
     </footer>
-
-    {% block scripts %}
     {% endblock %}
 
+    {% block scripts %}
     {% endblock %}
 </body>
 </html>
