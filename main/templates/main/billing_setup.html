@@ -15,6 +15,12 @@
         <div class="ritual-body">
             <div class="ritual-notice">
                 You need to setup your billing info in order to start your 30 days trial.
+                <br>
+                <br>
+                You will be charged exactly 30 days from now.
+                <br>
+                <br>
+                You can cancel anytime.
             </div>
             <button id="add-card">Add card</button>
         </div>
@@ -42,10 +48,9 @@
             var handler = StripeCheckout.configure({
                 key: 'pk_test_nKErTzQhoq1U9rn6Q5c5W0qt',
                 email: '{{ request.user.email }}',
-                image: 'https://fuguestateless.com/images/mark-negative.svg',
+                image: 'https://fuguestateless.com/mark-negative.svg',
                 locale: 'auto',
                 token: function (token) {
-                    console.log('token:', token);
                     var url = '/billing/customer/';
                     axios
                         .post(
@@ -65,8 +70,8 @@
                             }
                         })
                         .catch(function (err) {
-                            console.log('Error: ' + err);
-                            console.log('Please contact us at hi@avocadojobs.com or at @AvocadoJobs on Twitter.');
+                            console.log('Error:', err);
+                            console.log('Please contact us at hi@fuguestateless.com or at @sirodoht on Twitter.');
                             throw err;
                         });
                 },
