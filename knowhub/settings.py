@@ -78,12 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "knowhub.wsgi.application"
 
-LOGIN_URL = "/entrance"
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
-
-AUTH_TOKEN_DURATION = 30 * 60  # = 1800 = 30 min in seconds
-
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -148,6 +142,12 @@ AUTHENTICATION_BACKENDS = (
     "main.auth_backends.EmailTokenBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
+
+LOGIN_URL = "/entrance"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+AUTH_TOKEN_DURATION = 30 * 60  # = 1800 = 30 min in seconds
 
 
 # Session
@@ -224,4 +224,4 @@ STRIPE_SECRET = os.environ.get("STRIPE_SECRET")
 # Celery settings
 # http://docs.celeryproject.org/en/v4.2.1/django/first-steps-with-django.html
 
-CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://@localhost:6379') + '/3'
+CELERY_BROKER_URL = os.environ.get("REDIS_URL", "redis://@localhost:6379") + "/3"
