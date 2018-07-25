@@ -12,7 +12,7 @@ from django.views.decorators.http import require_http_methods, require_safe
 from knowhub import settings
 
 from . import billing
-from .forms import CompanyForm, EmailForm, SettingsForm, UserForm
+from .forms import CompanyForm, EmailForm, UserSettingsForm, CompanySettingsForm, UserForm
 from .helpers import email_login_link, get_invite_data, verify_invite_data
 from .models import Company
 from .tasks import invite_task
@@ -181,6 +181,29 @@ def user_settings(request, route):
         )
 
     return render(request, "main/settings.html", {"form": form})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def settings_company(request, route):
+    if not request.user.profile.is_admin:
+        return redirect("main:settings_user", request.user.profile.company.route)
+
+    if request.method == "POST":
+        form = CompanySettingsForm(
+            request.POST,
+            instance=request.user.profile.company,
+        )
+        if form.is_valid():
+            request.user.profile.company.save()
+            messages.success(request, "Company settings updated!")
+            return redirect("main:profile", route, request.user.username)
+    else:
+        form = CompanySettingsForm(
+            instance=request.user.profile.company
+        )
+
+    return render(request, "main/settings_company.html", {"form": form})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])

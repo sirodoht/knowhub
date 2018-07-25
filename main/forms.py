@@ -20,9 +20,15 @@ class UserForm(forms.ModelForm):
         fields = ["email"]
 
 
-class SettingsForm(forms.ModelForm):
+class UserSettingsForm(forms.ModelForm):
     slack = forms.CharField(label="Your Slack username")
 
     class Meta:
         model = User
         fields = ["first_name", "last_name", "email"]
+
+
+class CompanySettingsForm(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = ["name"]

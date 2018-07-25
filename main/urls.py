@@ -21,7 +21,9 @@ urlpatterns = [
         name="billing_customer",
     ),
     path("<slug:route>/invite/", views.invite, name="invite"),
-    path("<slug:route>/settings/", views.user_settings, name="settings"),
+    path("<slug:route>/settings/", views.settings_user, name="settings_user"),
+    path("<slug:route>/settings/company/", views.settings_company, name="settings_company"),
+    path("<slug:route>/settings/company/logo/", views.company_logo, name="company_logo"),
     path("<slug:route>/settings/photo/", views.profile_photo, name="profile_photo"),
     path("<slug:route>/profile/<slug:username>/", views.profile, name="profile"),
 ]
