@@ -206,6 +206,10 @@ header {
     margin: 15px 0;
 }
 
+.header-brand-link > img {
+    border-radius: 100%;
+}
+
 .header-brand-link > span {
     display: flex;
     align-items: center;

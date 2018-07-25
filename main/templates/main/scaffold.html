@@ -20,7 +20,7 @@
     <header>
         <div class="header-brand">
             <a href="{% url 'main:index' %}" class="header-brand-link">
-                <img src="{% static 'images/logo.svg' %}" alt="logo" width="30px" height="30px">
+                <img src="{{ request.user.profile.company.logo }}" alt="logo" width="30px" height="30px">
             </a>
         </div>
         <nav>
