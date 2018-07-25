@@ -1,0 +1,14 @@
+django
+psycopg2-binary
+whitenoise
+uwsgi
+dj-database-url
+isort
+flake8
+python-dotenv
+shortuuid
+pillow
+raven
+stripe
+black
+celery[redis,gevent]
