@@ -6,17 +6,26 @@
 
 {% block content %}
     <section class="profile">
-        <img src="{% static 'images/profile.svg' %}" alt="profile photo" width="240px">
+        {% if messages %}
+        <div class="profile-alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <img class="profile-photo" src="{{ request.user.profile.photo }}" alt="profile photo" width="240px">
+
         <h1>Eleanor Becker</h1>
         <div class="profile-role">CEO</div>
         <div class="profile-details">
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Email</div>
-                <div class="profile-details-line-value">eleanor@lemoncorp.com</div>
+                <div class="profile-details-line-value">{{ request.user.email }}</div>
             </div>
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Slack</div>
-                <div class="profile-details-line-value">eleanor</div>
+                <div class="profile-details-line-value">{{ request.user.profile.slack }}</div>
             </div>
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Local Time</div>
@@ -24,8 +33,13 @@
             </div>
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Location</div>
-                <div class="profile-details-line-value">Bangkok – UTC-7</div>
+                <div class="profile-details-line-value">{{ request.user.profile.location }} – UTC-7</div>
             </div>
+        </div>
+
+        <div>
+            <br>
+            <a href="{% url 'main:settings' request.user.profile.company.route %}">Update profile & settings</a>
         </div>
     </section>
 {% endblock %}

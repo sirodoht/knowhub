@@ -242,6 +242,10 @@ nav {
     margin: 15px 0;
 }
 
+.header-profile-photo {
+    border-radius: 50%;
+}
+
 .hero {
     border-bottom: 1px solid #ffa918;
 }
@@ -594,8 +598,18 @@ button:hover {
     font-size: 14px;
 }
 
+.people-grid-item-photo > img {
+    border-radius: 50%;
+}
+
 .profile {
     text-align: center;
+}
+
+.profile-alert {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    color: #0808ff;
 }
 
 .profile > h1 {
@@ -636,4 +650,76 @@ button:hover {
     width: 50%;
     text-align: left;
     padding-left: 10px;
+}
+
+.profile-photo {
+    border-radius: 100%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.settings {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.settings-alert {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    color: #0808ff;
+}
+
+.settings-photo img {
+    border-radius: 100%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.settings > h1 {
+    font-size: 29px;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.settings form {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.settings label {
+    color: #4f4f4f;
+}
+
+.settings input[type="email"],
+.settings input[type="text"] {
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.settings input[type="submit"] {
+    cursor: pointer;
+    display: flex;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 30px;
+    border-radius: 3px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+}
+
+.settings input[type="submit"]:hover {
+    background: #fe9f00;
 }

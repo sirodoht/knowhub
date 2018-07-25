@@ -1,5 +1,6 @@
 import json
 
+import shortuuid
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from django.contrib.auth.decorators import login_required
@@ -11,7 +12,8 @@ from django.views.decorators.http import require_http_methods, require_safe
 from knowhub import settings
 
 from . import billing
-from .forms import CompanyForm, EmailForm, UserForm
+from .models import Company
+from .forms import CompanyForm, EmailForm, UserForm, SettingsForm
 from .helpers import email_login_link
 
 
@@ -21,10 +23,20 @@ def index(request):
             return redirect("main:company_new")
         if request.user.profile.is_admin and not request.user.profile.stripe_id:
             return redirect("main:billing_setup")
+        return redirect("main:company", request.user.profile.company.route)
+    else:
+        return render(request, "main/index.html")
+
+
+def company(request, route):
+    if request.user.is_authenticated:
+        company = Company.objects.get(route=route)
         people = User.objects.all().filter(
             profile__company=request.user.profile.company
         )
-        return render(request, "main/dashboard.html", {"people": people})
+        return render(
+            request, "main/dashboard.html", {"company": company, "people": people}
+        )
     else:
         return render(request, "main/index.html")
 
@@ -91,7 +103,11 @@ def company_new(request):
     if request.method == "POST":
         form = CompanyForm(request.POST)
         if form.is_valid():
-            new_company = form.save()
+            new_company = form.save(commit=False)
+            new_company.route_id = shortuuid.ShortUUID(
+                "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
+            ).random(length=6)
+            new_company.save()
             request.user.profile.company = new_company
             request.user.save()
             return redirect("main:billing_setup")
@@ -121,7 +137,8 @@ def billing_customer(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def invite(request):
+def invite(request, route):
+    company = Company.objects.get(route=route)
     UserFormSet = formset_factory(UserForm, max_num=100, extra=100)
     if request.method == "POST":
         formset = UserFormSet(request.POST, prefix="user")
@@ -133,7 +150,30 @@ def invite(request):
     else:
         formset = UserFormSet(prefix="user")
 
-    return render(request, "main/invite.html", {"formset": formset})
+    return render(request, "main/invite.html", {"formset": formset, "company": company})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def profile(request, route, username):
+    if not username:
+        company = Company.objects.get(route=route)
+        return render(request, "main/profile.html", {"company": company})
+    else:
+        user = User.objects.get(username=username)
+        company = Company.objects.get(route=route)
+        return render(request, "main/profile.html", {"company": company, "user": user})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def profile_photo(request, route):
+    if request.method == "POST":
+        body = request.body.decode("utf-8")
+        data = json.loads(body)
+        request.user.profile.photo = data["photo_url"]
+        request.user.save()
+        return redirect("main:profile", request.user.profile.company.route)
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
