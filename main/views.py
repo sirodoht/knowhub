@@ -138,5 +138,21 @@ def invite(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def profile(request):
-    return render(request, "main/profile.html")
+def settings(request, route):
+    if request.method == "POST":
+        form = SettingsForm(
+            request.POST,
+            instance=request.user,
+            initial={"slack": request.user.profile.slack},
+        )
+        if form.is_valid():
+            request.user.profile.slack = form.cleaned_data["slack"]
+            request.user.save()
+            messages.success(request, "Settings updated!")
+            return redirect("main:profile", route, request.user.username)
+    else:
+        form = SettingsForm(
+            instance=request.user, initial={"slack": request.user.profile.slack}
+        )
+
+    return render(request, "main/settings.html", {"form": form})
