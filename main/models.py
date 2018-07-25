@@ -6,6 +6,7 @@ from django.dispatch import receiver
 
 class Company(models.Model):
     name = models.CharField(max_length=300)
+    route = models.CharField(max_length=50, unique=True, null=True, default=None)
 
     def __str__(self):
         return self.name
