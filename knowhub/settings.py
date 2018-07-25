@@ -219,3 +219,9 @@ LOGGING = {
 
 STRIPE_PUBLIC = os.environ.get("STRIPE_PUBLIC")
 STRIPE_SECRET = os.environ.get("STRIPE_SECRET")
+
+
+# Celery settings
+# http://docs.celeryproject.org/en/v4.2.1/django/first-steps-with-django.html
+
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://@localhost:6379') + '/3'
