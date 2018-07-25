@@ -22,7 +22,7 @@ def email_login_link(request, email):
     data = Signer().sign(base64.b64encode(data).decode("utf8"))
 
     send_mail(
-        "Login link for KnowHub.app",
+        "Sign in to KnowHub.app",
         render_to_string(
             "main/token_auth_email.txt",
             {"current_site": current_site, "data": data},

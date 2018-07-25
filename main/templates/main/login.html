@@ -29,7 +29,7 @@
         <form action="{% url 'main:auth' %}" method="post">
             {{ form.non_field_errors }}
 
-            <label for="id_email" class="section-label">Enter your email to login <abbr title="No passwords ™">in fashion</abbr></label>
+            <label for="id_email" class="section-label">Enter your email to sign in</label>
             {% if form.email.errors %}
                 {% for error in form.email.errors %}
                     <div class="form-error">{{ error|escape }}</div>
