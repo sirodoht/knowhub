@@ -14,18 +14,18 @@
         </div>
         {% endif %}
 
-        <img class="profile-photo" src="{{ request.user.profile.photo }}" alt="profile photo" width="240px">
+        <img class="profile-photo" src="{{ user.profile.photo }}" alt="profile photo" width="240px">
 
-        <h1>{{ request.user.first_name }} {{ request.user.last_name }}</h1>
-        <div class="profile-role">{{ request.user.profile.role|default:"" }}</div>
+        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+        <div class="profile-role">{{ user.profile.role|default:"" }}</div>
         <div class="profile-details">
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Email</div>
-                <div class="profile-details-line-value">{{ request.user.email }}</div>
+                <div class="profile-details-line-value">{{ user.email }}</div>
             </div>
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Slack</div>
-                <div class="profile-details-line-value">{{ request.user.profile.slack }}</div>
+                <div class="profile-details-line-value">{{ user.profile.slack }}</div>
             </div>
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Local Time</div>
@@ -33,10 +33,11 @@
             </div>
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Location</div>
-                <div class="profile-details-line-value">{{ request.user.profile.location }} – UTC-7</div>
+                <div class="profile-details-line-value">{{ user.profile.location }} – UTC-7</div>
             </div>
         </div>
 
+        {% if request.user == user %}
         <div>
             <br>
             <a href="{% url 'main:settings' request.user.profile.company.route %}">Update profile & settings</a>
@@ -44,5 +45,6 @@
             <br>
             <a href="{% url 'main:logout' %}">Logout</a>
         </div>
+        {% endif %}
     </section>
 {% endblock %}

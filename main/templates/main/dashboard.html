@@ -17,7 +17,7 @@
         <h2>Humans Directory</h2>
         <div class="people-grid">
             {% for person in people %}
-            <a class="people-grid-item" href="{% url 'main:profile' request.user.profile.company.route request.user.username %}">
+            <a class="people-grid-item" href="{% url 'main:profile' request.user.profile.company.route person.username %}">
                 <div class="people-grid-item-text">
                     <div class="people-grid-item-text-name">{{ person.get_full_name }}</div>
                     <div class="people-grid-item-text-role">{{ person.profile.role|default:"&nbsp;" }}</div>
