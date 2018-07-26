@@ -12,7 +12,13 @@ from django.views.decorators.http import require_http_methods, require_safe
 from knowhub import settings
 
 from . import billing
-from .forms import CompanyForm, EmailForm, UserSettingsForm, CompanySettingsForm, UserForm
+from .forms import (
+    CompanyForm,
+    CompanySettingsForm,
+    EmailForm,
+    UserForm,
+    UserSettingsForm,
+)
 from .helpers import email_login_link, get_invite_data, verify_invite_data
 from .models import Company
 from .tasks import invite_task
@@ -26,7 +32,7 @@ def index(request):
             return redirect("main:billing_setup")
         return redirect("main:people", request.user.profile.company.route)
     else:
-        return render(request, "main/index.html")
+        return render(request, "main/marketing.html")
 
 
 def people(request, route):
@@ -39,7 +45,7 @@ def people(request, route):
             request, "main/people.html", {"company": company, "people": people}
         )
     else:
-        return render(request, "main/index.html")
+        return redirect(request, "main:index")
 
 
 @require_safe
@@ -105,7 +111,7 @@ def company_new(request):
         form = CompanyForm(request.POST)
         if form.is_valid():
             new_company = form.save(commit=False)
-            new_company.route_id = shortuuid.ShortUUID(
+            new_route = shortuuid.ShortUUID(
                 "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
             ).random(length=6)
             new_company.save()
@@ -169,9 +175,7 @@ def company_logo(request, route):
         data = json.loads(body)
         request.user.profile.company.logo = data["logo_url"]
         request.user.profile.company.save()
-        return redirect(
-            "main:settings_company", request.user.profile.company.route
-        )
+        return redirect("main:settings_company", request.user.profile.company.route)
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -203,18 +207,13 @@ def settings_company(request, route):
         return redirect("main:settings_user", request.user.profile.company.route)
 
     if request.method == "POST":
-        form = CompanySettingsForm(
-            request.POST,
-            instance=request.user.profile.company,
-        )
+        form = CompanySettingsForm(request.POST, instance=request.user.profile.company)
         if form.is_valid():
             request.user.profile.company.save()
             messages.success(request, "Company settings updated!")
             return redirect("main:profile", route, request.user.username)
     else:
-        form = CompanySettingsForm(
-            instance=request.user.profile.company
-        )
+        form = CompanySettingsForm(instance=request.user.profile.company)
 
     return render(request, "main/settings_company.html", {"form": form})
 

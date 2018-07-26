@@ -186,6 +186,7 @@ html, body {
 
 a {
     text-decoration: none;
+    color: #0808ff;
 }
 
 header {
@@ -260,26 +261,41 @@ nav {
 
 h1 {
     font-size: 56px;
-    font-weight: 300;
+    font-weight: 400;
     margin-top: 40px;
     margin-bottom: 40px;
 }
 
 h2 {
     font-size: 34px;
-    font-weight: 300;
+    font-weight: 400;
     margin-top: 40px;
     margin-bottom: 50px;
 }
 
 .hero h1 {
-    margin-top: 80px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.hero-content-overline {
+    margin-top: 120px;
+    font-size: 24px;
+    color: #ffa918;
+}
+
+.hero-content-subtitle {
+    margin-top: 10px;
+    margin-bottom: 100px;
+    font-size: 24px;
+    color: #ffa918;
+    text-align: right;
 }
 
 .hero-content-text {
     font-size: 30px;
     line-height: 1.5;
-    color: #ffa918;
+    color: #0808ff;
     margin-bottom: 40px;
 }
 
@@ -295,7 +311,7 @@ section {
 
 .features-content-grid {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
     grid-column-gap: 100px;
     grid-row-gap: 40px;
@@ -308,7 +324,9 @@ section {
 }
 
 .features-content-grid-item-title > span {
+    user-select: none;
     font-size: 12px;
+    font-weight: 300;
     color: #aab7c4;
     border: 1px solid #aab7c4;
     border-radius: 10px;
@@ -332,9 +350,83 @@ section {
     margin-bottom: 60px;
 }
 
+.benefits {
+    background: #ffa918;
+}
+
+.benefits-content {
+    width: 1000px;
+    margin: auto;
+    color: #fff;
+    padding-bottom: 20px;
+}
+
+.benefits-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-column-gap: 100px;
+    grid-row-gap: 40px;
+}
+
+.benefits-content-grid-item-title {
+    font-size: 26px;
+    color: #ffa918;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.benefits-content-grid-item-title > span {
+    font-size: 12px;
+    border: 1px solid #aab7c4;
+    border-radius: 10px;
+    padding: 2px 6px;
+    margin-left: 12px;
+    display: inline-block;
+    transform: translateY(-3px);
+    opacity: 0.7;
+}
+
+.benefits-content-grid-item-description {
+    color: #ffedcd;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.benefits-content-pricing {
+    font-size: 26px;
+    color: #0808ff;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.pricing {
+    background: #0808ff;
+}
+
+.pricing-content {
+    margin: auto;
+    width: 1000px;
+    padding-top: 25px;
+}
+
+.pricing-content-lead {
+    display: block;
+    color: #fff;
+    font-size: 26px;
+}
+
+.pricing-content-subtitle {
+    display: block;
+    color: #aab7c4;
+    font-size: 19px;
+    margin-top: 30px;
+}
+
 .screenshots {
     width: 1000px;
     margin: auto;
+    padding-top: 15px;
 }
 
 .cta {

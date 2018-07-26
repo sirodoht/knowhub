@@ -1,0 +1,121 @@
+{% extends 'main/scaffold.html' %}
+
+{% load static %}
+
+{% block title %}KnowHub.app – Your remote company’s home{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-content-overline">
+                KnowHub =
+            </div>
+            <h1>People directory + docs + questions</h1>
+            <div class="hero-content-subtitle">
+                for remote teams
+            </div>
+            <div class="hero-content-text">
+                Asking questions is good.
+                <br>Getting answers in a disappearing chat might not be.
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="features-content">
+            <h2>Features</h2>
+            <div class="features-content-grid">
+                <div class="features-content-grid-item">
+                    <div class="features-content-grid-item-title">People directory</div>
+                    <div class="features-content-grid-item-description">
+                        A list with everyone working in the company, their role, and profile.
+                    </div>
+                </div>
+                <div class="features-content-grid-item">
+                    <div class="features-content-grid-item-title">Announcements</div>
+                    <div class="features-content-grid-item-description">
+                        Make announcements, spread news. Make everyone feel included without interrupting their flow.
+                    </div>
+                </div>
+                <div class="features-content-grid-item">
+                    <div class="features-content-grid-item-title">Resources<span>soon</span></div>
+                    <div class="features-content-grid-item-description">
+                        Markdown docs ranging from tech architecture overview to business development tips.
+                    </div>
+                </div>
+                <div class="features-content-grid-item">
+                    <div class="features-content-grid-item-title">Questions<span>not soon</span></div>
+                    <div class="features-content-grid-item-description">
+                        Questions and answers. Searchable, indexable, tagable. Unlike those that happen in a chat.
+                    </div>
+                </div>
+            </div>
+            <div class="features-content-pricing">
+                <a href="{% url 'main:register' %}">Start a free 30 day free trial →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits" id="why-knowhub">
+        <div class="benefits-content">
+            <h2>Why KnowHub?</h2>
+            <div class="benefits-content-grid">
+                <div class="benefits-content-grid-item">
+                    <div class="benefits-content-grid-item-title">Chat doesn't solve all problems</div>
+                    <div class="benefits-content-grid-item-description">
+                        KnowHub resources are designed for structured information and written guides.
+                    </div>
+                </div>
+                <div class="benefits-content-grid-item">
+                    <div class="benefits-content-grid-item-title">Company knowledge base</div>
+                    <div class="benefits-content-grid-item-description">
+                        Staging environment failure? Database restore from backup? KnowHub is the place for
+                        this info.
+                    </div>
+                </div>
+                <div class="benefits-content-grid-item">
+                    <div class="benefits-content-grid-item-title">No need to ask the same questions</div>
+                    <div class="benefits-content-grid-item-description">
+                        Making questions and answers tagged and searchable is better than asking the same thing every
+                        time.
+                    </div>
+                </div>
+                <div class="benefits-content-grid-item">
+                    <div class="benefits-content-grid-item-title">Faster onboarding</div>
+                    <div class="benefits-content-grid-item-description">
+                        Reading older questions and answers will make them experience past problems as part of the team.
+                    </div>
+                </div>
+                <div class="benefits-content-grid-item">
+                    <div class="benefits-content-grid-item-title">Let your employees feel connected</div>
+                    <div class="benefits-content-grid-item-description">
+                        Enable your employees to feel part of the company. Inform them what's happening
+                        inside.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="pricing-content">
+            <a class="pricing-content-lead" href="{% url 'main:register' %}">
+                Pricing is $2/month per user. All features included. Cancel anytime.
+            </a>
+            <a class="pricing-content-subtitle" href="{% url 'main:register' %}">
+                Start a free 30 day free trial →
+            </a>
+        </div>
+    </section>
+
+    <section class="screenshots">
+        <h2>Oh, this is how it looks like...</h2>
+        <img src="{% static 'images/screenshot-company.png' %}" alt="company screenshot" width="1000px">
+    </section>
+
+    <section class="cta">
+        <a href="#" class="cta-link">
+            Try KnowHub for free →
+        </a>
+    </section>
+{% endblock %}

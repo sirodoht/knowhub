@@ -8,6 +8,7 @@ app_name = "main"
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("entrance/", views.login, name="register"),
     path("entrance/", views.login, name="login"),
     path("auth/", views.token_post, name="auth"),
     path("logout/", views.logout, name="logout"),
@@ -24,8 +25,14 @@ urlpatterns = [
     ),
     path("<slug:route>/invite/", views.invite, name="invite"),
     path("<slug:route>/settings/", views.settings_user, name="settings_user"),
-    path("<slug:route>/settings/company/", views.settings_company, name="settings_company"),
-    path("<slug:route>/settings/company/logo/", views.company_logo, name="company_logo"),
+    path(
+        "<slug:route>/settings/company/",
+        views.settings_company,
+        name="settings_company",
+    ),
+    path(
+        "<slug:route>/settings/company/logo/", views.company_logo, name="company_logo"
+    ),
     path("<slug:route>/settings/photo/", views.profile_photo, name="profile_photo"),
     path("<slug:route>/profile/<slug:username>/", views.profile, name="profile"),
 ]
