@@ -114,6 +114,8 @@ def company_new(request):
             new_route = shortuuid.ShortUUID(
                 "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
             ).random(length=6)
+            new_route = [new_route[i : i + 2] for i in range(0, len(new_route), 2)]
+            new_company.route = "-".join(new_route)
             new_company.save()
             request.user.profile.company = new_company
             request.user.save()
