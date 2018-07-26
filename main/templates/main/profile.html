@@ -40,8 +40,9 @@
         {% if request.user == user %}
         <div>
             <br>
-            <a href="{% url 'main:settings_user' request.user.profile.company.route %}">Settings</a>
-            | <a href="{% url 'main:logout' %}">Logout</a>
+            <a href="{% url 'main:settings_user' request.user.profile.company.route %}">User Settings</a>
+            | <a href="{% url 'main:settings_company' request.user.profile.company.route %}">Company Settings</a>
+            | <a href="{% url 'main:logout' %}">Sign out</a>
         </div>
         {% endif %}
     </section>
