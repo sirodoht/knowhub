@@ -25,9 +25,24 @@
             </a>
         </div>
         <nav>
-            <a href="{% url 'main:people' request.user.profile.company.route %}" class="nav-item {% nav_active 'people' %}">People</a>
-            <a href="{% url 'main:resources' request.user.profile.company.route %}" class="nav-item {% nav_active 'resources' %}">Resources</a>
-            <a href="{% url 'main:questions' request.user.profile.company.route %}" class="nav-item {% nav_active 'questions' %}">Questions</a>
+            <a href="{% url 'main:people' request.user.profile.company.route %}" class="nav-item {% nav_active 'people' %}">
+                <div class="nav-item-icon {% icon_active 'people' %}">
+                    {% include "main/team.svg" %}
+                </div>
+                People
+            </a>
+            <a href="{% url 'main:resources' request.user.profile.company.route %}" class="nav-item {% nav_active 'resources' %}">
+                <div class="nav-item-icon {% icon_active 'resources' %}">
+                    {% include "main/book.svg" %}
+                </div>
+                Resources
+            </a>
+            <a href="{% url 'main:questions' request.user.profile.company.route %}" class="nav-item {% nav_active 'questions' %}">
+                <div class="nav-item-icon {% icon_active 'questions' %}">
+                    {% include "main/bubbles.svg" %}
+                </div>
+                Questions
+            </a>
         </nav>
         <div class="header-profile">
             <a href="{% url 'main:profile' request.user.profile.company.route request.user.username %}">

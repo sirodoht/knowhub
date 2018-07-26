@@ -230,6 +230,22 @@ nav {
     margin: 10px 15px;
 }
 
+.nav-item-icon {
+    height: 20px;
+    margin-right: 4px;
+    transform: translateY(-2px);
+}
+
+.nav-item-icon > svg {
+    height: 20px;
+    fill: #aab7c4;
+}
+
+.nav-item-icon-active > svg {
+    height: 20px;
+    fill: #ffa918;
+}
+
 .nav-item-active {
     color: #ffa918;
 }
