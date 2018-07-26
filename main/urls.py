@@ -13,7 +13,7 @@ urlpatterns = [
     path("logout/", views.logout, name="logout"),
     path("init/", views.company_new, name="company_new"),
     path("invitation/", views.invite_verify, name="invite_verify"),
-    path("<slug:route>/", views.company, name="company"),
+    path("<slug:route>/people/", views.people, name="people"),
     path("<slug:route>/billing/", views.billing_setup, name="billing_setup"),
     path(
         "<slug:route>/billing/customer/",

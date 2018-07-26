@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Company - KnowHub.app{% endblock %}
+{% block title %}People - KnowHub.app{% endblock %}
 
 {% block content %}
     <section class="people">
@@ -14,7 +14,7 @@
         </div>
         {% endif %}
 
-        <h2>Humans Directory</h2>
+        <h1>Humans Directory</h1>
         <div class="people-grid">
             {% for person in people %}
             <a class="people-grid-item" href="{% url 'main:profile' request.user.profile.company.route person.username %}">

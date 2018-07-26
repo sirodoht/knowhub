@@ -24,19 +24,19 @@ def index(request):
             return redirect("main:company_new")
         if request.user.profile.is_admin and not request.user.profile.stripe_id:
             return redirect("main:billing_setup")
-        return redirect("main:company", request.user.profile.company.route)
+        return redirect("main:people", request.user.profile.company.route)
     else:
         return render(request, "main/index.html")
 
 
-def company(request, route):
+def people(request, route):
     if request.user.is_authenticated:
         company = Company.objects.get(route=route)
         people = User.objects.all().filter(
             profile__company=request.user.profile.company
         )
         return render(
-            request, "main/dashboard.html", {"company": company, "people": people}
+            request, "main/people.html", {"company": company, "people": people}
         )
     else:
         return render(request, "main/index.html")
@@ -242,6 +242,7 @@ def invite(request, route):
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
+@login_required
 def invite_verify(request):
     if request.user.is_authenticated:
         messages.error(request, "You are already registered.")
