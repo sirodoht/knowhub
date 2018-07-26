@@ -14,6 +14,8 @@ urlpatterns = [
     path("init/", views.company_new, name="company_new"),
     path("invitation/", views.invite_verify, name="invite_verify"),
     path("<slug:route>/people/", views.people, name="people"),
+    path("<slug:route>/resources/", views.resources, name="resources"),
+    path("<slug:route>/questions/", views.questions, name="questions"),
     path("<slug:route>/billing/", views.billing_setup, name="billing_setup"),
     path(
         "<slug:route>/billing/customer/",

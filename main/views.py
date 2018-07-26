@@ -259,3 +259,15 @@ def invite_verify(request):
         messages.error(request, "Invalid invite link.")
 
     return redirect(settings.LOGIN_URL)
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def resources(request, route):
+    return render(request, "main/resources.html")
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def questions(request, route):
+    return render(request, "main/questions.html")

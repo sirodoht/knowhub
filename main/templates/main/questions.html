@@ -1,0 +1,19 @@
+{% extends 'main/scaffold.html' %}
+
+{% load static %}
+
+{% block title %}Questions - KnowHub.app{% endblock %}
+
+{% block content %}
+    <section class="people">
+        {% if messages %}
+        <div class="people-alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <h1>Questions</h1>
+    </section>
+{% endblock %}
