@@ -14,7 +14,7 @@
         </div>
         {% endif %}
 
-        <h1>Humans Directory</h1>
+        <h1>People Directory</h1>
         <div class="people-grid">
             {% for person in people %}
             <a class="people-grid-item" href="{% url 'main:profile' request.user.profile.company.route person.username %}">
