@@ -51,8 +51,6 @@ def generate_username(email):
 
 
 def get_invite_data(request, email, company):
-    current_site = get_current_site(request)
-
     email = email.lower().strip()
     info = {"c": company.route, "e": email}
     info = json.dumps(info).encode("utf8")
