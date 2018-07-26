@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="features-content-pricing">
-                <a href="{% url 'main:register' %}">Start a free 30 day free trial →</a>
+                <a href="{% url 'main:register' %}">Start a free 30 day trial →</a>
             </div>
         </div>
     </section>
@@ -103,18 +103,18 @@
                 Pricing is $2/month per user. All features included. Cancel anytime.
             </a>
             <a class="pricing-content-subtitle" href="{% url 'main:register' %}">
-                Start a free 30 day free trial →
+                Start a free 30 day trial →
             </a>
         </div>
     </section>
 
     <section class="screenshots">
-        <h2>Oh, this is how it looks like...</h2>
+        <h2>Oh, and this is how it looks like...</h2>
         <img src="{% static 'images/screenshot-company.png' %}" alt="company screenshot" width="1000px">
     </section>
 
     <section class="cta">
-        <a href="#" class="cta-link">
+        <a href="{% url 'main:register' %}" class="cta-link">
             Try KnowHub for free →
         </a>
     </section>
