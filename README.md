@@ -4,6 +4,7 @@
 
 ## Colors
 
+* text black #101010
 * orange #ffa918
 * orange hover #fe9f00
 * blue #0808ff
