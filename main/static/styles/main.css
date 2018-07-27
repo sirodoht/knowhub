@@ -177,7 +177,7 @@ template {
 
 /* main */
 html, body {
-    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 16px;
     text-rendering: optimizeLegibility;
     height: 100%;
@@ -213,6 +213,8 @@ header {
     justify-content: space-between;
     max-width: 1000px;
     margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .header-brand {
@@ -223,7 +225,8 @@ header {
     font-size: 20px;
     color: #ffa918;
     display: flex;
-    margin: 15px 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .header-brand-link > img {
@@ -249,7 +252,9 @@ nav {
     white-space: nowrap;
     font-size: 16px;
     color: #aab7c4;
-    margin: 10px 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 30px;
 }
 
 .nav-item-icon {
