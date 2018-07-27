@@ -11,6 +11,9 @@
 * grey footer #aab7c4
 * grey for orange bg (ligher) #ffedcd
 * grey text for white bg (darker) #828282
+* green
+  * dark #0d9086
+  * light for gb #d5f4f2
 
 ## License
 
