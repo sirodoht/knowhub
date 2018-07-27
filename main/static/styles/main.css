@@ -189,10 +189,29 @@ a {
     color: #0808ff;
 }
 
+h1 {
+    font-size: 56px;
+    font-weight: 400;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 34px;
+    font-weight: 400;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+@media (max-width: 768px) {
+    h2 {
+        font-size: 30px;
+    }
+}
+
 header {
     display: flex;
     justify-content: space-between;
-    width: 1000px;
+    max-width: 1000px;
     margin: auto;
 }
 
@@ -204,7 +223,7 @@ header {
     font-size: 20px;
     color: #ffa918;
     display: flex;
-    margin: 15px 0;
+    margin: 15px 10px;
 }
 
 .header-brand-link > img {
@@ -225,6 +244,7 @@ nav {
 
 .nav-item {
     display: flex;
+    white-space: nowrap;
     font-size: 16px;
     color: #aab7c4;
     margin: 10px 15px;
@@ -253,6 +273,20 @@ nav {
 .nav-item-special {
     color: #ffa918;
 }
+@media (max-width: 768px) {
+    .nav-item-special {
+        display: none;
+    }
+}
+
+.nav-item-anchor {
+    color: #ffa918;
+}
+@media (max-width: 768px) {
+    .nav-item-anchor {
+        display: none;
+    }
+}
 
 .nav-item-cta {
     color: #0808ff;
@@ -271,33 +305,34 @@ nav {
 }
 
 .hero-content {
-    width: 1000px;
-    margin: auto;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-h1 {
-    font-size: 56px;
-    font-weight: 400;
-    margin-top: 40px;
-    margin-bottom: 40px;
-}
-
-h2 {
-    font-size: 34px;
-    font-weight: 400;
-    margin-top: 40px;
-    margin-bottom: 50px;
-}
-
-.hero h1 {
+.hero-content-title {
     margin-top: 0;
     margin-bottom: 10px;
+}
+@media (max-width: 768px) {
+    .hero-content-title {
+        margin-top: 20px;
+        margin-bottom: 15px;
+        font-size: 38px;
+    }
 }
 
 .hero-content-overline {
     margin-top: 120px;
     font-size: 24px;
     color: #ffa918;
+}
+@media (max-width: 768px) {
+    .hero-content-overline {
+        display: none;
+    }
 }
 
 .hero-content-subtitle {
@@ -307,12 +342,24 @@ h2 {
     color: #ffa918;
     text-align: right;
 }
+@media (max-width: 768px) {
+    .hero-content-subtitle {
+        text-align: left;
+        margin-bottom: 40px;
+    }
+}
 
 .hero-content-text {
     font-size: 30px;
     line-height: 1.5;
     color: #0808ff;
     margin-bottom: 40px;
+}
+@media (max-width: 768px) {
+    .hero-content-text {
+        font-size: 20px;
+        margin-bottom: 0;
+    }
 }
 
 section {
@@ -321,8 +368,10 @@ section {
 }
 
 .features-content {
-    width: 1000px;
+    max-width: 1000px;
     margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .features-content-grid {
@@ -332,11 +381,26 @@ section {
     grid-column-gap: 100px;
     grid-row-gap: 40px;
 }
+@media (max-width: 768px) {
+    .features-content-grid {
+        grid-column-gap: 30px;
+    }
+}
+@media (max-width: 480px) {
+    .features-content-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
 .features-content-grid-item-title {
     font-size: 26px;
     color: #ffa918;
     margin-bottom: 15px;
+}
+@media (max-width: 768px) {
+    .features-content-grid-item-title {
+        font-size: 22px;
+    }
 }
 
 .features-content-grid-item-title > span {
@@ -365,16 +429,23 @@ section {
     margin-top: 60px;
     margin-bottom: 60px;
 }
+@media (max-width: 768px) {
+    .features-content-pricing {
+        text-align: center;
+    }
+}
 
 .benefits {
     background: #ffa918;
 }
 
 .benefits-content {
-    width: 1000px;
+    max-width: 1000px;
     margin: auto;
     color: #fff;
     padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .benefits-content-grid {
@@ -384,12 +455,27 @@ section {
     grid-column-gap: 100px;
     grid-row-gap: 40px;
 }
+@media (max-width: 768px) {
+    .benefits-content-grid {
+        grid-column-gap: 30px;
+    }
+}
+@media (max-width: 480px) {
+    .benefits-content-grid {
+        grid-template-columns: 1fr;
+    }
+}
 
 .benefits-content-grid-item-title {
     font-size: 26px;
     color: #ffa918;
     margin-bottom: 15px;
     color: #fff;
+}
+@media (max-width: 768px) {
+    .benefits-content-grid-item-title {
+        font-size: 22px;
+    }
 }
 
 .benefits-content-grid-item-title > span {
@@ -422,14 +508,21 @@ section {
 
 .pricing-content {
     margin: auto;
-    width: 1000px;
+    max-width: 1000px;
     padding-top: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .pricing-content-lead {
     display: block;
     color: #fff;
     font-size: 26px;
+}
+@media (max-width: 768px) {
+    .pricing-content-lead {
+        font-size: 22px;
+    }
 }
 
 .pricing-content-subtitle {
@@ -440,37 +533,84 @@ section {
 }
 
 .screenshots {
-    width: 1000px;
+    max-width: 1000px;
     margin: auto;
     padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.screenshots img {
+    width: 100%;
 }
 
 .cta {
     text-align: center;
     margin-bottom: 70px;
 }
+@media (max-width: 768px) {
+    .cta {
+        margin-bottom: 30px;
+    }
+}
 
 .cta-link {
     font-size: 26px;
     color: #0808ff;
 }
+@media (max-width: 768px) {
+    .cta-link {
+        font-size: 22px;
+    }
+}
+
+footer {
+    max-width: 1000px;
+    margin: auto;
+}
 
 .footer-content {
-    width: 1000px;
-    margin: auto;
     display: flex;
+    flex-wrap: wrap-reverse;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     font-size: 13px;
 }
 
 .footer-content-left {
     color: #aab7c4;
+    white-space: nowrap;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+@media (max-width: 411px) {
+    .footer-content-left {
+        flex-grow: 1;
+        text-align: center;
+    }
+}
+
+.footer-content-right {
+    white-space: nowrap;
+    margin-top: 10px;
+}
+@media (max-width: 411px) {
+    .footer-content-right {
+        flex-grow: 1;
+        text-align: center;
+    }
 }
 
 a.footer-content-right-item {
-    margin-left: 20px;
     color: #aab7c4;
+}
+
+a.footer-content-right-item:not(:first-child) {
+    margin-left: 20px;
 }
 
 button {
