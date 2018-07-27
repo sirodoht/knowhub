@@ -314,7 +314,7 @@ nav {
 .hero-content-title {
     font-size: 42px;
     text-align: center;
-    margin-top: 100px;
+    margin-top: 140px;
     margin-bottom: 120px;
 }
 @media (max-width: 768px) {
@@ -355,10 +355,10 @@ nav {
 }
 
 .pitch {
+    display: flex;
     background: #d5f4f2;
     padding-top: 40px;
     padding-bottom: 40px;
-    display: flex;
     border-top: 1px solid #d7ebe9;
     border-bottom: 1px solid #d7ebe9;
 }
