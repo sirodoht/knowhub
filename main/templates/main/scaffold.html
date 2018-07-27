@@ -14,6 +14,9 @@
 
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+    {% block head_extra %}
+    {% endblock %}
 </head>
 <body>
     {% block layout %}
@@ -75,10 +78,10 @@
         <div class="footer-content">
             <div class="footer-content-left">© 2018 Fugue Stateless Ltd</div>
             <div class="footer-content-right">
-                <a href="#" class="footer-content-right-item">About</a>
-                <a href="#" class="footer-content-right-item">Blog</a>
                 <a href="#" class="footer-content-right-item">Terms</a>
                 <a href="#" class="footer-content-right-item">Privacy</a>
+                <a href="#" class="footer-content-right-item">Blog</a>
+                <a href="#" class="footer-content-right-item">About</a>
             </div>
         </div>
     </footer>

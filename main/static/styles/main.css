@@ -232,14 +232,16 @@ header {
 
 .header-brand-link > span {
     display: flex;
-    align-items: center;
+    margin-top: 4px;
     margin-left: 10px;
 }
 
 nav {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 11px;
     margin: 0;
+    justify-content: flex-end;
 }
 
 .nav-item {
@@ -272,20 +274,6 @@ nav {
 
 .nav-item-special {
     color: #ffa918;
-}
-@media (max-width: 768px) {
-    .nav-item-special {
-        display: none;
-    }
-}
-
-.nav-item-anchor {
-    color: #ffa918;
-}
-@media (max-width: 768px) {
-    .nav-item-anchor {
-        display: none;
-    }
 }
 
 .nav-item-cta {
