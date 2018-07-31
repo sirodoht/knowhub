@@ -59,3 +59,8 @@ class Post(models.Model):
     @property
     def as_markdown(self):
         return markdown.markdown(self.body)
+
+
+class Subscriber(models.Model):
+    email = models.EmailField()
+    ip = models.GenericIPAddressField(null=True, blank=True)
