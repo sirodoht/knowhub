@@ -30,9 +30,25 @@ class CompanyAdmin(admin.ModelAdmin):
 admin.site.register(models.Company, CompanyAdmin)
 
 
+# Resource
+class ResourceAdmin(admin.ModelAdmin):
+    list_display = ("title", "company")
+
+
+admin.site.register(models.Resource, ResourceAdmin)
+
+
 # Post
 class PostAdmin(admin.ModelAdmin):
     list_display = ("title", "date")
 
 
 admin.site.register(models.Post, PostAdmin)
+
+
+# Subscriber
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ("email", "ip")
+
+
+admin.site.register(models.Subscriber, SubscriberAdmin)
