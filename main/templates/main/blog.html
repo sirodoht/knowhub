@@ -25,5 +25,69 @@
             </div>
             {% endfor %}
         </div>
+
+        <div class="blog-subscribe">
+            <hr>
+            <div class="blog-subscribe-text">Subscribe to our updates</div>
+            <input type="email" name="email" maxlength="254" required id="id_email" placeholder="you@email.com">
+            {% csrf_token %}
+            <input type="submit" value="Subscribe" id="subscribe">
+            <div class="blog-subscribe-alert" id="subscribe-alert">Success!</div>
+        </div>
     </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        function getCsrf() {
+            var inputElems = document.querySelectorAll('input');
+            var csrfToken = '';
+            for (let i = 0; i < inputElems.length; ++i) {
+                if (inputElems[i].name === 'csrfmiddlewaretoken') {
+                    csrfToken = inputElems[i].value;
+                    break;
+                }
+            }
+            return csrfToken;
+        }
+
+        function showAlert(message) {
+            document.getElementById('subscribe-alert').innerHTML = message;
+            document.getElementById('subscribe-alert').style.display = 'block';
+        }
+
+        function subscribe(email) {
+            var url = document.location.href + 'subscribe/';
+            var xhr = new XMLHttpRequest();
+            var fd = new FormData();
+            fd.append('email', email);
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('X-CSRFToken', getCsrf());
+
+            xhr.onreadystatechange = function(e) {
+                if (xhr.readyState === 4) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.message) {
+                        showAlert(response.message);
+                    }
+                }
+            };
+
+            xhr.send(fd);
+        };
+
+        function init() {
+            document.getElementById('subscribe').addEventListener('click', function () {
+                var emailElm = document.getElementById('id_email');
+                if (emailElm.checkValidity()) {
+                    subscribe(emailElm.value);
+                } else {
+                    alert('Invalid email. Please try again.');
+                }
+            });
+        }
+
+        init();
+    </script>
 {% endblock %}
