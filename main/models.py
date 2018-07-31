@@ -1,7 +1,9 @@
+import markdown
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 
 class Company(models.Model):
@@ -46,3 +48,14 @@ class Resource(models.Model):
     title = models.CharField(max_length=300)
     body = models.TextField(blank=True, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=300)
+    slug = models.CharField(max_length=300)
+    body = models.TextField(blank=True, null=True)
+    date = models.DateField(default=timezone.now)
+
+    @property
+    def as_markdown(self):
+        return markdown.markdown(self.body)

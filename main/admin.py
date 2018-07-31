@@ -28,3 +28,11 @@ class CompanyAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Company, CompanyAdmin)
+
+
+# Post
+class PostAdmin(admin.ModelAdmin):
+    list_display = ("title", "date")
+
+
+admin.site.register(models.Post, PostAdmin)
