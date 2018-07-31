@@ -282,7 +282,7 @@ def resources(request, route):
             messages.success(request, "Resource created.")
             return redirect("main:resources", route)
         else:
-            messages.success(request, "Resource creation failed.")
+            messages.error(request, "Resource creation failed.")
             return redirect("main:resources", route)
     else:
         form = ResourceForm()
