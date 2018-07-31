@@ -53,7 +53,7 @@ class Resource(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=300)
     slug = models.CharField(max_length=300)
-    body = models.TextField(blank=True, null=True)
+    body = models.TextField()
     date = models.DateField(default=timezone.now)
 
     @property
