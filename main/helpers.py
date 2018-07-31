@@ -100,3 +100,16 @@ def get_client_ip(request):
     else:
         ip = request.META.get("REMOTE_ADDR")
     return ip
+
+
+def log_analytic(request):
+    if not request.user.is_authenticated:
+        return
+    new_analytic = Analytic(
+        querystring=request.GET.urlencode(),
+        ip=get_client_ip(request),
+        path=request.path,
+    )
+    if request.user.is_authenticated:
+        new_analytic.user = User.objects.get(id=request.user.id)
+    new_analytic.save()

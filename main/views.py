@@ -33,6 +33,7 @@ from .tasks import invite_task
 
 
 def index(request):
+    log_analytic(request)
     if request.user.is_authenticated:
         if not request.user.profile.company:
             return redirect("main:company_new")
@@ -58,6 +59,7 @@ def people(request, route):
 
 @require_safe
 def login(request):
+    log_analytic(request)
     if request.user.is_authenticated:
         return redirect("main:index")
     return render(request, "main/login.html", {"next": request.GET.get("next")})
@@ -115,6 +117,7 @@ def logout(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def company_new(request):
+    log_analytic(request)
     if request.method == "POST":
         form = CompanyForm(request.POST)
         if form.is_valid():
@@ -298,18 +301,21 @@ def questions(request, route):
 
 @require_safe
 def blog(request):
+    log_analytic(request)
     posts = Post.objects.all().order_by("-date")
     return render(request, "main/blog.html", {"posts": posts})
 
 
 @require_safe
 def blog_post(request, post_slug):
+    log_analytic(request)
     post = Post.objects.get(slug=post_slug)
     return render(request, "main/blog_post.html", {"post": post})
 
 
 @require_http_methods(["POST"])
 def blog_subscribe(request):
+    log_analytic(request)
     if request.method == "POST":
         form = SubscriberForm(request.POST)
         if form.is_valid():
