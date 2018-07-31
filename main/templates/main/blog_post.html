@@ -1,0 +1,27 @@
+{% extends 'main/scaffold.html' %}
+
+{% load static %}
+
+{% block title %}{{ post.title }} - KnowHub Blog{% endblock %}
+
+{% block content %}
+<section class="blog">
+        {% if messages %}
+        <div class="blog-alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="blog-post">
+            <header>
+                <h1>{{ post.title }}</h1>
+                <div class="blog-post-date">{{ post.date }}</div>
+            </header>
+            <p>
+                {{ post.as_markdown|safe }}
+            </p>
+        </div>
+    </section>
+{% endblock %}
