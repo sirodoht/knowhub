@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login as dj_login, logout as dj_lo
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.forms import formset_factory
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_safe
 
@@ -18,11 +18,17 @@ from .forms import (
     CompanySettingsForm,
     EmailForm,
     ResourceForm,
+    SubscriberForm,
     UserForm,
     UserSettingsForm,
 )
-from .helpers import email_login_link, get_invite_data, verify_invite_data
-from .models import Company, Post
+from .helpers import (
+    email_login_link,
+    get_client_ip,
+    get_invite_data,
+    verify_invite_data,
+)
+from .models import Company, Post, Subscriber
 from .tasks import invite_task
 
 
@@ -300,3 +306,23 @@ def blog(request):
 def blog_post(request, post_slug):
     post = Post.objects.get(slug=post_slug)
     return render(request, "main/blog_post.html", {"post": post})
+
+
+@require_http_methods(["POST"])
+def blog_subscribe(request):
+    if request.method == "POST":
+        form = SubscriberForm(request.POST)
+        if form.is_valid():
+            subscriber, created = Subscriber.objects.get_or_create(
+                email=form.cleaned_data["email"]
+            )
+            if created:
+                subscriber.ip = get_client_ip(request)
+                subscriber.save()
+                return JsonResponse(status=200, data={"message": "Success!"})
+            else:
+                return JsonResponse(status=200, data={"message": "Already subscribed!"})
+        else:
+            return JsonResponse(
+                status=400, data={"message": "Something went wrong. Sorry about that."}
+            )
