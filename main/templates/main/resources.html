@@ -4,10 +4,51 @@
 
 {% block title %}Resources - KnowHub.app{% endblock %}
 
+{% block head_extra %}
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/simplemde.min.css' %}">
+    <style>
+        /* SimpleMDE related styles */
+        .CodeMirror {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            line-height: 1.5;
+            border: none;
+        }
+
+        .editor-statusbar {
+            margin-bottom: 50px;
+        }
+
+        .editor-toolbar {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid #aab7c455;
+            opacity: 1;
+        }
+
+        .editor-toolbar:hover {
+            opacity: 1;
+        }
+
+        .editor-toolbar a {
+            border-radius: 1px;
+            opacity: 0.6;
+        }
+
+        .editor-toolbar a.active,
+        .editor-toolbar a:hover {
+            opacity: 1;
+            border-color: transparent;
+            background: inherit;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-    <section class="people">
+    <section class="resources">
         {% if messages %}
-        <div class="people-alert">
+        <div class="resources-alert">
             {% for message in messages %}
                 {{ message }}
             {% endfor %}
@@ -15,5 +56,51 @@
         {% endif %}
 
         <h1>Resources</h1>
+
+        <form action="{% url 'main:resources' request.user.profile.company.route %}" method="post">
+            {{ form.non_field_errors }}
+
+            {% if form.title.errors %}
+                {% for error in form.title.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="text" name="title" maxlength="300" required id="id_title" placeholder="Title">
+
+            {% if form.body.errors %}
+                {% for error in form.body.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <textarea name="body" id="id_body"></textarea>
+
+            {% csrf_token %}
+
+            <input type="submit" value="Save changes">
+        </form>
     </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'scripts/simplemde.min.js' %}"></script>
+    <script>
+        var simplemde = new SimpleMDE({
+            element: document.getElementById('id_body'),
+            forceSync: true,
+            autoDownloadFontAwesome: false,
+            spellChecker: false,
+            lineWrapping: false,
+            placeholder: 'Type here...',
+            showIcons: ['table'],
+            hideIcons: ['guide', 'quote'],
+            status: ['lines', 'cursor'],
+            shortcuts: {
+                'toggleOrderedList': null,
+                'toggleCodeBlock': null,
+                'drawTable': null,
+                'toggleHeadingBigger': null,
+                'drawImage': null,
+            }
+        });
+    </script>
 {% endblock %}
