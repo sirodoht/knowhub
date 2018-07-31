@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 
 from knowhub import settings
 
-from .models import Company
+from .models import Analytic, Company
 
 
 def email_login_link(request, email):

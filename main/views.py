@@ -26,6 +26,7 @@ from .helpers import (
     email_login_link,
     get_client_ip,
     get_invite_data,
+    log_analytic,
     verify_invite_data,
 )
 from .models import Company, Post, Subscriber
