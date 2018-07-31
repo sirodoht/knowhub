@@ -189,6 +189,13 @@ a {
     color: #0d9086;
 }
 
+hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 h1 {
     font-size: 56px;
     font-weight: 400;
@@ -693,6 +700,7 @@ button:hover {
     vertical-align: middle;
     background-color: #fff;
     border: 1px solid #d1d5da;
+    box-shadow: none;
     border-radius: 3px;
 }
 
@@ -832,8 +840,10 @@ button:hover {
 }
 
 .people {
-    width: 1000px;
+    max-width: 1000px;
     margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .people h2 {
@@ -934,9 +944,11 @@ button:hover {
 }
 
 .settings {
-    width: 1000px;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
     text-align: center;
 }
 
@@ -1000,8 +1012,10 @@ button:hover {
 }
 
 .resources {
-    width: 1000px;
+    max-width: 1000px;
     margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .resources input[type="text"] {
@@ -1032,8 +1046,10 @@ button:hover {
 }
 
 .blog {
-    width: 1000px;
+    max-width: 1000px;
     margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .blog-list-item {
@@ -1066,4 +1082,48 @@ button:hover {
 .blog-post-date {
     font-size: 14px;
     color: #828282;
+}
+
+.blog-subscribe {
+    max-width: 450px;
+    margin: auto;
+    text-align: center;
+}
+
+.blog-subscribe-text {
+    font-size: 18px;
+    color: #0d9086;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.blog input[type="email"] {
+    width: 210px;
+    margin-top: 3px;
+    margin-bottom: 7px;
+    border: 1px solid #ddd;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-bottom: 10px;
+}
+
+.blog input[type="submit"] {
+    cursor: pointer;
+    padding: 5px 15px;
+    border-radius: 3px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+    transform: translateY(-1px);
+}
+
+.blog input[type="submit"]:hover {
+    background: #fe9f00;
+}
+
+.blog-subscribe-alert {
+    display: none;
+    color: #ffa918;
 }
