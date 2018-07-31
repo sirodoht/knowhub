@@ -12,3 +12,4 @@ raven
 stripe
 black
 celery[redis,gevent]
+markdown

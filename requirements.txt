@@ -21,6 +21,7 @@ greenlet==0.4.14          # via gevent
 idna==2.7                 # via requests
 isort==4.3.4
 kombu==4.2.1              # via celery
+markdown==2.6.11
 mccabe==0.6.1             # via flake8
 pillow==5.2.0
 psycopg2-binary==2.7.5
