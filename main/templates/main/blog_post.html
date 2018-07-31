@@ -19,9 +19,7 @@
                 <h1>{{ post.title }}</h1>
                 <div class="blog-post-date">{{ post.date }}</div>
             </header>
-            <p>
-                {{ post.as_markdown|safe }}
-            </p>
+            {{ post.as_markdown|safe }}
         </div>
     </section>
 {% endblock %}
