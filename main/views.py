@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_safe
+from django.http import HttpResponse, JsonResponse
 
 from knowhub import settings
 
@@ -16,6 +17,7 @@ from .forms import (
     CompanyForm,
     CompanySettingsForm,
     EmailForm,
+    ResourceForm,
     UserForm,
     UserSettingsForm,
 )
@@ -265,7 +267,21 @@ def invite_verify(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def resources(request, route):
-    return render(request, "main/resources.html")
+    if request.method == "POST":
+        form = ResourceForm(request.POST)
+        if form.is_valid():
+            resource = form.save(commit=False)
+            resource.company = request.user.profile.company
+            resource.save()
+            messages.success(request, "Resource created.")
+            return redirect("main:resources", route)
+        else:
+            messages.success(request, "Resource creation failed.")
+            return redirect("main:resources", route)
+    else:
+        form = ResourceForm()
+
+    return render(request, "main/resources.html", {"form": form})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
