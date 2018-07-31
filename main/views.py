@@ -6,9 +6,9 @@ from django.contrib.auth import authenticate, login as dj_login, logout as dj_lo
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.forms import formset_factory
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods, require_safe
-from django.http import HttpResponse, JsonResponse
 
 from knowhub import settings
 
@@ -22,7 +22,7 @@ from .forms import (
     UserSettingsForm,
 )
 from .helpers import email_login_link, get_invite_data, verify_invite_data
-from .models import Company
+from .models import Company, Post
 from .tasks import invite_task
 
 
@@ -288,3 +288,15 @@ def resources(request, route):
 @login_required
 def questions(request, route):
     return render(request, "main/questions.html")
+
+
+@require_safe
+def blog(request):
+    posts = Post.objects.all().order_by("-date")
+    return render(request, "main/blog.html", {"posts": posts})
+
+
+@require_safe
+def blog_post(request, post_slug):
+    post = Post.objects.get(slug=post_slug)
+    return render(request, "main/blog_post.html", {"post": post})
