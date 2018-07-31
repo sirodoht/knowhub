@@ -40,3 +40,9 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+class Resource(models.Model):
+    title = models.CharField(max_length=300)
+    body = models.TextField(blank=True, null=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
