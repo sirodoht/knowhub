@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Company
+from .models import Company, Resource
 
 
 class EmailForm(forms.Form):
@@ -32,3 +32,9 @@ class CompanySettingsForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = ["name"]
+
+
+class ResourceForm(forms.ModelForm):
+    class Meta:
+        model = Resource
+        fields = ["title", "body"]
