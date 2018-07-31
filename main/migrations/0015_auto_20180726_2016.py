@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('main', '0014_auto_20180725_2330'),
-    ]
+    dependencies = [("main", "0014_auto_20180725_2330")]
 
     operations = [
         migrations.AlterField(
-            model_name='profile',
-            name='photo',
-            field=models.ImageField(default='/static/images/person.svg', upload_to=''),
-        ),
+            model_name="profile",
+            name="photo",
+            field=models.ImageField(default="/static/images/person.svg", upload_to=""),
+        )
     ]

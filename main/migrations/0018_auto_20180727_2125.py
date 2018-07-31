@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('main', '0017_resource_company'),
-    ]
+    dependencies = [("main", "0017_resource_company")]
 
     operations = [
         migrations.AlterField(
-            model_name='resource',
-            name='body',
+            model_name="resource",
+            name="body",
             field=models.TextField(blank=True, null=True),
-        ),
+        )
     ]
