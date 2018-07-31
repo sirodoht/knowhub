@@ -15,6 +15,7 @@ urlpatterns = [
     path("init/", views.company_new, name="company_new"),
     path("invitation/", views.invite_verify, name="invite_verify"),
     path("blog/", views.blog, name="blog"),
+    path("blog/subscribe/", views.blog_subscribe, name="blog_subscribe"),
     path("blog/<slug:post_slug>/", views.blog_post, name="blog_post"),
     path("<slug:route>/people/", views.people, name="people"),
     path("<slug:route>/resources/", views.resources, name="resources"),
