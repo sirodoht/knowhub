@@ -209,7 +209,7 @@ h2 {
     }
 }
 
-header {
+body > header {
     display: flex;
     justify-content: space-between;
     max-width: 1000px;
@@ -1029,4 +1029,41 @@ button:hover {
 
 .resources input[type="submit"]:hover {
     background: #fe9f00;
+}
+
+.blog {
+    width: 1000px;
+    margin: auto;
+}
+
+.blog-list-item {
+    margin-bottom: 30px;
+}
+
+.blog-list-item-title {
+    margin: 0;
+}
+
+.blog-list-item-date {
+    font-size: 14px;
+    color: #828282;
+}
+
+.blog-post header {
+    margin-bottom: 30px;
+}
+
+.blog-post h1 {
+    margin-bottom: 15px;
+}
+
+.blog-post h2,
+.blog-post h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.blog-post-date {
+    font-size: 14px;
+    color: #828282;
 }
