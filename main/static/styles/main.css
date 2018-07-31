@@ -201,6 +201,7 @@ h2 {
     font-weight: 400;
     margin-top: 40px;
     margin-bottom: 50px;
+    line-height: 1.5;
 }
 @media (max-width: 768px) {
     h2 {
@@ -450,20 +451,6 @@ section {
     .features-content-grid-item-title {
         font-size: 22px;
     }
-}
-
-.features-content-grid-item-title > span {
-    user-select: none;
-    font-size: 12px;
-    font-weight: 300;
-    color: #aab7c4;
-    border: 1px solid #aab7c4;
-    border-radius: 10px;
-    padding: 2px 6px;
-    margin-left: 12px;
-    display: inline-block;
-    transform: translateY(-3px);
-    opacity: 0.7;
 }
 
 .features-content-grid-item-description {
@@ -1009,5 +996,37 @@ button:hover {
 }
 
 .settings input[type="submit"]:hover {
+    background: #fe9f00;
+}
+
+.resources {
+    width: 1000px;
+    margin: auto;
+}
+
+.resources input[type="text"] {
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.resources input[type="submit"] {
+    cursor: pointer;
+    display: flex;
+    margin-top: 10px;
+    margin-left: auto;
+    padding: 10px 30px;
+    border-radius: 3px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+}
+
+.resources input[type="submit"]:hover {
     background: #fe9f00;
 }
