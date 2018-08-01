@@ -2,6 +2,13 @@
 
 > Distributed home for remote companies
 
+## Formatting
+
+Run:
+```
+black . && isort -y && flake8
+```
+
 ## Colors
 
 * text black #101010
