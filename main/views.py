@@ -130,8 +130,9 @@ def company_new(request):
             new_company.route = "-".join(new_route)
             new_company.save()
             request.user.profile.company = new_company
+            request.user.profile.is_admin = True
             request.user.save()
-            return redirect("main:billing_setup")
+            return redirect("main:billing_setup", request.user.profile.company.route)
     else:
         form = CompanyForm()
 
@@ -140,13 +141,13 @@ def company_new(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def billing_setup(request):
+def billing_setup(request, route):
     return render(request, "main/billing_setup.html")
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def billing_customer(request):
+def billing_customer(request, route):
     if request.method == "POST":
         body = request.body.decode("utf-8")
         data = json.loads(body)

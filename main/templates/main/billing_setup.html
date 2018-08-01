@@ -48,10 +48,10 @@
             var handler = StripeCheckout.configure({
                 key: 'pk_test_nKErTzQhoq1U9rn6Q5c5W0qt',
                 email: '{{ request.user.email }}',
-                image: 'https://fuguestateless.com/mark-negative.svg',
+                image: 'https://fuguestateless.com/mark-negative.png',
                 locale: 'auto',
                 token: function (token) {
-                    var url = '/billing/customer/';
+                    var url = document.location.href + 'customer/';
                     axios
                         .post(
                             url,
