@@ -10,5 +10,6 @@ def customer_create(user_email, token):
 def subscription_create(customer_id):
     return stripe.Subscription.create(
         customer=customer_id,
-        items=[{"plan": settings.STRIPE_PLAN, "trial_period_days": 30}],
+        items=[{"plan": settings.STRIPE_PLAN}],
+        trial_period_days=30,
     )
