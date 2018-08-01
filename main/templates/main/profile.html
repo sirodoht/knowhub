@@ -41,7 +41,9 @@
         <div>
             <br>
             <a href="{% url 'main:settings_user' request.user.profile.company.route %}">User Settings</a>
+            {% if request.user.profile.is_admin %}
             | <a href="{% url 'main:settings_company' request.user.profile.company.route %}">Company Settings</a>
+            {% endif %}
             | <a href="{% url 'main:logout' %}">Sign out</a>
         </div>
         {% endif %}
