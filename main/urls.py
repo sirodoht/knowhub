@@ -20,6 +20,14 @@ urlpatterns = [
     path("<slug:route>/", views.company, name="company"),
     path("<slug:route>/people/", views.people, name="people"),
     path("<slug:route>/resources/", views.resources, name="resources"),
+    path(
+        "<slug:route>/resources/new/", views.resources_create, name="resources_create"
+    ),
+    path(
+        "<slug:route>/resources/<slug:document>/",
+        views.resources_view,
+        name="resources_view",
+    ),
     path("<slug:route>/questions/", views.questions, name="questions"),
     path("<slug:route>/billing/", views.billing_setup, name="billing_setup"),
     path(
