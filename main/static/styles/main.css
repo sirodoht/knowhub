@@ -1018,6 +1018,80 @@ button:hover {
     padding-right: 10px;
 }
 
+.resources-title {
+    display: flex;
+}
+
+.resources-title > a {
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: auto;
+    padding: 5px 15px;
+    border-radius: 3px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+    display: flex;
+    align-self: center;
+}
+
+.resources-list-item {
+    margin-bottom: 30px;
+}
+
+.resources-list-item-title {
+    margin: 0;
+}
+
+.resources-new:hover {
+    background: #fe9f00;
+}
+
+.resources-document header {
+    margin-bottom: 30px;
+}
+
+.resources-document h1 {
+    margin-bottom: 15px;
+}
+
+.resources-document h2,
+.resources-document h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.resources-document-title {
+    display: flex;
+}
+
+.resources-document-title > h1 {
+    display: flex;
+    align-self: center;
+}
+
+.resources-document-title > a {
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: auto;
+    padding: 5px 15px;
+    border-radius: 3px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+    display: flex;
+    align-self: center;
+}
+
+.resources-document-date {
+    font-size: 14px;
+    color: #828282;
+}
+
+.resources-document > article {
+    max-width: 700px;
+}
+
 .resources input[type="text"] {
     width: 100%;
     margin-top: 3px;
