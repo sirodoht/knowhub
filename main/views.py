@@ -144,6 +144,8 @@ def company_new(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def billing_setup(request, route):
+    if route != request.user.profile.company.route:
+        return redirect(request, "main:index")
     stripe_public = settings.STRIPE_PUBLIC
     return render(request, "main/billing_setup.html", {"stripe_public": stripe_public})
 
