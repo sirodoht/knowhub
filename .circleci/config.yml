@@ -38,6 +38,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
+            python manage.py collectstatic
             pytest
           environment:
             DATABASE_URL: "postgres://postgres:@localhost:5432/postgres"
