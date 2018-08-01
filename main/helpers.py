@@ -9,6 +9,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.core.signing import BadSignature, Signer
 from django.template.loader import render_to_string
+from django.utils.text import slugify
 
 from knowhub import settings
 
@@ -37,8 +38,7 @@ def email_login_link(request, email):
 
 
 def generate_username(email):
-    username = email.split("@")[0]
-    username = username.replace("+", "-")
+    username = slugify(email.split("@")[0])
 
     # check if exists
     if User.objects.filter(username=username).count():
