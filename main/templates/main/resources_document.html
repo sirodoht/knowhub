@@ -1,0 +1,30 @@
+{% extends 'main/scaffold.html' %}
+
+{% load static %}
+
+{% block title %}Resources - KnowHub.app{% endblock %}
+
+{% block content %}
+    <section class="resources">
+        {% if messages %}
+        <div class="resources-alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="resources-document">
+            <header>
+                <div class="resources-document-title">
+                    <h1>{{ resource.title }}</h1>
+                    <a href="{% url 'main:resources_create' request.user.profile.company.route %}">Create</a>
+                </div>
+                <div class="resources-document-date">Last update at {{ resource.updated_at }}</div>
+            </header>
+            <article>
+                {{ resource.as_markdown|safe }}
+            </article>
+        </div>
+    </section>
+{% endblock %}
