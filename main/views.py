@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.utils.text import slugify
 from django.views.decorators.http import require_http_methods, require_safe
 
 from knowhub import settings
@@ -29,7 +30,7 @@ from .helpers import (
     log_analytic,
     verify_invite_data,
 )
-from .models import Company, Post, Subscriber
+from .models import Company, Post, Resource, Subscriber
 from .tasks import invite_task
 
 
@@ -288,11 +289,32 @@ def invite_verify(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def resources(request, route):
+    resources = Resource.objects.filter(company=request.user.profile.company).order_by(
+        "title"
+    )
+    return render(request, "main/resources.html", {"resources": resources})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def resources_view(request, route, document):
+    resource = Resource.objects.get(slug=document)
+    return render(request, "main/resources_document.html", {"resource": resource})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def resources_create(request, route):
     if request.method == "POST":
         form = ResourceForm(request.POST)
         if form.is_valid():
             resource = form.save(commit=False)
             resource.company = request.user.profile.company
+            resource.slug = slugify(form.cleaned_data["title"])
+            if resource.slug == "new":
+                resource.slug = "new-" + shortuuid.ShortUUID(
+                    "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
+                ).random(length=6)
             resource.save()
             messages.success(request, "Resource created.")
             return redirect("main:resources", route)
@@ -302,7 +324,7 @@ def resources(request, route):
     else:
         form = ResourceForm()
 
-    return render(request, "main/resources.html", {"form": form})
+    return render(request, "main/resources_create.html", {"form": form})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
