@@ -39,7 +39,7 @@ def index(request):
         if not request.user.profile.company:
             return redirect("main:company_new")
         if request.user.profile.is_admin and not request.user.profile.stripe_id:
-            return redirect("main:billing_setup")
+            return redirect("main:billing_setup", request.user.profile.company.route)
         return redirect("main:people", request.user.profile.company.route)
     else:
         return render(request, "main/marketing.html")
@@ -47,6 +47,8 @@ def index(request):
 
 def people(request, route):
     if request.user.is_authenticated:
+        if not request.user.profile.stripe_id:
+            return redirect("main:billing_setup", route)
         company = Company.objects.get(route=route)
         people = User.objects.all().filter(
             profile__company=request.user.profile.company
