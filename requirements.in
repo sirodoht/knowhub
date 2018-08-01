@@ -13,3 +13,5 @@ stripe
 black
 celery[redis,gevent]
 markdown
+pytest
+pytest-django
