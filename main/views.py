@@ -155,6 +155,7 @@ def billing_customer(request, route):
         body = request.body.decode("utf-8")
         data = json.loads(body)
         stripe_customer = billing.customer_create(request.user.email, data["token"])
+        billing.subscription_create(stripe_customer.id)
         request.user.profile.stripe_id = stripe_customer.id
         request.user.save()
         return redirect("main:index")

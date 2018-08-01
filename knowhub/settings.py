@@ -220,6 +220,10 @@ LOGGING = {
 STRIPE_PUBLIC = os.environ.get("STRIPE_PUBLIC")
 STRIPE_SECRET = os.environ.get("STRIPE_SECRET")
 
+STRIPE_PLAN = "plan_DKzD7hxQmCsY3J"
+if not DEBUG:
+    STRIPE_PLAN = "plan_DKzsEai5wOYBvP"
+
 
 # Celery settings
 # http://docs.celeryproject.org/en/v4.2.1/django/first-steps-with-django.html
