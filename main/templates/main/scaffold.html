@@ -1,5 +1,4 @@
 {% load static %}
-{% load app_filters %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,20 +27,20 @@
             </a>
         </div>
         <nav>
-            <a href="{% url 'main:people' request.user.profile.company.route %}" class="nav-item {% nav_active 'people' %}">
-                <div class="nav-item-icon {% icon_active 'people' %}">
+            <a href="{% url 'main:people' request.user.profile.company.route %}" class="nav-item">
+                <div class="nav-item-icon">
                     {% include "main/team.svg" %}
                 </div>
                 People
             </a>
-            <a href="{% url 'main:resources' request.user.profile.company.route %}" class="nav-item {% nav_active 'resources' %}">
-                <div class="nav-item-icon {% icon_active 'resources' %}">
+            <a href="{% url 'main:resources' request.user.profile.company.route %}" class="nav-item">
+                <div class="nav-item-icon">
                     {% include "main/book.svg" %}
                 </div>
                 Resources
             </a>
-            <a href="{% url 'main:questions' request.user.profile.company.route %}" class="nav-item {% nav_active 'questions' %}">
-                <div class="nav-item-icon {% icon_active 'questions' %}">
+            <a href="{% url 'main:questions' request.user.profile.company.route %}" class="nav-item">
+                <div class="nav-item-icon">
                     {% include "main/bubbles.svg" %}
                 </div>
                 Questions

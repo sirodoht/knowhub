@@ -286,15 +286,6 @@ nav {
     fill: #aab7c4;
 }
 
-.nav-item-icon-active > svg {
-    height: 20px;
-    fill: #ffa918;
-}
-
-.nav-item-active {
-    color: #ffa918;
-}
-
 .nav-item-special {
     color: #ffa918;
 }
