@@ -8,8 +8,8 @@ app_name = "main"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("entrance/", views.login, name="register"),
-    path("entrance/", views.login, name="login"),
+    path("join/", views.register, name="register"),
+    path("signin/", views.login, name="login"),
     path("auth/", views.token_post, name="auth"),
     path("logout/", views.logout, name="logout"),
     path("init/", views.company_new, name="company_new"),
