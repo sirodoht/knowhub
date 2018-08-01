@@ -39,3 +39,5 @@ jobs:
           command: |
             . venv/bin/activate
             python manage.py test
+          environment:
+            DATABASE_URL: "postgres://postgres:@localhost:5432/postgres"
