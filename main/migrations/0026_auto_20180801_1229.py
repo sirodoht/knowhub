@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('main', '0025_analytic'),
-    ]
+    dependencies = [("main", "0025_analytic")]
 
     operations = [
         migrations.AlterField(
-            model_name='profile',
-            name='slack',
+            model_name="profile",
+            name="slack",
             field=models.CharField(blank=True, max_length=300, null=True),
-        ),
+        )
     ]
