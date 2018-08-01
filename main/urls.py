@@ -17,6 +17,7 @@ urlpatterns = [
     path("blog/", views.blog, name="blog"),
     path("blog/subscribe/", views.blog_subscribe, name="blog_subscribe"),
     path("blog/<slug:post_slug>/", views.blog_post, name="blog_post"),
+    path("<slug:route>/", views.company, name="company"),
     path("<slug:route>/people/", views.people, name="people"),
     path("<slug:route>/resources/", views.resources, name="resources"),
     path("<slug:route>/questions/", views.questions, name="questions"),

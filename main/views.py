@@ -45,6 +45,10 @@ def index(request):
         return render(request, "main/marketing.html")
 
 
+def company(request, route):
+    return redirect("main:index")
+
+
 def people(request, route):
     if request.user.is_authenticated:
         if not request.user.profile.stripe_id:
@@ -57,7 +61,7 @@ def people(request, route):
             request, "main/people.html", {"company": company, "people": people}
         )
     else:
-        return redirect(request, "main:index")
+        return redirect("main:index")
 
 
 @require_safe
@@ -145,7 +149,7 @@ def company_new(request):
 @login_required
 def billing_setup(request, route):
     if route != request.user.profile.company.route:
-        return redirect(request, "main:index")
+        return redirect("main:index")
     stripe_public = settings.STRIPE_PUBLIC
     return render(request, "main/billing_setup.html", {"stripe_public": stripe_public})
 
