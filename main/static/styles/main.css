@@ -205,6 +205,13 @@ hr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* iOS input text reset */
+input[type=text] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
 h1 {
     font-size: 56px;
     font-weight: 400;
