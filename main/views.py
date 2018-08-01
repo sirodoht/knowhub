@@ -66,6 +66,14 @@ def people(request, route):
 
 
 @require_safe
+def register(request):
+    log_analytic(request)
+    if request.user.is_authenticated:
+        return redirect("main:index")
+    return render(request, "main/register.html")
+
+
+@require_safe
 def login(request):
     log_analytic(request)
     if request.user.is_authenticated:
