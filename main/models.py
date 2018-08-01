@@ -22,7 +22,7 @@ class Profile(models.Model):
     is_admin = models.BooleanField(default=False)
     stripe_id = models.CharField(max_length=50, blank=True, null=True)
     role = models.CharField(max_length=300, blank=True, null=True)
-    slack = models.TextField(max_length=300, blank=True, null=True)
+    slack = models.CharField(max_length=300, blank=True, null=True)
     interests = models.TextField(max_length=600, blank=True, null=True)
     location = models.CharField(max_length=300, blank=True, null=True)
     work_start = models.TimeField(blank=True, null=True)
