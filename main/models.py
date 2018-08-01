@@ -46,8 +46,14 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Resource(models.Model):
     title = models.CharField(max_length=300)
+    slug = models.CharField(max_length=300)
     body = models.TextField(blank=True, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def as_markdown(self):
+        return markdown.markdown(self.body)
 
     def __str__(self):
         return self.title
@@ -58,6 +64,7 @@ class Post(models.Model):
     slug = models.CharField(max_length=300)
     body = models.TextField()
     date = models.DateField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
 
     @property
     def as_markdown(self):
