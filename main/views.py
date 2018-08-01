@@ -144,7 +144,8 @@ def company_new(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def billing_setup(request, route):
-    return render(request, "main/billing_setup.html")
+    stripe_public = settings.STRIPE_PUBLIC
+    return render(request, "main/billing_setup.html", {"stripe_public": stripe_public})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])

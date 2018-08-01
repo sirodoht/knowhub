@@ -46,7 +46,7 @@
             }
 
             var handler = StripeCheckout.configure({
-                key: 'pk_test_nKErTzQhoq1U9rn6Q5c5W0qt',
+                key: '{{ stripe_public }}',
                 email: '{{ request.user.email }}',
                 image: 'https://fuguestateless.com/mark-negative.png',
                 locale: 'auto',
