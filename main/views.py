@@ -374,3 +374,8 @@ def blog_subscribe(request):
             return JsonResponse(
                 status=400, data={"message": "Something went wrong. Sorry about that."}
             )
+
+
+@require_safe
+def google_verify(request):
+    return render(request, "main/googlef6b7b346eca71466.html")
