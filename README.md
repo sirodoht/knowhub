@@ -2,6 +2,13 @@
 
 > Distributed home for remote companies
 
+## Development
+
+```sh
+python manage.py runserver
+celery -A knowhub worker -P gevent -l debug
+```
+
 ## Formatting
 
 Run:
