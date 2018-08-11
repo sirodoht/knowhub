@@ -1220,3 +1220,25 @@ button:hover {
     letter-spacing: -.003em;
     font-family: Georgia, Cambria, "Times New Roman", Times, serif;
 }
+
+.generic {
+    max-width: 1000px;
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.generic-content {
+    max-width: 700px;
+    color: rgba(0, 0, 0, 0.84);
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.58;
+    font-size: 21px;
+    letter-spacing: -.003em;
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.generic-content h2 {
+    margin-bottom: 20px;
+}

@@ -379,3 +379,11 @@ def blog_subscribe(request):
 @require_safe
 def google_verify(request):
     return render(request, "main/googlef6b7b346eca71466.html")
+
+
+def legal_terms(request):
+    return render(request, "main/terms.html")
+
+
+def legal_privacy(request):
+    return render(request, "main/privacy.html")
