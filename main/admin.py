@@ -48,10 +48,18 @@ admin.site.register(models.Post, PostAdmin)
 
 # Subscriber
 class SubscriberAdmin(admin.ModelAdmin):
-    list_display = ("email", "ip")
+    list_display = ("email", "ip", "created_at")
 
 
 admin.site.register(models.Subscriber, SubscriberAdmin)
+
+
+# Explorer
+class ExplorerAdmin(admin.ModelAdmin):
+    list_display = ("email", "ip", "created_at")
+
+
+admin.site.register(models.Explorer, ExplorerAdmin)
 
 
 # Analytic

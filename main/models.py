@@ -77,6 +77,7 @@ class Post(models.Model):
 class Subscriber(models.Model):
     email = models.EmailField()
     ip = models.GenericIPAddressField(null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.email
@@ -91,3 +92,12 @@ class Analytic(models.Model):
 
     def __str__(self):
         return self.ip
+
+
+class Explorer(models.Model):
+    email = models.EmailField()
+    ip = models.GenericIPAddressField(null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.email

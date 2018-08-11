@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Company, Resource, Subscriber
+from .models import Company, Explorer, Resource, Subscriber
 
 
 class EmailForm(forms.Form):
@@ -44,3 +44,9 @@ class SubscriberForm(forms.ModelForm):
     class Meta:
         model = Subscriber
         fields = ["email", "ip"]
+
+
+class ExplorerForm(forms.ModelForm):
+    class Meta:
+        model = Explorer
+        fields = ["email"]
