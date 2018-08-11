@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Distributed base for all company information that requires diffusion.">
+    <meta name="description" content="Home for company information and resources.">
 
     <title>{% block title %}{% endblock %}</title>
 
@@ -64,8 +64,8 @@
             <a href="{% url 'main:index' %}#features" class="nav-item nav-item-anchor">Features</a>
             <a href="{% url 'main:index' %}#why-knowhub" class="nav-item nav-item-anchor">Why KnowHub?</a>
             <a href="{% url 'main:index' %}#pricing" class="nav-item nav-item-anchor">Pricing</a>
-            <a href="{% url 'main:login' %}" class="nav-item nav-item-special">Sign in</a>
-            <a href="{% url 'main:register' %}" class="nav-item nav-item-cta">Get started →</a>
+            <!-- <a href="{% url 'main:login' %}" class="nav-item nav-item-special">Sign in</a> -->
+            <a href="{% url 'main:subscribe' %}" class="nav-item nav-item-cta">Get started →</a>
         </nav>
     </header>
     {% endif %}
@@ -77,10 +77,9 @@
         <div class="footer-content">
             <div class="footer-content-left">© 2018 Fugue Stateless Ltd</div>
             <div class="footer-content-right">
-                <a href="#" class="footer-content-right-item">Terms</a>
-                <a href="#" class="footer-content-right-item">Privacy</a>
+                <a href="{% url 'main:legal_terms' %}" class="footer-content-right-item">Terms</a>
+                <a href="{% url 'main:legal_privacy' %}" class="footer-content-right-item">Privacy</a>
                 <a href="{% url 'main:blog' %}" class="footer-content-right-item">Blog</a>
-                <a href="#" class="footer-content-right-item">About</a>
             </div>
         </div>
     </footer>
