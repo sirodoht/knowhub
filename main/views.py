@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.forms import formset_factory
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
@@ -18,6 +19,7 @@ from .forms import (
     CompanyForm,
     CompanySettingsForm,
     EmailForm,
+    ExplorerForm,
     ResourceForm,
     SubscriberForm,
     UserForm,
@@ -63,6 +65,39 @@ def people(request, route):
         )
     else:
         return redirect("main:index")
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+def subscribe(request):
+    if request.user.is_authenticated:
+        return redirect("main:index")
+    if request.method == "POST":
+        log_analytic(request)
+        form = ExplorerForm(request.POST)
+        if form.is_valid():
+            explorer = form.save(commit=False)
+            explorer.ip = get_client_ip(request)
+            explorer.save()
+            send_mail(
+                "Explorer signup at KnowHub",
+                explorer.email + " just signed up!",
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.ADMINS[0][1]],
+            )
+            return redirect("main:subscribe_thanks")
+    else:
+        log_analytic(request)
+        form = ExplorerForm()
+
+    return render(request, "main/subscribe.html", {"form": form})
+
+
+@require_safe
+def subscribe_thanks(request):
+    log_analytic(request)
+    if request.user.is_authenticated:
+        return redirect("main:index")
+    return render(request, "main/subscribe_thanks.html")
 
 
 @require_safe

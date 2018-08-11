@@ -8,6 +8,8 @@ app_name = "main"
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("subscribe/thanks/", views.subscribe_thanks, name="subscribe_thanks"),
+    path("subscribe/", views.subscribe, name="subscribe"),
     path("join/", views.register, name="register"),
     path("signin/", views.login, name="login"),
     path("auth/", views.token_post, name="auth"),
