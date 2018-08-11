@@ -1,0 +1,34 @@
+{% extends 'main/scaffold.html' %}
+
+{% load static %}
+
+{% block title %}Join KnowHub{% endblock %}
+
+{% block layout %}
+    <section class="ritual">
+        <a href="{% url 'main:index' %}">
+            <img src="{% static 'images/logo.svg' %}" alt="logo" width="48px" height="48px">
+        </a>
+
+        <h1>KnowHub</h1>
+
+        {% if messages %}
+        <div class="ritual-alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="ritual-body">
+            <div class="ritual-notice">
+                <h2>Thank you for your interest!</h2>
+                <p>
+                    We haven't launch yet, but since you are interested you can
+                    expect an invitation to our closed beta soon.
+                </p>
+            </div>
+            <a href="{% url 'main:index' %}">Return to homepage</a>
+        </div>
+    </section>
+{% endblock %}

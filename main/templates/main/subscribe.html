@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Sign in - KnowHub.app{% endblock %}
+{% block title %}Join KnowHub{% endblock %}
 
 {% block layout %}
     <section class="ritual">
@@ -12,12 +12,6 @@
 
         <h1>KnowHub</h1>
 
-        {% if next %}
-        <div class="ritual-alert">
-            To proceed please sign in.
-        </div>
-        {% endif %}
-
         {% if messages %}
         <div class="ritual-alert">
             {% for message in messages %}
@@ -26,11 +20,10 @@
         </div>
         {% endif %}
 
-        {% if not messages %}
-        <form action="{% url 'main:auth' %}" method="post">
+        <form action="{% url 'main:subscribe' %}" method="post">
             {{ form.non_field_errors }}
 
-            <label for="id_email" class="section-label">Enter your email to sign in</label>
+            <label for="id_email" class="section-label">Enter your email to get started</label>
             {% if form.email.errors %}
                 {% for error in form.email.errors %}
                     <div class="form-error">{{ error|escape }}</div>
@@ -39,9 +32,7 @@
             <input type="email" name="email" maxlength="100" required id="id_email">
 
             {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}">
-            <input type="submit" value="Sign in">
+            <input type="submit" value="Get started">
         </form>
-        {% endif %}
     </section>
 {% endblock %}

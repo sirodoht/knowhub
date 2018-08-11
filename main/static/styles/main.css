@@ -672,6 +672,13 @@ button:hover {
     margin-bottom: 16px;
 }
 
+.ritual h2 {
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #101010;
+}
+
 .ritual > form {
     box-sizing: border-box;
     width: 340px;
