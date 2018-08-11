@@ -65,6 +65,8 @@ def get_invite_data(request, email, company):
 
     data = {
         "email": email,
+        "inviter_name": request.user.profile.name,
+        "inviter_email": request.user.email,
         "company_name": company.name,
         "invitation_url": invitation_url,
         "signed_info": signed_info,

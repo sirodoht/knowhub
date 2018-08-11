@@ -1,6 +1,6 @@
 Howdy,
 
-You have been invited to join {{ data.company_name|safe }} at KnowHub.app!
+{{ data.inviter_name }} ({{ data.inviter_email }}) has invited you to join {{ data.company_name|safe }} at KnowHub.
 
 Click here to accept:
 {{ data.invitation_url|safe }}

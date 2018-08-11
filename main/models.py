@@ -17,6 +17,7 @@ class Company(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=300, blank=True, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
     photo = models.ImageField(default="/static/images/person.svg")
     is_admin = models.BooleanField(default=False)
