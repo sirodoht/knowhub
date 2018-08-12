@@ -24,6 +24,7 @@ from .forms import (
     SubscriberForm,
     UserForm,
     UserSettingsForm,
+    UserSetupForm,
 )
 from .helpers import (
     email_login_link,
@@ -54,7 +55,7 @@ def company(request, route):
 
 def people(request, route):
     if request.user.is_authenticated:
-        if not request.user.profile.stripe_id:
+        if request.user.profile.is_admin and not request.user.profile.stripe_id:
             return redirect("main:billing_setup", route)
         company = Company.objects.get(route=route)
         people = User.objects.all().filter(
@@ -65,39 +66,6 @@ def people(request, route):
         )
     else:
         return redirect("main:index")
-
-
-@require_http_methods(["HEAD", "GET", "POST"])
-def subscribe(request):
-    if request.user.is_authenticated:
-        return redirect("main:index")
-    if request.method == "POST":
-        log_analytic(request)
-        form = ExplorerForm(request.POST)
-        if form.is_valid():
-            explorer = form.save(commit=False)
-            explorer.ip = get_client_ip(request)
-            explorer.save()
-            send_mail(
-                "Explorer signup at KnowHub",
-                explorer.email + " just signed up!",
-                settings.DEFAULT_FROM_EMAIL,
-                [settings.ADMINS[0][1]],
-            )
-            return redirect("main:subscribe_thanks")
-    else:
-        log_analytic(request)
-        form = ExplorerForm()
-
-    return render(request, "main/subscribe.html", {"form": form})
-
-
-@require_safe
-def subscribe_thanks(request):
-    log_analytic(request)
-    if request.user.is_authenticated:
-        return redirect("main:index")
-    return render(request, "main/subscribe_thanks.html")
 
 
 @require_safe
@@ -124,7 +92,7 @@ def token_post(request):
 
     if request.GET.get("d"):
         # The user has clicked a login link.
-        user = authenticate(token=request.GET["d"])
+        user = authenticate(request, token=request.GET["d"])
         if user is not None:
             dj_login(request, user)
             messages.success(request, "Sign in successful.")
@@ -165,6 +133,60 @@ def logout(request):
     return redirect(settings.LOGOUT_REDIRECT_URL)
 
 
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def invite(request, route):
+    company = Company.objects.get(route=route)
+    UserFormSet = formset_factory(UserForm, max_num=100, extra=100)
+    if request.method == "POST":
+        formset = UserFormSet(request.POST, prefix="user")
+        if formset.is_valid():
+            uniqueEmails = []
+            for form in formset:
+                if (
+                    "email" in form.cleaned_data
+                    and form.cleaned_data["email"] not in uniqueEmails
+                ):
+                    uniqueEmails.append(form.cleaned_data["email"])
+            for email in uniqueEmails:
+                data = get_invite_data(request, email, company)
+                invite_task.delay(data)
+            messages.success(request, "Invites sent!")
+            return redirect("main:index")
+        else:
+            messages.error(request, "Invalid email address.")
+    else:
+        formset = UserFormSet(prefix="user")
+
+    return render(request, "main/invite.html", {"formset": formset, "company": company})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+def invite_verify(request):
+    if request.user.is_authenticated:
+        messages.error(request, "You are already registered and logged in.")
+        return redirect(settings.LOGIN_REDIRECT_URL)
+
+    if request.GET.get("d"):
+        user = verify_invite_data(token=request.GET["d"])
+        if user is not None:
+            messages.success(request, "Your account was created succesfully.")
+            user = authenticate(request, token=request.GET["d"])
+            if user is not None:
+                dj_login(request, user)
+                return redirect(settings.LOGIN_REDIRECT_URL)
+            else:
+                messages.error(
+                    request,
+                    "The sign in link was invalid or has expired. Please try to sign in again.",
+                )
+            return redirect(settings.LOGIN_URL)
+        else:
+            messages.error(request, "Invalid invite link.")
+    else:
+        messages.error(request, "Invalid invite link.")
+
+    return redirect(settings.LOGIN_URL)
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -232,6 +254,39 @@ def billing_customer(request, route):
         request.user.profile.stripe_id = stripe_customer.id
         request.user.save()
         return redirect("main:index")
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+def subscribe(request):
+    if request.user.is_authenticated:
+        return redirect("main:index")
+    if request.method == "POST":
+        log_analytic(request)
+        form = ExplorerForm(request.POST)
+        if form.is_valid():
+            explorer = form.save(commit=False)
+            explorer.ip = get_client_ip(request)
+            explorer.save()
+            send_mail(
+                "Explorer signup at KnowHub",
+                explorer.email + " just signed up!",
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.ADMINS[0][1]],
+            )
+            return redirect("main:subscribe_thanks")
+    else:
+        log_analytic(request)
+        form = ExplorerForm()
+
+    return render(request, "main/subscribe.html", {"form": form})
+
+
+@require_safe
+def subscribe_thanks(request):
+    log_analytic(request)
+    if request.user.is_authenticated:
+        return redirect("main:index")
+    return render(request, "main/subscribe_thanks.html")
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -308,48 +363,6 @@ def settings_company(request, route):
         form = CompanySettingsForm(instance=request.user.profile.company)
 
     return render(request, "main/settings_company.html", {"form": form})
-
-
-@require_http_methods(["HEAD", "GET", "POST"])
-@login_required
-def invite(request, route):
-    company = Company.objects.get(route=route)
-    UserFormSet = formset_factory(UserForm, max_num=100, extra=100)
-    if request.method == "POST":
-        formset = UserFormSet(request.POST, prefix="user")
-        if formset.is_valid():
-            for form in formset:
-                if "email" in form.cleaned_data:
-                    data = get_invite_data(request, form.cleaned_data["email"], company)
-                    invite_task.delay(data)
-            messages.success(request, "Invites sent!")
-            return redirect("main:index")
-        else:
-            messages.error(request, "Invalid email address.")
-    else:
-        formset = UserFormSet(prefix="user")
-
-    return render(request, "main/invite.html", {"formset": formset, "company": company})
-
-
-@require_http_methods(["HEAD", "GET", "POST"])
-@login_required
-def invite_verify(request):
-    if request.user.is_authenticated:
-        messages.error(request, "You are already registered.")
-        return redirect(settings.LOGIN_REDIRECT_URL)
-
-    if request.GET.get("d"):
-        user = verify_invite_data(token=request.GET["d"])
-        if user is not None:
-            messages.success(request, "Your account was created succesfully.")
-            return redirect(settings.LOGIN_URL)
-        else:
-            messages.error(request, "Invalid invite link.")
-    else:
-        messages.error(request, "Invalid invite link.")
-
-    return redirect(settings.LOGIN_URL)
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
