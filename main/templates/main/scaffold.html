@@ -27,12 +27,6 @@
             </a>
         </div>
         <nav>
-            <a href="{% url 'main:people' request.user.profile.company.route %}" class="nav-item">
-                <div class="nav-item-icon">
-                    {% include "main/team.svg" %}
-                </div>
-                People
-            </a>
             <a href="{% url 'main:resources' request.user.profile.company.route %}" class="nav-item">
                 <div class="nav-item-icon">
                     {% include "main/book.svg" %}
@@ -44,6 +38,12 @@
                     {% include "main/bubbles.svg" %}
                 </div>
                 Questions
+            </a>
+            <a href="{% url 'main:people' request.user.profile.company.route %}" class="nav-item">
+                <div class="nav-item-icon">
+                    {% include "main/team.svg" %}
+                </div>
+                People
             </a>
         </nav>
         <div class="header-profile">
