@@ -26,7 +26,7 @@ def email_login_link(request, email):
     data = Signer().sign(base64.b64encode(data).decode("utf8"))
 
     send_mail(
-        "Sign in to KnowHub.app",
+        "Sign in to KnowHub",
         render_to_string(
             "main/token_auth_email.txt",
             {"current_site": current_site, "data": data},
@@ -38,7 +38,8 @@ def email_login_link(request, email):
 
 
 def generate_username(email):
-    username = slugify(email.split("@")[0])
+    username = email.split("@")[0].replace("+", "-")
+    username = slugify(username)
 
     # check if exists
     if User.objects.filter(username=username).count():
