@@ -28,6 +28,16 @@ class UserSettingsForm(forms.ModelForm):
         fields = ["first_name", "last_name", "email"]
 
 
+class UserSetupForm(forms.ModelForm):
+    name = forms.CharField(label="Your name")
+    role = forms.CharField(label="Your role in the company")
+    slack = forms.CharField(label="Your Slack username")
+
+    class Meta:
+        model = User
+        fields = ["email"]
+
+
 class CompanySettingsForm(forms.ModelForm):
     class Meta:
         model = Company
