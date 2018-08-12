@@ -1,0 +1,50 @@
+{% extends 'main/scaffold.html' %}
+
+{% load static %}
+
+{% block title %}Setup your profile - {{ request.user.profile.company.name }}{% endblock %}
+
+{% block content %}
+    <section class="generic">
+        {% if messages %}
+        <div class="generic-alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <h1>Setup your profile</h1>
+        <form action="{% url 'main:invite_setup' request.user.profile.company.route %}" method="post">
+            {{ form.non_field_errors }}
+
+            <label for="id_name">{{ form.name.label }}</label>
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="text" name="name" maxlength="300" required id="id_name" value="{{ form.name.value|default:"" }}">
+
+            <label for="id_role">Role</label>
+            {% if form.role.errors %}
+                {% for error in form.role.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="text" name="role" maxlength="300" required id="id_role" value="{{ form.role.value|default:"" }}">
+
+            <label for="id_slack">{{ form.slack.label }}</label>
+            {% if form.slack.errors %}
+                {% for error in form.slack.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="text" name="slack" maxlength="300" required id="id_slack" value="{{ form.slack.value|default:"" }}">
+
+            {% csrf_token %}
+
+            <input type="submit" value="Save and go to dashboard">
+        </form>
+    </section>
+{% endblock %}
