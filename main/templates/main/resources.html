@@ -7,7 +7,7 @@
 {% block content %}
     <section class="resources">
         {% if messages %}
-        <div class="resources-alert">
+        <div class="alert">
             {% for message in messages %}
                 {{ message }}
             {% endfor %}
@@ -15,10 +15,8 @@
         {% endif %}
 
         <header>
-            <div class="resources-title">
-                <h1>Resources</h1>
-                <a href="{% url 'main:resources_create' request.user.profile.company.route %}">Create</a>
-            </div>
+            <h1>Resources</h1>
+            <a href="{% url 'main:resources_create' request.user.profile.company.route %}">Create</a>
         </header>
         <div class="resources-list">
             {% for document in resources %}

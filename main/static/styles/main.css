@@ -914,6 +914,23 @@ button:hover {
     padding-right: 10px;
 }
 
+.people header {
+    display: flex;
+}
+
+.people header a {
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: auto;
+    padding: 5px 15px;
+    border-radius: 3px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+    display: flex;
+    align-self: center;
+}
+
 .people h2 {
     font-size: 26px;
     color: #ffa918;
@@ -957,12 +974,6 @@ button:hover {
 
 .profile {
     text-align: center;
-}
-
-.profile-alert {
-    margin-top: 20px;
-    margin-bottom: 30px;
-    color: #0d9086;
 }
 
 .profile > h1 {
@@ -1018,12 +1029,6 @@ button:hover {
     padding-left: 10px;
     padding-right: 10px;
     text-align: center;
-}
-
-.settings-alert {
-    margin-top: 20px;
-    margin-bottom: 30px;
-    color: #0d9086;
 }
 
 .settings-photo img {
@@ -1086,16 +1091,16 @@ button:hover {
     padding-right: 10px;
 }
 
-.resources-title {
+.resources header {
     display: flex;
 }
 
-.resources-title > a {
+.resources header a {
     cursor: pointer;
     margin-top: 10px;
     margin-left: auto;
     padding: 5px 15px;
-    border-radius: 3px;
+    border-radius: 2px;
     background: #ffa918;
     color: #fff;
     border: none;
@@ -1143,7 +1148,7 @@ button:hover {
     margin-top: 10px;
     margin-left: auto;
     padding: 5px 15px;
-    border-radius: 3px;
+    border-radius: 2px;
     background: #ffa918;
     color: #fff;
     border: none;
@@ -1296,6 +1301,11 @@ button:hover {
     padding-right: 10px;
 }
 
+.generic-alert {
+    text-align: center;
+    color: #ffa918;
+}
+
 .generic-content {
     max-width: 700px;
     color: rgba(0, 0, 0, 0.84);
@@ -1309,4 +1319,52 @@ button:hover {
 
 .generic-content h2 {
     margin-bottom: 20px;
+}
+
+.generic h1 {
+    font-size: 29px;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.generic form {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.generic label {
+    color: #4f4f4f;
+}
+
+.generic input[type="email"],
+.generic input[type="text"] {
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.generic input[type="submit"] {
+    cursor: pointer;
+    display: flex;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 30px;
+    border-radius: 3px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+}
+
+.generic input[type="submit"]:hover {
+    background: #fe9f00;
 }
