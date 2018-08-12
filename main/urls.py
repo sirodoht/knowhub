@@ -23,6 +23,7 @@ urlpatterns = [
     path("blog/subscribe/", views.blog_subscribe, name="blog_subscribe"),
     path("blog/<slug:post_slug>/", views.blog_post, name="blog_post"),
     path("<slug:route>/", views.company, name="company"),
+    path("<slug:route>/setup/", views.invite_setup, name="invite_setup"),
     path("<slug:route>/people/", views.people, name="people"),
     path("<slug:route>/resources/", views.resources, name="resources"),
     path(

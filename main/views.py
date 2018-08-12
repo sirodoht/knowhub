@@ -165,6 +165,29 @@ def logout(request):
     return redirect(settings.LOGOUT_REDIRECT_URL)
 
 
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def invite_setup(request, route):
+    if request.user.profile.name:
+        return redirect("main:profile", route, request.user.username)
+
+    if request.method == "POST":
+        form = UserSetupForm(request.POST, instance=request.user)
+        if form.is_valid():
+            request.user.profile.name = form.cleaned_data["name"]
+            request.user.profile.slack = form.cleaned_data["slack"]
+            request.user.profile.role = form.cleaned_data["role"]
+            request.user.save()
+            messages.success(request, "Welcome!")
+            return redirect("main:index")
+    else:
+        form = UserSetupForm(instance=request.user)
+
+    return render(request, "main/invite_setup.html", {"form": form})
+
+
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def company_new(request):
