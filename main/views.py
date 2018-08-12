@@ -174,7 +174,7 @@ def invite_verify(request):
             user = authenticate(request, token=request.GET["d"])
             if user is not None:
                 dj_login(request, user)
-                return redirect(settings.LOGIN_REDIRECT_URL)
+                return redirect("main:invite_setup", user.profile.company.route)
             else:
                 messages.error(
                     request,
