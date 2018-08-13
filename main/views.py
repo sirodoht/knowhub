@@ -197,7 +197,7 @@ def invite_setup(request, route):
         return redirect("main:profile", route, request.user.username)
 
     if request.method == "POST":
-        form = UserSetupForm(request.POST, instance=request.user)
+        form = UserSetupForm(request.POST)
         if form.is_valid():
             request.user.profile.name = form.cleaned_data["name"]
             request.user.profile.slack = form.cleaned_data["slack"]
@@ -206,7 +206,14 @@ def invite_setup(request, route):
             messages.success(request, "Welcome!")
             return redirect("main:index")
     else:
-        form = UserSetupForm(instance=request.user)
+        form = UserSetupForm(
+            instance=request.user,
+            initial={
+                "name": request.user.profile.name,
+                "role": request.user.profile.role,
+                "slack": request.user.profile.slack,
+            },
+        )
 
     return render(request, "main/invite_setup.html", {"form": form})
 
