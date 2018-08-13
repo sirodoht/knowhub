@@ -16,7 +16,7 @@
 
         <img class="profile-photo" src="{{ user.profile.photo }}" alt="profile photo" width="240px">
 
-        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+        <h1>{{ user.profile.name|default:"" }}</h1>
         <div class="profile-role">{{ user.profile.role|default:"" }}</div>
         <div class="profile-details">
             <div class="profile-details-line">
