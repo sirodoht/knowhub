@@ -14,7 +14,7 @@
         </div>
         {% endif %}
 
-        <h1>Setup your profile</h1>
+        <h1 class="generic-title">Setup your profile</h1>
         <form action="{% url 'main:invite_setup' request.user.profile.company.route %}" method="post">
             {{ form.non_field_errors }}
 
