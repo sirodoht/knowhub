@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Company, Explorer, Resource, Subscriber
+from . import models
 
 
 class EmailForm(forms.Form):
@@ -10,7 +10,7 @@ class EmailForm(forms.Form):
 
 class CompanyForm(forms.ModelForm):
     class Meta:
-        model = Company
+        model = models.Company
         fields = ["name"]
 
 
@@ -20,43 +20,39 @@ class UserForm(forms.ModelForm):
         fields = ["email"]
 
 
-class UserSettingsForm(forms.ModelForm):
-    slack = forms.CharField(label="Your Slack username")
+class ProfileForm(forms.ModelForm):
+    email = forms.EmailField(label="Your email")
 
     class Meta:
-        model = User
-        fields = ["first_name", "last_name", "email"]
+        model = models.Profile
+        fields = ["name", "role", "slack"]
 
 
-class UserSetupForm(forms.ModelForm):
-    name = forms.CharField(label="Your name")
-    role = forms.CharField(label="Your role in the company")
-    slack = forms.CharField(label="Your Slack username")
-
+class InviteSetupForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ["email"]
+        model = models.Profile
+        fields = ["name", "role", "slack"]
 
 
 class CompanySettingsForm(forms.ModelForm):
     class Meta:
-        model = Company
+        model = models.Company
         fields = ["name"]
 
 
 class ResourceForm(forms.ModelForm):
     class Meta:
-        model = Resource
+        model = models.Resource
         fields = ["title", "body"]
 
 
 class SubscriberForm(forms.ModelForm):
     class Meta:
-        model = Subscriber
+        model = models.Subscriber
         fields = ["email", "ip"]
 
 
 class ExplorerForm(forms.ModelForm):
     class Meta:
-        model = Explorer
+        model = models.Explorer
         fields = ["email"]

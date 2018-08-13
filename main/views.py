@@ -20,11 +20,11 @@ from .forms import (
     CompanySettingsForm,
     EmailForm,
     ExplorerForm,
+    InviteSetupForm,
+    ProfileForm,
     ResourceForm,
     SubscriberForm,
     UserForm,
-    UserSettingsForm,
-    UserSetupForm,
 )
 from .helpers import (
     email_login_link,
@@ -197,23 +197,13 @@ def invite_setup(request, route):
         return redirect("main:profile", route, request.user.username)
 
     if request.method == "POST":
-        form = UserSetupForm(request.POST)
+        form = InviteSetupForm(request.POST, instance=request.user.profile)
         if form.is_valid():
-            request.user.profile.name = form.cleaned_data["name"]
-            request.user.profile.slack = form.cleaned_data["slack"]
-            request.user.profile.role = form.cleaned_data["role"]
-            request.user.save()
+            request.user.profile.save()
             messages.success(request, "Welcome!")
             return redirect("main:index")
     else:
-        form = UserSetupForm(
-            instance=request.user,
-            initial={
-                "name": request.user.profile.name,
-                "role": request.user.profile.role,
-                "slack": request.user.profile.slack,
-            },
-        )
+        form = InviteSetupForm(instance=request.user.profile)
 
     return render(request, "main/invite_setup.html", {"form": form})
 
@@ -337,19 +327,19 @@ def company_logo(request, route):
 @login_required
 def settings_user(request, route):
     if request.method == "POST":
-        form = UserSettingsForm(
+        form = ProfileForm(
             request.POST,
-            instance=request.user,
-            initial={"slack": request.user.profile.slack},
+            instance=request.user.profile,
+            initial={"email": request.user.email},
         )
         if form.is_valid():
-            request.user.profile.slack = form.cleaned_data["slack"]
+            request.user.email = form.cleaned_data["email"]
             request.user.save()
             messages.success(request, "User settings updated!")
             return redirect("main:profile", route, request.user.username)
     else:
-        form = UserSettingsForm(
-            instance=request.user, initial={"slack": request.user.profile.slack}
+        form = ProfileForm(
+            instance=request.user.profile, initial={"email": request.user.email}
         )
 
     return render(request, "main/settings.html", {"form": form})
