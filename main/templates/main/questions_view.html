@@ -1,0 +1,134 @@
+{% extends 'main/scaffold.html' %}
+
+{% load static %}
+
+{% block title %}{{ question.title }} - {{ request.user.profile.company.name }}{% endblock %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/simplemde.min.css' %}">
+    <style>
+        /* SimpleMDE related styles */
+        .CodeMirror {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            line-height: 1.5;
+        }
+
+        .CodeMirror, .CodeMirror-scroll {
+            min-height: 100px;
+        }
+
+        .editor-statusbar {
+            margin-bottom: 50px;
+        }
+
+        .editor-toolbar {
+            border-color: #ddd;
+            border-radius: 1px;
+            opacity: 1;
+        }
+
+        .editor-toolbar:hover {
+            opacity: 1;
+        }
+
+        .editor-toolbar a {
+            border-radius: 1px;
+            opacity: 0.6;
+        }
+
+        .editor-toolbar a.active,
+        .editor-toolbar a:hover {
+            opacity: 1;
+            border-color: transparent;
+            background: inherit;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section class="questions">
+        {% if messages %}
+        <div class="generic-alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="questions-view">
+            <header>
+                <h1>{{ question.title }}</h1>
+                <a href="{% url 'main:questions_create' request.user.profile.company.route %}">Ask a Question</a>
+            </header>
+            <div class="questions-view-content">
+                <div class="questions-view-content-body">
+                    <a class="questions-view-content-body-author" title="{{ question.author.profile.name }} ({{question.author.username }})"
+                        href="{% url 'main:profile' question.author.profile.company.route question.author.username %}">
+                        <img src="{{ question.author.profile.photo }}" alt="{{ question.author.username }} photo" width="32px">
+                    </a>
+                    <div class="questions-view-content-body-text">{{ question.as_markdown|safe }}</div>
+                </div>
+                <div class="questions-view-content-meta">asked at {{ question.created_at }}</div>
+            </div>
+            <div class="questions-view-answers">
+                {% for item in answers %}
+                <div class="questions-view-answers-item">
+                    <a class="questions-view-answers-item-author" title="{{ item.author.profile.name }} ({{item.author.username }})"
+                        href="{% url 'main:profile' item.author.profile.company.route item.author.username %}">
+                        <img src="{{ item.author.profile.photo }}" alt="{{ item.author.username }} photo" width="32px">
+                    </a>
+                    <div class="questions-view-answers-item-body">
+                        <div class="questions-view-answers-item-body-text">
+                            {{ item.as_markdown|safe }}
+                        </div>
+                        <div class="questions-view-answers-item-body-meta">
+                            answered at {{ item.created_at }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="questions-view-post">
+                <div class="questions-view-post-title">Your Answer</div>
+                <form action="{% url 'main:questions_view' request.user.profile.company.route question.slug %}" method="post">
+                    {{ form.non_field_errors }}
+
+                    {% if form.body.errors %}
+                        {% for error in form.body.errors %}
+                            <div class="form-error">{{ error|escape }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <textarea name="body" id="id_body" required></textarea>
+
+                    {% csrf_token %}
+
+                    <input type="submit" value="Post Answer">
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'scripts/simplemde.min.js' %}"></script>
+    <script>
+        var simplemde = new SimpleMDE({
+            element: document.getElementById('id_body'),
+            forceSync: true,
+            autoDownloadFontAwesome: false,
+            spellChecker: false,
+            placeholder: 'Type your answer here...',
+            showIcons: ['table'],
+            hideIcons: ['guide', 'quote', 'heading'],
+            status: false,
+            shortcuts: {
+                'toggleOrderedList': null,
+                'toggleCodeBlock': null,
+                'drawTable': null,
+                'toggleHeadingBigger': null,
+                'drawImage': null,
+            }
+        });
+    </script>
+{% endblock %}
