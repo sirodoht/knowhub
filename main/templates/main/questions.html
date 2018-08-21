@@ -5,7 +5,7 @@
 {% block title %}Questions - KnowHub.app{% endblock %}
 
 {% block content %}
-    <section class="people">
+    <section class="generic">
         {% if messages %}
         <div class="generic-alert">
             {% for message in messages %}
@@ -14,6 +14,21 @@
         </div>
         {% endif %}
 
-        <h1>Questions</h1>
+        <header>
+            <h1>Questions</h1>
+            <a href="{% url 'main:questions_create' request.user.profile.company.route %}">Ask a Question</a>
+        </header>
+        <div class="questions-list">
+            {% for item in questions %}
+            <div class="questions-list-item">
+                <h2 class="questions-list-item-title">
+                    <a href="{% url 'main:questions_view' request.user.profile.company.route item.slug %}">{{ item.title }}</a>
+                </h2>
+                <div class="questions-list-item-meta">
+                    asked by {{ item.author.username }} at {{ item.created_at }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </section>
 {% endblock %}
