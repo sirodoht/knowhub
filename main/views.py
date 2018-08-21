@@ -390,12 +390,10 @@ def resources_create(request, route):
             resource = form.save(commit=False)
             resource.company = request.user.profile.company
             resource.slug = slugify(form.cleaned_data["title"])
-            if resource.slug == "new":
-                resource.slug = "new-" + shortuuid.ShortUUID(
-                    "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
-                ).random(length=6)
+            resource.slug += "-" + shortuuid.ShortUUID(
+                "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
+            ).random(length=6)
             resource.save()
-            messages.success(request, "Resource created.")
             return redirect("main:resources", route)
         else:
             messages.error(request, "Resource creation failed.")
