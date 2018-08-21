@@ -1499,12 +1499,12 @@ button:hover {
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 16px;
+    margin-top: 16px;
     box-sizing: border-box;
-    background: #e5f9f8;
+    border: 1px solid #ffa918;
 }
 
 .questions-view-content-body {
-    margin-top: 16px;
     display: flex;
 }
 
@@ -1544,15 +1544,25 @@ button:hover {
     margin-bottom: 32px;
 }
 
+.questions-view-answers-title {
+    font-size: 22px;
+    margin-top: 64px;
+    margin-bottom: 8px;
+}
+
+.questions-view-answers-item:nth-child(2) {
+    margin-top: 32px;
+}
+
 .questions-view-answers-item {
     display: flex;
     margin-top: 64px;
     max-width: 700px;
-    background: #f7f7f7;
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 16px;
     box-sizing: border-box;
+    border: 1px solid #ffa918;
 }
 
 .questions-view-answers-item-author {

@@ -72,6 +72,7 @@
                 <div class="questions-view-content-meta">asked at {{ question.created_at }}</div>
             </div>
             <div class="questions-view-answers">
+                <div class="questions-view-answers-title">Answers</div>
                 {% for item in answers %}
                 <div class="questions-view-answers-item">
                     <a class="questions-view-answers-item-author" title="{{ item.author.profile.name }} ({{item.author.username }})"
