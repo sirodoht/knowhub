@@ -25,6 +25,8 @@ black . && isort -y && flake8
 * grey footer #aab7c4
 * grey for orange bg (ligher) #ffedcd
 * grey text for white bg (darker) #828282
+* grey for meta #9199a1
+* grey light for border #e4e6e8
 * green
   * dark #0d9086
   * light for gb #d5f4f2
