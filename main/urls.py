@@ -30,7 +30,7 @@ urlpatterns = [
         "<slug:route>/resources/new/", views.resources_create, name="resources_create"
     ),
     path(
-        "<slug:route>/resources/<slug:document>/",
+        "<slug:route>/resources/<slug:resource_slug>/",
         views.resources_view,
         name="resources_view",
     ),
