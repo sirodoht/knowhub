@@ -16,12 +16,14 @@ from knowhub import settings
 
 from . import billing
 from .forms import (
+    AnswerForm,
     CompanyForm,
     CompanySettingsForm,
     EmailForm,
     ExplorerForm,
     InviteSetupForm,
     ProfileForm,
+    QuestionForm,
     ResourceForm,
     SubscriberForm,
     UserForm,
@@ -33,7 +35,7 @@ from .helpers import (
     log_analytic,
     verify_invite_data,
 )
-from .models import Company, Post, Resource, Subscriber
+from .models import Answer, Company, Post, Question, Resource, Subscriber
 from .tasks import invite_task
 
 
@@ -407,7 +409,60 @@ def resources_create(request, route):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def questions(request, route):
-    return render(request, "main/questions.html")
+    questions = Question.objects.filter(company=request.user.profile.company).order_by(
+        "updated_at"
+    )
+    return render(request, "main/questions.html", {"questions": questions})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def questions_create(request, route):
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.author = request.user
+            question.company = request.user.profile.company
+            question.slug = slugify(form.cleaned_data["title"])
+            question.slug += "-" + shortuuid.ShortUUID(
+                "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
+            ).random(length=6)
+            question.save()
+            return redirect("main:questions_view", route, question.slug)
+        else:
+            messages.error(request, "Question posting failed.")
+            return redirect("main:questions", route)
+    else:
+        form = QuestionForm()
+
+    return render(request, "main/questions_create.html", {"form": form})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def questions_view(request, route, question_slug):
+    question = Question.objects.get(slug=question_slug)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.author = request.user
+            answer.question = question
+            answer.save()
+            return redirect("main:questions_view", route, question_slug)
+        else:
+            messages.error(request, "Question posting failed.")
+            return redirect("main:questions_view", route, question_slug)
+    else:
+        form = AnswerForm()
+        answers = Answer.objects.filter(question=question).order_by("created_at")
+
+    return render(
+        request,
+        "main/questions_view.html",
+        {"form": form, "question": question, "answers": answers},
+    )
 
 
 @require_safe
