@@ -102,3 +102,35 @@ class Explorer(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class Question(models.Model):
+    title = models.CharField(max_length=300)
+    slug = models.CharField(max_length=300)
+    body = models.TextField(blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def as_markdown(self):
+        return markdown.markdown(self.body)
+
+    def __str__(self):
+        return self.title
+
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    body = models.TextField(blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def as_markdown(self):
+        return markdown.markdown(self.body)
+
+    def __str__(self):
+        return self.body[:100]
