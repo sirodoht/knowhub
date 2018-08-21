@@ -54,7 +54,7 @@ class Resource(models.Model):
 
     @property
     def as_markdown(self):
-        return markdown.markdown(self.body)
+        return markdown.markdown(self.body, extensions=['markdown.extensions.fenced_code'])
 
     def __str__(self):
         return self.title
@@ -69,7 +69,7 @@ class Post(models.Model):
 
     @property
     def as_markdown(self):
-        return markdown.markdown(self.body)
+        return markdown.markdown(self.body, extensions=['markdown.extensions.fenced_code'])
 
     def __str__(self):
         return self.title
@@ -115,7 +115,7 @@ class Question(models.Model):
 
     @property
     def as_markdown(self):
-        return markdown.markdown(self.body)
+        return markdown.markdown(self.body, extensions=['markdown.extensions.fenced_code'])
 
     def __str__(self):
         return self.title
@@ -130,7 +130,7 @@ class Answer(models.Model):
 
     @property
     def as_markdown(self):
-        return markdown.markdown(self.body)
+        return markdown.markdown(self.body, extensions=['markdown.extensions.fenced_code'])
 
     def __str__(self):
         return self.body[:100]
