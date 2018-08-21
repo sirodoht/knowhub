@@ -35,6 +35,12 @@ urlpatterns = [
         name="resources_view",
     ),
     path("<slug:route>/questions/", views.questions, name="questions"),
+    path("<slug:route>/questions/ask", views.questions_create, name="questions_create"),
+    path(
+        "<slug:route>/questions/<slug:question_slug>/",
+        views.questions_view,
+        name="questions_view",
+    ),
     path("<slug:route>/billing/", views.billing_setup, name="billing_setup"),
     path(
         "<slug:route>/billing/customer/",
