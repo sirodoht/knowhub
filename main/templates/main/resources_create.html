@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Create new resource - KnowHub {% endblock %}
+{% block title %}Create Resource - {{ request.user.profile.company.name }}{% endblock %}
 
 {% block head_extra %}
     <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
@@ -55,8 +55,9 @@
         </div>
         {% endif %}
 
-        <h1>Resources</h1>
-
+        <header>
+            <h1>Resources</h1>
+        </header>
         <form action="{% url 'main:resources_create' request.user.profile.company.route %}" method="post">
             {{ form.non_field_errors }}
 
