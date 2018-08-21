@@ -14,13 +14,13 @@
         </div>
         {% endif %}
 
-        <div class="resources-document">
+        <div class="resources-view">
             <header>
-                <div class="resources-document-title">
+                <div class="resources-view-title">
                     <h1>{{ resource.title }}</h1>
                     <a href="{% url 'main:resources_create' request.user.profile.company.route %}">Create</a>
                 </div>
-                <div class="resources-document-date">Last update at {{ resource.updated_at }}</div>
+                <div class="resources-view-date">Last update at {{ resource.updated_at }}</div>
             </header>
             <article>
                 {{ resource.as_markdown|safe }}

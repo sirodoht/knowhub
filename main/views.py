@@ -376,9 +376,9 @@ def resources(request, route):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def resources_view(request, route, document):
-    resource = Resource.objects.get(slug=document)
-    return render(request, "main/resources_document.html", {"resource": resource})
+def resources_view(request, route, resource_slug):
+    resource = Resource.objects.get(slug=resource_slug)
+    return render(request, "main/resources_view.html", {"resource": resource})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
