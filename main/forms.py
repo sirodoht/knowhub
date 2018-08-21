@@ -56,3 +56,15 @@ class ExplorerForm(forms.ModelForm):
     class Meta:
         model = models.Explorer
         fields = ["email"]
+
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = models.Question
+        fields = ["title", "body"]
+
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = models.Answer
+        fields = ["body"]
