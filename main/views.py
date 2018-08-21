@@ -46,7 +46,7 @@ def index(request):
             return redirect("main:billing_setup", request.user.profile.company.route)
         return redirect("main:people", request.user.profile.company.route)
     else:
-        return render(request, "main/marketing.html")
+        return render(request, "main/landing.html")
 
 
 def company(request, route):
