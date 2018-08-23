@@ -34,6 +34,16 @@ urlpatterns = [
         views.resources_view,
         name="resources_view",
     ),
+    path(
+        "<slug:route>/resources/<slug:resource_slug>/edit/",
+        views.resources_edit,
+        name="resources_edit",
+    ),
+    path(
+        "<slug:route>/resources/<slug:resource_slug>/delete/",
+        views.resources_delete,
+        name="resources_delete",
+    ),
     path("<slug:route>/questions/", views.questions, name="questions"),
     path("<slug:route>/questions/ask", views.questions_create, name="questions_create"),
     path(

@@ -19,6 +19,7 @@ from .forms import (
     AnswerForm,
     CompanyForm,
     CompanySettingsForm,
+    DeleteResourceForm,
     EmailForm,
     ExplorerForm,
     InviteSetupForm,
@@ -402,6 +403,46 @@ def resources_create(request, route):
         form = ResourceForm()
 
     return render(request, "main/resources_create.html", {"form": form})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def resources_edit(request, route, resource_slug):
+    resource = Resource.objects.get(slug=resource_slug)
+    if request.method == "POST":
+        form = ResourceForm(request.POST, instance=resource)
+        if form.is_valid():
+            resource = form.save(commit=False)
+            resource.slug = slugify(form.cleaned_data["title"])
+            resource.slug += "-" + shortuuid.ShortUUID(
+                "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
+            ).random(length=6)
+            resource.save()
+            return redirect("main:resources_view", route, resource.slug)
+        else:
+            messages.error(request, "Resource editing failed.")
+            return redirect("main:resources_view", route, resource_slug)
+    else:
+        resource = Resource.objects.get(slug=resource_slug)
+        form = ResourceForm(instance=resource)
+
+    return render(
+        request, "main/resources_edit.html", {"form": form, "resource": resource}
+    )
+
+
+@require_http_methods(["HEAD", "POST"])
+@login_required
+def resources_delete(request, route, resource_slug):
+    if request.method == "POST":
+        resource = Resource.objects.get(slug=resource_slug)
+        form = DeleteResourceForm(request.POST, instance=resource)
+        if form.is_valid():
+            resource.delete()
+            return redirect("main:resources", route)
+        else:
+            messages.error(request, "Resource deletion failed.")
+            return redirect("main:resources_view", route, resource_slug)
 
 
 @require_http_methods(["HEAD", "GET", "POST"])

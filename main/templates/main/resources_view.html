@@ -18,7 +18,8 @@
             <header>
                 <div class="resources-view-title">
                     <h1>{{ resource.title }}</h1>
-                    <a href="{% url 'main:resources_create' request.user.profile.company.route %}">Create</a>
+                    <a href="{% url 'main:resources_edit' request.user.profile.company.route resource.slug %}" class="resources-view-title-edit">Edit</a>
+                    <a href="{% url 'main:resources_create' request.user.profile.company.route %}" class="resources-view-title-create">Create</a>
                 </div>
                 <div class="resources-view-date">Last update at {{ resource.updated_at }}</div>
             </header>
