@@ -17,7 +17,7 @@
             <div class="resources-view-content">
                 <div class="resources-view-content-body">
                     <article>
-                        {{ resource.as_markdown|safe|default:"<em>(empty)</em>" }}
+                        {{ resource.as_markdown|safe|default:"<em class=\"muted\">(empty)</em>" }}
                     </article>
                     <div class="resources-view-content-body-date">Last update at {{ resource.updated_at }}</div>
                 </div>
@@ -28,6 +28,8 @@
                             <div>
                                 <div class="resources-view-content-side-tags-item">{{ tag.text }}</div>
                             </div>
+                        {% empty %}
+                            <em class="muted">(none)</em>
                         {% endfor %}
                     </div>
                 </div>
