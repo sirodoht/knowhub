@@ -53,6 +53,10 @@ class Resource(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
+    def tags(self):
+        return ",".join([tag.text for tag in self.tag_set.all()])
+
+    @property
     def as_markdown(self):
         return markdown.markdown(
             self.body, extensions=["markdown.extensions.fenced_code"]
@@ -60,6 +64,9 @@ class Resource(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ("title",)
 
 
 class Post(models.Model):
@@ -77,6 +84,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ("-date",)
 
 
 class Subscriber(models.Model):
@@ -126,11 +136,14 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ("-updated_at",)
+
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     body = models.TextField(blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -143,9 +156,12 @@ class Answer(models.Model):
     def __str__(self):
         return self.body[:100]
 
+    class Meta:
+        ordering = ("created_at",)
+
 
 class Tag(models.Model):
-    resource = models.ForeignKey(Resource, on_delete=models.SET_NULL, null=True)
+    resources = models.ManyToManyField(Resource)
     text = models.CharField(max_length=100)
 
     def __str__(self):
