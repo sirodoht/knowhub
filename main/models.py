@@ -142,3 +142,11 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.body[:100]
+
+
+class Tag(models.Model):
+    resource = models.ForeignKey(Resource, on_delete=models.SET_NULL, null=True)
+    text = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.text
