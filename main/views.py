@@ -36,7 +36,7 @@ from .helpers import (
     log_analytic,
     verify_invite_data,
 )
-from .models import Answer, Company, Post, Question, Resource, Subscriber
+from .models import Answer, Company, Post, Question, Resource, Subscriber, Tag
 from .tasks import invite_task
 
 
@@ -395,6 +395,8 @@ def resources_create(request, route):
                 "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
             ).random(length=6)
             resource.save()
+            for tag in form.cleaned_data["tags"].split(","):
+                Tag.objects.get_or_create(text=tag).resources.add(resource)
             return redirect("main:resources", route)
         else:
             messages.error(request, "Resource creation failed.")
@@ -410,21 +412,28 @@ def resources_create(request, route):
 def resources_edit(request, route, resource_slug):
     resource = Resource.objects.get(slug=resource_slug)
     if request.method == "POST":
-        form = ResourceForm(request.POST, instance=resource)
+        form = ResourceForm(
+            request.POST, instance=resource, initial={"tags": resource.tags}
+        )
         if form.is_valid():
             resource = form.save(commit=False)
-            resource.slug = slugify(form.cleaned_data["title"])
-            resource.slug += "-" + shortuuid.ShortUUID(
-                "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
-            ).random(length=6)
+            if "title" in form.changed_data:
+                resource.slug = slugify(form.cleaned_data["title"])
+                resource.slug += "-" + shortuuid.ShortUUID(
+                    "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
+                ).random(length=6)
             resource.save()
+            resource.tag_set.clear()
+            for tag in form.cleaned_data["tags"].split(","):
+                tag, created = Tag.objects.get_or_create(text=tag)
+                tag.resources.add(resource)
             return redirect("main:resources_view", route, resource.slug)
         else:
             messages.error(request, "Resource editing failed.")
             return redirect("main:resources_view", route, resource_slug)
     else:
         resource = Resource.objects.get(slug=resource_slug)
-        form = ResourceForm(instance=resource)
+        form = ResourceForm(instance=resource, initial={"tags": resource.tags})
 
     return render(
         request, "main/resources_edit.html", {"form": form, "resource": resource}
