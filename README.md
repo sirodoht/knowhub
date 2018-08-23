@@ -29,7 +29,7 @@ black . && isort -y && flake8
 * grey light for border #e4e6e8
 * green
   * dark #0d9086
-  * light for gb #d5f4f2
+  * light for bg #d5f4f2
 * red #d65050
 
 ## License
