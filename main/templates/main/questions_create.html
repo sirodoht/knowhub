@@ -47,27 +47,29 @@
         <header>
             <h1>Ask a Question</h1>
         </header>
-        <form action="{% url 'main:questions_create' request.user.profile.company.route %}" method="post">
-            {{ form.non_field_errors }}
+        <div class="questions-create">
+            <form action="{% url 'main:questions_create' request.user.profile.company.route %}" method="post">
+                {{ form.non_field_errors }}
 
-            {% if form.title.errors %}
-                {% for error in form.title.errors %}
-                    <div class="form-error">{{ error|escape }}</div>
-                {% endfor %}
-            {% endif %}
-            <input type="text" name="title" maxlength="300" required id="id_title" placeholder="Type your question title...">
+                {% if form.title.errors %}
+                    {% for error in form.title.errors %}
+                        <div class="form-error">{{ error|escape }}</div>
+                    {% endfor %}
+                {% endif %}
+                <input type="text" name="title" maxlength="300" required id="id_title" placeholder="Type your question title...">
 
-            {% if form.body.errors %}
-                {% for error in form.body.errors %}
-                    <div class="form-error">{{ error|escape }}</div>
-                {% endfor %}
-            {% endif %}
-            <textarea name="body" id="id_body" required></textarea>
+                {% if form.body.errors %}
+                    {% for error in form.body.errors %}
+                        <div class="form-error">{{ error|escape }}</div>
+                    {% endfor %}
+                {% endif %}
+                <textarea name="body" id="id_body" required></textarea>
 
-            {% csrf_token %}
+                {% csrf_token %}
 
-            <input type="submit" value="Post Question">
-        </form>
+                <input type="submit" value="Post Question">
+            </form>
+        </div>
     </section>
 {% endblock %}
 
