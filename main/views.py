@@ -395,8 +395,9 @@ def resources_create(request, route):
                 "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
             ).random(length=6)
             resource.save()
-            for tag in form.cleaned_data["tags"].split(","):
-                Tag.objects.get_or_create(text=tag).resources.add(resource)
+            for tag_text in form.cleaned_data["tags"].split(","):
+                tag, created = Tag.objects.get_or_create(text=tag_text)
+                tag.resources.add(resource)
             return redirect("main:resources", route)
         else:
             messages.error(request, "Resource creation failed.")
@@ -424,8 +425,8 @@ def resources_edit(request, route, resource_slug):
                 ).random(length=6)
             resource.save()
             resource.tag_set.clear()
-            for tag in form.cleaned_data["tags"].split(","):
-                tag, created = Tag.objects.get_or_create(text=tag)
+            for tag_text in form.cleaned_data["tags"].split(","):
+                tag, created = Tag.objects.get_or_create(text=tag_text)
                 tag.resources.add(resource)
             return redirect("main:resources_view", route, resource.slug)
         else:
