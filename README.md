@@ -30,6 +30,7 @@ black . && isort -y && flake8
 * green
   * dark #0d9086
   * light for gb #d5f4f2
+* red #d65050
 
 ## License
 
