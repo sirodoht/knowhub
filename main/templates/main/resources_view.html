@@ -13,11 +13,25 @@
                     <a href="{% url 'main:resources_edit' request.user.profile.company.route resource.slug %}" class="resources-view-title-edit">Edit</a>
                     <a href="{% url 'main:resources_create' request.user.profile.company.route %}" class="resources-view-title-create">Create</a>
                 </div>
-                <div class="resources-view-date">Last update at {{ resource.updated_at }}</div>
             </header>
-            <article>
-                {{ resource.as_markdown|safe }}
-            </article>
+            <div class="resources-view-content">
+                <div class="resources-view-content-body">
+                    <article>
+                        {{ resource.as_markdown|safe|default:"<em>(empty)</em>" }}
+                    </article>
+                    <div class="resources-view-content-body-date">Last update at {{ resource.updated_at }}</div>
+                </div>
+                <div class="resources-view-content-side">
+                    <div class="resources-view-content-side-title">Tags</div>
+                    <div class="resources-view-content-side-tags">
+                        {% for tag in resource.tag_set.all %}
+                            <div>
+                                <div class="resources-view-content-side-tags-item">{{ tag.text }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 {% endblock %}
