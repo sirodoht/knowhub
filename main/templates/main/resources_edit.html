@@ -94,9 +94,9 @@
                 <div class="resources-create-content-side-tags">
                     <div class="resources-create-content-side-tags-list" id="tags-list">
                         <!-- <div>
-                            <span class="tags-item">
+                            <div class="tags-item">
                                 sample-tag
-                            </span>
+                            </div>
                         </div> -->
                     </div>
                 </div>
@@ -163,7 +163,7 @@
                 return;
             }
             var newTagElem = document.createElement('div');
-            var newTagContentElem = document.createElement('span');
+            var newTagContentElem = document.createElement('div');
             newTagContentElem.classList.add('tags-item');
             newTagContentElem.addEventListener('click', function (event) {
                 event.target.parentNode.removeChild(event.target);
