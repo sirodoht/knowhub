@@ -6,14 +6,6 @@
 
 {% block content %}
     <section class="people">
-        {% if messages %}
-        <div class="generic-alert">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        </div>
-        {% endif %}
-
         <header>
             <h1>People Directory</h1>
             <a href="{% url 'main:invite' request.user.profile.company.route %}">Invite</a>

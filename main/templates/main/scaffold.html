@@ -81,7 +81,21 @@
             </div>
         </div>
     </header>
+    {% if messages %}
+    <div class="flash">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
     {% else %}
+    {% if messages %}
+    <div class="flash">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
     <header style="background: #fff; box-shadow: none;">
         <div class="header-content">
             <div class="header-content-brand">

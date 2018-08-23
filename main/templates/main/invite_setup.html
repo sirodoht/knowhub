@@ -6,14 +6,6 @@
 
 {% block content %}
     <section class="generic">
-        {% if messages %}
-        <div class="generic-alert">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        </div>
-        {% endif %}
-
         <h1 class="generic-title">Setup your profile</h1>
         <form action="{% url 'main:invite_setup' request.user.profile.company.route %}" method="post">
             {{ form.non_field_errors }}

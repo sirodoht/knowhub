@@ -132,7 +132,7 @@ def token_post(request):
 @login_required
 def logout(request):
     dj_logout(request)
-    # messages.success(request, "You have been logged out.")
+    messages.success(request, "You have been logged out")
     return redirect(settings.LOGOUT_REDIRECT_URL)
 
 
@@ -338,7 +338,7 @@ def settings_user(request, route):
         if form.is_valid():
             request.user.email = form.cleaned_data["email"]
             request.user.save()
-            messages.success(request, "User settings updated!")
+            messages.success(request, "Settings updated successfully")
             return redirect("main:profile", route, request.user.username)
     else:
         form = ProfileForm(
@@ -358,7 +358,7 @@ def settings_company(request, route):
         form = CompanySettingsForm(request.POST, instance=request.user.profile.company)
         if form.is_valid():
             request.user.profile.company.save()
-            messages.success(request, "Company settings updated!")
+            messages.success(request, "Settings updated successfully")
             return redirect("main:profile", route, request.user.username)
     else:
         form = CompanySettingsForm(instance=request.user.profile.company)
