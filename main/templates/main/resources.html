@@ -19,11 +19,16 @@
             <a href="{% url 'main:resources_create' request.user.profile.company.route %}">Create</a>
         </header>
         <div class="resources-list">
-            {% for document in resources %}
+            {% for item in resources %}
             <div class="resources-list-item">
                 <h2 class="resources-list-item-title">
-                    <a href="{% url 'main:resources_view' request.user.profile.company.route document.slug %}">{{ document.title }}</a>
+                    <a href="{% url 'main:resources_view' request.user.profile.company.route item.slug %}">{{ item.title }}</a>
                 </h2>
+                <div class="resources-list-item-tags">
+                    {% for tag in item.tag_set.all %}
+                        <div class="resources-list-item-tags-item">{{ tag.text }}</div>
+                    {% endfor %}
+                </div>
             </div>
             {% endfor %}
         </div>
