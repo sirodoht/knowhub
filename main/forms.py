@@ -46,6 +46,12 @@ class ResourceForm(forms.ModelForm):
         fields = ["title", "body"]
 
 
+class DeleteResourceForm(forms.ModelForm):
+    class Meta:
+        model = models.Resource
+        fields = []
+
+
 class SubscriberForm(forms.ModelForm):
     class Meta:
         model = models.Subscriber
