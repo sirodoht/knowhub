@@ -426,8 +426,9 @@ def resources_edit(request, route, resource_slug):
             resource.save()
             resource.tag_set.clear()
             for tag_text in form.cleaned_data["tags"].split(","):
-                tag, created = Tag.objects.get_or_create(text=tag_text)
-                tag.resources.add(resource)
+                if tag_text.strip():
+                    tag, created = Tag.objects.get_or_create(text=tag_text)
+                    tag.resources.add(resource)
             return redirect("main:resources_view", route, resource.slug)
         else:
             messages.error(request, "Resource editing failed.")
