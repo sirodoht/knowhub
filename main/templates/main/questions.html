@@ -27,8 +27,8 @@
                 <div class="questions-list-item-meta">
                     asked by
                     <a href="{% url 'main:profile' request.user.profile.company.route item.author.username %}">
-                        {{ item.author.username }}
-                    </a> at {{ item.created_at }}
+                        {{ item.author.username }}</a>
+                    at {{ item.created_at }}
                 </div>
             </div>
             {% endfor %}

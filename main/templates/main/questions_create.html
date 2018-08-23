@@ -19,9 +19,8 @@
         }
 
         .editor-toolbar {
-            border-top: none;
-            border-left: none;
-            border-right: none;
+            border-color: #ddd;
+            border-radius: 1px;
             opacity: 1;
         }
 
@@ -90,9 +89,9 @@
             spellChecker: false,
             lineWrapping: false,
             placeholder: 'Details go here...',
-            showIcons: ['table', 'heading-2'],
+            showIcons: ['table'],
             hideIcons: ['guide', 'quote', 'heading'],
-            status: ['lines', 'cursor'],
+            status: false,
             shortcuts: {
                 'toggleOrderedList': null,
                 'toggleCodeBlock': null,
