@@ -41,6 +41,8 @@ class CompanySettingsForm(forms.ModelForm):
 
 
 class ResourceForm(forms.ModelForm):
+    tags = forms.CharField(label="Tags", strip=True, max_length=300, required=False)
+
     class Meta:
         model = models.Resource
         fields = ["title", "body"]
