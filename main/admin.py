@@ -68,3 +68,27 @@ class AnalyticAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Analytic, AnalyticAdmin)
+
+
+# Question
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ("slug", "title", "author", "company", "created_at", "updated_at")
+
+
+admin.site.register(models.Question, QuestionAdmin)
+
+
+# Answer
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ("body", "question", "created_at", "updated_at")
+
+
+admin.site.register(models.Answer, AnswerAdmin)
+
+
+# Tag
+class TagAdmin(admin.ModelAdmin):
+    list_display = ("text",)
+
+
+admin.site.register(models.Tag, TagAdmin)
