@@ -9,7 +9,7 @@ python manage.py runserver
 celery -A knowhub worker -P gevent -l debug
 ```
 
-## Formatting
+## Code Formatting
 
 Run:
 ```
