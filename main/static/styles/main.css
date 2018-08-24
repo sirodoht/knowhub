@@ -1126,6 +1126,7 @@ button:hover {
 .settings input[type="email"],
 .settings input[type="text"] {
     width: 100%;
+    box-sizing: border-box;
     margin-top: 3px;
     margin-bottom: 20px;
     border: 1px solid #ddd;
@@ -1133,6 +1134,12 @@ button:hover {
     padding-bottom: 4px;
     padding-left: 8px;
     padding-right: 8px;
+}
+
+.settings select {
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom: 20px;
 }
 
 .settings input[type="submit"] {

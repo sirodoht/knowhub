@@ -1,5 +1,8 @@
+import datetime
 import json
 
+import pytz
+from django.utils import timezone
 import shortuuid
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
@@ -35,6 +38,7 @@ from .helpers import (
     get_invite_data,
     log_analytic,
     verify_invite_data,
+    get_timezones_form,
 )
 from .models import Answer, Company, Post, Question, Resource, Subscriber, Tag
 from .tasks import invite_task
@@ -340,12 +344,19 @@ def settings_user(request, route):
             request.user.save()
             messages.success(request, "Settings updated successfully")
             return redirect("main:profile", route, request.user.username)
+        else:
+            messages.success(request, "Settings update failed")
+            return redirect("main:profile", route, request.user.username)
     else:
         form = ProfileForm(
             instance=request.user.profile, initial={"email": request.user.email}
         )
 
-    return render(request, "main/settings.html", {"form": form})
+    return render(
+        request,
+        "main/settings.html",
+        {"form": form, "timezones": get_timezones_form()},
+    )
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -460,8 +471,10 @@ def resources_delete(request, route, resource_slug):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def questions(request, route):
+    if route != request.user.profile.company.route:
+        return redirect("main:questions", request.user.profile.company.route)
     questions = Question.objects.filter(company=request.user.profile.company).order_by(
-        "updated_at"
+        "-updated_at"
     )
     return render(request, "main/questions.html", {"questions": questions})
 

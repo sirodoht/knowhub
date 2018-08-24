@@ -50,6 +50,18 @@
             {% endif %}
             <input type="text" name="slack" maxlength="300" required id="id_slack" value="{{ form.slack.value }}">
 
+            <label for="id_time_zone">Time Zone</label>
+            {% if form.time_zone.errors %}
+                {% for error in form.time_zone.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <select name="time_zone" id="id_time_zone">
+                {% for tz in timezones %}
+                <option value="{{ tz.code }}" {% if tz.code == TIME_ZONE %}selected{% endif %}>({{ tz.offset }}) {{ tz.name }}</option>
+                {% endfor %}
+            </select>
+
             {% csrf_token %}
 
             <input type="hidden" name="next" value="{{ next }}">
