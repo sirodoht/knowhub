@@ -26,6 +26,7 @@ class Profile(models.Model):
     slack = models.CharField(max_length=300, blank=True, null=True)
     interests = models.TextField(max_length=600, blank=True, null=True)
     location = models.CharField(max_length=300, blank=True, null=True)
+    time_zone = models.CharField(max_length=300, default="UTC")
     work_start = models.TimeField(blank=True, null=True)
     work_end = models.TimeField(blank=True, null=True)
     agenda = models.TextField(max_length=600, blank=True, null=True)
@@ -66,7 +67,7 @@ class Resource(models.Model):
         return self.title
 
     class Meta:
-        ordering = ("title",)
+        ordering = ["title"]
 
 
 class Post(models.Model):
@@ -86,7 +87,7 @@ class Post(models.Model):
         return self.title
 
     class Meta:
-        ordering = ("-date",)
+        ordering = ["-date"]
 
 
 class Subscriber(models.Model):
@@ -137,7 +138,7 @@ class Question(models.Model):
         return self.title
 
     class Meta:
-        ordering = ("-updated_at",)
+        ordering = ["-updated_at"]
 
 
 class Answer(models.Model):
@@ -157,7 +158,7 @@ class Answer(models.Model):
         return self.body[:100]
 
     class Meta:
-        ordering = ("created_at",)
+        ordering = ["created_at"]
 
 
 class Tag(models.Model):
