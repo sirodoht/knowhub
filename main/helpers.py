@@ -1,4 +1,6 @@
 import base64
+import pytz
+import datetime
 import json
 import time
 
@@ -114,3 +116,27 @@ def log_analytic(request):
     if request.user.is_authenticated:
         new_analytic.user = User.objects.get(id=request.user.id)
     new_analytic.save()
+
+
+def get_timezones_form():
+    timezones = []
+    timezones_name = pytz.common_timezones
+    for name in timezones_name:
+        if name == "GMT":
+            continue
+
+        offset = datetime.datetime.now(pytz.timezone(name)).strftime("%z")
+        offset_pretty = "UTC" + offset[:3] + ":" + offset[3:]
+
+        name_pretty = name
+        if "/" in name:
+            name_pretty = name.replace("_", " ")
+        timezones.append({"code": name, "name": name_pretty, "offset": offset_pretty})
+
+    timezones_sorted = sorted(timezones, key=lambda k: k["offset"])
+    timezones_utc = timezones_sorted[:19]
+    timezones_plus = timezones_sorted[19:263]
+    timezones_minus = reversed(timezones_sorted[263:])
+    timezones_synthesized = [*timezones_minus, *timezones_utc, *timezones_plus]
+
+    return timezones_synthesized
