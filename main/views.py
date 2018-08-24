@@ -354,7 +354,7 @@ def settings_user(request, route):
 
     return render(
         request,
-        "main/settings.html",
+        "main/settings_user.html",
         {"form": form, "timezones": get_timezones_form()},
     )
 

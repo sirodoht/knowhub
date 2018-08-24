@@ -50,6 +50,14 @@
             {% endif %}
             <input type="text" name="slack" maxlength="300" required id="id_slack" value="{{ form.slack.value }}">
 
+            <label for="id_location">{{ form.location.label }}</label>
+            {% if form.location.errors %}
+                {% for error in form.location.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="text" name="location" maxlength="300" required id="id_location" value="{{ form.location.value }}">
+
             <label for="id_time_zone">Time Zone</label>
             {% if form.time_zone.errors %}
                 {% for error in form.time_zone.errors %}
