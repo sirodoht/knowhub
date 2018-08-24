@@ -1136,6 +1136,12 @@ button:hover {
     padding-right: 8px;
 }
 
+.settings input[type="time"] {
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom: 20px;
+}
+
 .settings select {
     width: 100%;
     margin-top: 3px;

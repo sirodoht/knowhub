@@ -40,7 +40,7 @@
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="role" maxlength="300" required id="id_role" value="{{ form.role.value }}">
+            <input type="text" name="role" maxlength="300" id="id_role" value="{{ form.role.value }}">
 
             <label for="id_slack">{{ form.slack.label }}</label>
             {% if form.slack.errors %}
@@ -48,7 +48,23 @@
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="slack" maxlength="300" required id="id_slack" value="{{ form.slack.value }}">
+            <input type="text" name="slack" maxlength="300" id="id_slack" value="{{ form.slack.value }}">
+
+            <label for="id_work_start">{{ form.work_start.label }}</label>
+            {% if form.work_start.errors %}
+                {% for error in form.work_start.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="time" name="work_start" maxlength="300" id="id_work_start" value="{{ form.work_start.value }}">
+
+            <label for="id_work_end">{{ form.work_end.label }}</label>
+            {% if form.work_end.errors %}
+                {% for error in form.work_end.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="time" name="work_end" maxlength="300" id="id_work_end" value="{{ form.work_end.value }}">
 
             <label for="id_location">{{ form.location.label }}</label>
             {% if form.location.errors %}
@@ -56,7 +72,7 @@
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="location" maxlength="300" required id="id_location" value="{{ form.location.value }}">
+            <input type="text" name="location" maxlength="300" id="id_location" value="{{ form.location.value }}">
 
             <label for="id_time_zone">Time Zone</label>
             {% if form.time_zone.errors %}

@@ -4,7 +4,7 @@
 {% load tz %}
 {% load custom_filters %}
 
-{% block title %}{{ request.user.profile.name }} - {{ request.user.profile.company.name }}{% endblock %}
+{% block title %}{{ user.profile.name }} - {{ request.user.profile.company.name }}{% endblock %}
 
 {% block content %}
     <section class="profile">
@@ -21,9 +21,17 @@
                 <div class="profile-details-line-key">Slack</div>
                 <div class="profile-details-line-value">{{ user.profile.slack }}</div>
             </div>
+            {% if user.profile.work_start and user.profile.work_end %}
+            <div class="profile-details-line">
+                <div class="profile-details-line-key">Working Hours</div>
+                <div class="profile-details-line-value">
+                    <abbr title="At your local timezone">{{ user.profile.work_start|time:"H:i" }} - {{ user.profile.work_end|time:"H:i" }}</abbr>
+                </div>
+            </div>
+            {% endif %}
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Local Time</div>
-                <div class="profile-details-line-value">{{ local_time }}</div>
+                <div class="profile-details-line-value" title="{{ local_datetime }}">{{ local_time }}</div>
             </div>
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Location</div>

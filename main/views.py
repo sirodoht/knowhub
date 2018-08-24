@@ -303,12 +303,15 @@ def profile(request, route, username):
         user = User.objects.get(username=username)
         local_time = datetime.datetime.now(
             pytz.timezone(user.profile.time_zone)
-        ).strftime("%-I:%M %p")
+        ).strftime("%H:%M")
+        local_datetime = datetime.datetime.now(
+            pytz.timezone(user.profile.time_zone)
+        ).strftime("%a, %b %-d - %-I:%M %p")
         company = Company.objects.get(route=route)
         return render(
             request,
             "main/profile.html",
-            {"company": company, "user": user, "local_time": local_time},
+            {"company": company, "user": user, "local_time": local_time, "local_datetime": local_datetime},
         )
 
 
