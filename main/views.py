@@ -396,8 +396,9 @@ def resources_create(request, route):
             ).random(length=6)
             resource.save()
             for tag_text in form.cleaned_data["tags"].split(","):
-                tag, created = Tag.objects.get_or_create(text=tag_text)
-                tag.resources.add(resource)
+                if tag_text.strip():
+                    tag, created = Tag.objects.get_or_create(text=tag_text)
+                    tag.resources.add(resource)
             return redirect("main:resources", route)
         else:
             messages.error(request, "Resource creation failed.")
