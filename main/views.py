@@ -2,7 +2,6 @@ import datetime
 import json
 
 import pytz
-from django.utils import timezone
 import shortuuid
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
@@ -36,9 +35,9 @@ from .helpers import (
     email_login_link,
     get_client_ip,
     get_invite_data,
+    get_timezones_form,
     log_analytic,
     verify_invite_data,
-    get_timezones_form,
 )
 from .models import Answer, Company, Post, Question, Resource, Subscriber, Tag
 from .tasks import invite_task
@@ -303,7 +302,11 @@ def profile(request, route, username):
     else:
         user = User.objects.get(username=username)
         company = Company.objects.get(route=route)
-        return render(request, "main/profile.html", {"company": company, "user": user})
+        return render(
+            request,
+            "main/profile.html",
+            {"company": company, "user": user, "local_time": local_time},
+        )
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
