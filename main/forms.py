@@ -25,7 +25,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = models.Profile
-        fields = ["name", "role", "slack", "time_zone"]
+        fields = ["name", "role", "slack", "time_zone", "location"]
 
 
 class InviteSetupForm(forms.ModelForm):
