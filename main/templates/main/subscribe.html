@@ -33,6 +33,10 @@
 
             {% csrf_token %}
             <input type="submit" value="Get started">
+            <div class="ritual-form-explain">
+                By clicking “Get started”, you agree to our
+                <a href="{% url 'main:terms' %}">terms&nbsp;of&nbsp;service</a>&nbsp;and&nbsp;<a href="{% url 'main:privacy' %}">privacy&nbsp;policy</a>.
+            </div>
         </form>
     </section>
 {% endblock %}
