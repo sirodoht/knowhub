@@ -1,8 +1,10 @@
 {% extends 'main/scaffold.html' %}
 
 {% load static %}
+{% load tz %}
+{% load custom_filters %}
 
-{% block title %}Company - KnowHub.app{% endblock %}
+{% block title %}{{ request.user.profile.name }} - {{ request.user.profile.company.name }}{% endblock %}
 
 {% block content %}
     <section class="profile">
@@ -21,11 +23,11 @@
             </div>
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Local Time</div>
-                <div class="profile-details-line-value">12:23 PM</div>
+                <div class="profile-details-line-value">{{ local_time }}</div>
             </div>
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Location</div>
-                <div class="profile-details-line-value">{{ user.profile.location }} – UTC-7</div>
+                <div class="profile-details-line-value">{{ user.profile.location }} – {{ request.user.profile.time_zone|tz_offset }}</div>
             </div>
         </div>
 
