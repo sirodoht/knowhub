@@ -59,6 +59,9 @@ MIDDLEWARE = [
     "main.middleware.TimezoneMiddleware",
 ]
 
+if DEBUG:
+    MIDDLEWARE.append("main.middleware.StatsMiddleware")
+
 ROOT_URLCONF = "knowhub.urls"
 
 TEMPLATES = [
