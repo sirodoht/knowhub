@@ -1,0 +1,51 @@
+{% extends 'main/scaffold.html' %}
+
+{% load static %}
+
+{% block layout %}
+    <header>
+        <div class="header-content">
+            <div class="header-content-brand">
+                <a href="{% url 'main:index' %}" class="header-content-brand-link">
+                    <img src="{{ request.user.profile.company.logo }}" alt="logo" width="32px" height="32px">
+                </a>
+            </div>
+            <nav>
+                <a href="{% url 'main:questions' request.user.profile.company.route %}" class="nav-item">
+                    <div class="nav-item-icon">
+                        {% include "main/bubbles.svg" %}
+                    </div>
+                    Questions
+                </a>
+                <a href="{% url 'main:resources' request.user.profile.company.route %}" class="nav-item">
+                    <div class="nav-item-icon">
+                        {% include "main/book.svg" %}
+                    </div>
+                    Resources
+                </a>
+                <a href="{% url 'main:people' request.user.profile.company.route %}" class="nav-item">
+                    <div class="nav-item-icon">
+                        {% include "main/team.svg" %}
+                    </div>
+                    People
+                </a>
+            </nav>
+            <div class="header-content-profile">
+                <a href="{% url 'main:profile' request.user.profile.company.route request.user.username %}">
+                    <img class="header-content-profile-photo" src="{{ request.user.profile.photo }}" alt="profile photo" width="32px" height="32px">
+                </a>
+            </div>
+        </div>
+    </header>
+    {% if messages %}
+    <div class="flash">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+{% endblock %}

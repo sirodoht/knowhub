@@ -1,4 +1,4 @@
-{% extends 'main/scaffold.html' %}
+{% extends 'main/layout_public.html' %}
 
 {% load static %}
 
@@ -17,7 +17,7 @@
         <div class="blog-post">
             <header>
                 <h1>{{ post.title }}</h1>
-                <div class="blog-post-date">{{ post.date }}</div>
+                <div class="blog-post-date">Published on {{ post.date }}</div>
             </header>
             {{ post.as_markdown|safe }}
         </div>
