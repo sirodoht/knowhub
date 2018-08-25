@@ -7,12 +7,15 @@
 {% block content %}
     <section class="people">
         <header>
-            <h1>People Directory</h1>
-            <a href="{% url 'main:invite' request.user.profile.company.route %}">Invite</a>
+            <div class="people-title">
+                <h1>People Directory</h1>
+                <a href="{% url 'main:announce' %}" class="people-title-announce">Announce</a>
+                <a href="{% url 'main:invite' %}" class="people-title-invite">Invite</a>
+            </div>
         </header>
         <div class="people-grid">
             {% for person in people %}
-            <a class="people-grid-item" href="{% url 'main:profile' request.user.profile.company.route person.username %}">
+            <a class="people-grid-item" href="{% url 'main:profile' person.username %}">
                 <div class="people-grid-item-text">
                     <div class="people-grid-item-text-name">{{ person.profile.name }}</div>
                     <div class="people-grid-item-text-role">{{ person.profile.role|default:"&nbsp;" }}</div>
