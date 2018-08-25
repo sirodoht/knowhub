@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 from django.forms import formset_factory
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.utils import timezone
 from django.utils.text import slugify
 from django.views.decorators.http import require_http_methods, require_safe
 
@@ -307,11 +308,44 @@ def profile(request, route, username):
         local_datetime = datetime.datetime.now(
             pytz.timezone(user.profile.time_zone)
         ).strftime("%a, %b %-d - %-I:%M %p")
+        if user.profile.work_start:
+            user_timezone = pytz.timezone(user.profile.time_zone)
+            now = timezone.now()
+            user.profile.work_start = datetime.datetime(
+                year=now.year,
+                month=now.month,
+                day=now.day,
+                hour=user.profile.work_start.hour,
+                minute=user.profile.work_end.minute,
+            )
+            localized = user_timezone.localize(user.profile.work_start)
+            user.profile.work_start = localized.astimezone(
+                pytz.timezone(request.user.profile.time_zone)
+            )
+        if user.profile.work_end:
+            user_timezone = pytz.timezone(user.profile.time_zone)
+            now = timezone.now()
+            user.profile.work_end = datetime.datetime(
+                year=now.year,
+                month=now.month,
+                day=now.day,
+                hour=user.profile.work_end.hour,
+                minute=user.profile.work_end.minute,
+            )
+            localized = user_timezone.localize(user.profile.work_end)
+            user.profile.work_end = localized.astimezone(
+                pytz.timezone(request.user.profile.time_zone)
+            )
         company = Company.objects.get(route=route)
         return render(
             request,
             "main/profile.html",
-            {"company": company, "user": user, "local_time": local_time, "local_datetime": local_datetime},
+            {
+                "company": company,
+                "user": user,
+                "local_time": local_time,
+                "local_datetime": local_datetime,
+            },
         )
 
 
@@ -357,9 +391,13 @@ def settings_user(request, route):
             messages.success(request, "Settings update failed")
             return redirect("main:profile", route, request.user.username)
     else:
-        form = ProfileForm(
-            instance=request.user.profile, initial={"email": request.user.email}
-        )
+        initial_data = {"email": request.user.email}
+        if request.user.profile.work_start and request.user.profile.work_end:
+            initial_data["work_start"] = request.user.profile.work_start.strftime(
+                "%H:%M"
+            )
+            initial_data["work_end"] = request.user.profile.work_end.strftime("%H:%M")
+        form = ProfileForm(instance=request.user.profile, initial=initial_data)
 
     return render(
         request,

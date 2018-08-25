@@ -1,7 +1,6 @@
 {% extends 'main/layout_auth.html' %}
 
 {% load static %}
-{% load tz %}
 {% load custom_filters %}
 
 {% block title %}{{ user.profile.name }} - {{ request.user.profile.company.name }}{% endblock %}
@@ -17,15 +16,17 @@
                 <div class="profile-details-line-key">Email</div>
                 <div class="profile-details-line-value">{{ user.email }}</div>
             </div>
+            {% if user.profile.slack %}
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Slack</div>
                 <div class="profile-details-line-value">{{ user.profile.slack }}</div>
             </div>
+            {% endif %}
             {% if user.profile.work_start and user.profile.work_end %}
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Working Hours</div>
                 <div class="profile-details-line-value">
-                    <abbr title="At your local timezone">{{ user.profile.work_start|time:"H:i" }} - {{ user.profile.work_end|time:"H:i" }}</abbr>
+                    <abbr title="At your local timezone ({{ TIME_ZONE|tz_offset }})">{{ user.profile.work_start|time:"H:i" }} - {{ user.profile.work_end|time:"H:i" }}</abbr>
                 </div>
             </div>
             {% endif %}
@@ -35,7 +36,7 @@
             </div>
             <div class="profile-details-line">
                 <div class="profile-details-line-key">Location</div>
-                <div class="profile-details-line-value">{{ user.profile.location }} – {{ request.user.profile.time_zone|tz_offset }}</div>
+                <div class="profile-details-line-value">{{ user.profile.location }} – {{ user.profile.time_zone|tz_offset }}</div>
             </div>
         </div>
 
