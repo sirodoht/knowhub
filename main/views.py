@@ -19,6 +19,7 @@ from knowhub import settings
 
 from . import billing
 from .forms import (
+    AnnounceForm,
     AnswerForm,
     CompanyForm,
     CompanySettingsForm,
@@ -31,7 +32,6 @@ from .forms import (
     ResourceForm,
     SubscriberForm,
     UserForm,
-    AnnounceForm,
 )
 from .helpers import (
     email_login_link,
@@ -42,7 +42,7 @@ from .helpers import (
     verify_invite_data,
 )
 from .models import Answer, Company, Post, Question, Resource, Subscriber, Tag
-from .tasks import invite_task
+from .tasks import invite_task, announce_task
 
 
 def index(request):
@@ -352,9 +352,7 @@ def profile_photo(request):
         data = json.loads(body)
         request.user.profile.photo = data["photo_url"]
         request.user.save()
-        return redirect(
-            "main:profile", request.user.username
-        )
+        return redirect("main:profile", request.user.username)
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -454,7 +452,7 @@ def resources_create(request):
                     tag.resources.add(resource)
             return redirect("main:resources")
         else:
-            messages.error(request, "Resource creation failed.")
+            messages.error(request, "Resource creation failed")
             return redirect("main:resources")
     else:
         form = ResourceForm()
@@ -485,7 +483,7 @@ def resources_edit(request, resource_slug):
                     tag.resources.add(resource)
             return redirect("main:resources_view", resource.slug)
         else:
-            messages.error(request, "Resource editing failed.")
+            messages.error(request, "Resource editing failed")
             return redirect("main:resources_view", resource_slug)
     else:
         resource = Resource.objects.get(slug=resource_slug)
@@ -506,7 +504,7 @@ def resources_delete(request, resource_slug):
             resource.delete()
             return redirect("main:resources")
         else:
-            messages.error(request, "Resource deletion failed.")
+            messages.error(request, "Resource deletion failed")
             return redirect("main:resources_view", resource_slug)
 
 
@@ -556,7 +554,7 @@ def questions_view(request, question_slug):
             answer.save()
             return redirect("main:questions_view", question_slug)
         else:
-            messages.error(request, "Question posting failed.")
+            messages.error(request, "Question posting failed")
             return redirect("main:questions_view", question_slug)
     else:
         form = AnswerForm()
@@ -617,3 +615,28 @@ def terms(request):
 @require_safe
 def privacy(request):
     return render(request, "main/privacy.html")
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def announce(request):
+    if request.method == "POST":
+        form = AnnounceForm(request.POST)
+        if form.is_valid():
+            profiles = request.user.profile.company.profile_set.all()
+            for item in profiles:
+                announce_task.delay(
+                    {
+                        "subject": form.cleaned_data["subject"],
+                        "body": form.cleaned_data["body"],
+                        "email": item.user.email,
+                    }
+                )
+            messages.success(request, "Announcement emails sent")
+            return redirect("main:people")
+        else:
+            messages.error(request, "Invalid input data")
+    else:
+        form = AnnounceForm()
+
+    return render(request, "main/announce.html", {"form": form})
