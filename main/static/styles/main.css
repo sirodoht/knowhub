@@ -1616,10 +1616,13 @@ button:hover {
     padding-right: 10px;
 }
 
+.generic header {
+    display: flex;
+}
+
 .generic header a {
     cursor: pointer;
-    margin-top: 16px;
-    margin-bottom: 40px;
+    margin-top: 10px;
     margin-left: auto;
     padding: 5px 15px;
     border-radius: 3px;
@@ -1691,30 +1694,6 @@ button:hover {
 
 .generic input[type="submit"]:hover {
     background: #fe9f00;
-}
-
-.generic {
-    max-width: 1000px;
-    margin: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.generic header {
-    display: flex;
-}
-
-.generic header a {
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: auto;
-    padding: 5px 15px;
-    border-radius: 3px;
-    background: #ffa918;
-    color: #fff;
-    border: none;
-    display: flex;
-    align-self: center;
 }
 
 .questions {
