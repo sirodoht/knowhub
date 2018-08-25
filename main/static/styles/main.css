@@ -898,28 +898,34 @@ button:hover {
 
 .addition {
     width: 400px;
-    margin: auto auto 200px;
+    margin: auto auto 100px;
 }
 
 .addition h1 {
     font-size: 32px;
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 60px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
+.addition-form {
+    margin-top: 48px;
 }
 
 .addition-label {
     font-size: 16px;
     font-weight: 500;
     display: block;
-    margin-bottom: 7px;
+    margin-top: 16px;
+    margin-bottom: 2px;
 }
 
+.addition-input[type="text"],
 .addition-input[type="email"] {
     box-sizing: border-box;
     width: 100%;
     min-height: 34px;
-    padding: 7px 12px;
+    padding: 7px;
     margin-top: 5px;
     margin-bottom: 5px;
     font-size: 16px;
@@ -930,8 +936,22 @@ button:hover {
     border-radius: 2px;
 }
 
+.addition-input[type="text"]::placeholder,
 .addition-input[type="email"]::placeholder {
     color: #bbb;
+}
+
+.addition-textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 7px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    line-height: 20px;
+    background-color: #fff;
+    border: 1px solid #d1d5da;
+    border-radius: 2px;
 }
 
 .addition-input[type="submit"] {
@@ -948,6 +968,30 @@ button:hover {
 
 .addition-input[type="submit"]:hover {
     background: #fe9f00;
+}
+
+.addition-input-center[type="submit"] {
+    cursor: pointer;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+    padding: 10px 30px;
+    border-radius: 3px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
+}
+
+.addition-input-center[type="submit"]:hover {
+    background: #fe9f00;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 2px 2px 6px rgba(43, 45, 80, 0.2);
+}
+
+.addition-subtitle {
+    text-align: center;
 }
 
 .addition-more {
@@ -968,30 +1012,50 @@ button:hover {
     padding-right: 10px;
 }
 
-.people header {
+.people-title {
     display: flex;
     border-bottom: 1px solid #e4e6e8;
 }
 
-.people header a {
+.people-title-invite {
     cursor: pointer;
     margin-top: 16px;
     margin-bottom: 16px;
-    margin-left: auto;
+    margin-left: 16px;
+    padding: 10px 15px;
     border-radius: 3px;
     background: #ffa918;
     color: #fff;
     border: none;
     display: flex;
     align-self: center;
-    padding: 10px 15px;
-    transition: all 0.15s ease;
+    transition: all 0.15s ease-in-out;
     box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
 }
 
-.people header a:hover {
+.people-title-invite:hover {
     background: #fe9f00;
-    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1), 0 0 0 1px rgba(43,45,80,.1);
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 2px 2px 6px rgba(43, 45, 80, 0.2);
+}
+
+.people-title-announce {
+    cursor: pointer;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: auto;
+    padding: 8px 13px;
+    border: 2px solid #0d9086;
+    border-radius: 3px;
+    color: #0d9086;
+    border-radius: 3px;
+    display: flex;
+    align-self: center;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
+}
+
+.people-title-invite:hover {
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 2px 2px 6px rgba(43, 45, 80, 0.2);
 }
 
 .people h1 {
