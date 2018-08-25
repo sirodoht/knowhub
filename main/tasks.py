@@ -13,3 +13,10 @@ def invite_task(data):
         settings.DEFAULT_FROM_EMAIL,
         [data["email"]],
     )
+
+
+@shared_task
+def announce_task(data):
+    send_mail(
+        data["subject"], data["body"], settings.DEFAULT_FROM_EMAIL, [data["email"]]
+    )
