@@ -148,14 +148,14 @@ def invite(request, route):
     if request.method == "POST":
         formset = UserFormSet(request.POST, prefix="user")
         if formset.is_valid():
-            uniqueEmails = []
+            unique_emails = []
             for form in formset:
                 if (
                     "email" in form.cleaned_data
-                    and form.cleaned_data["email"] not in uniqueEmails
+                    and form.cleaned_data["email"] not in unique_emails
                 ):
-                    uniqueEmails.append(form.cleaned_data["email"])
-            for email in uniqueEmails:
+                    unique_emails.append(form.cleaned_data["email"])
+            for email in unique_emails:
                 data = get_invite_data(request, email, company)
                 invite_task.delay(data)
             messages.success(request, "Invites sent!")
