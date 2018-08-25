@@ -8,17 +8,17 @@
     <section class="questions">
         <header>
             <h1>Questions</h1>
-            <a href="{% url 'main:questions_create' request.user.profile.company.route %}">Ask a Question</a>
+            <a href="{% url 'main:questions_create' %}">Ask a Question</a>
         </header>
         <div class="questions-list">
             {% for item in questions %}
             <div class="questions-list-item">
                 <h2 class="questions-list-item-title">
-                    <a href="{% url 'main:questions_view' request.user.profile.company.route item.slug %}">{{ item.title }}</a>
+                    <a href="{% url 'main:questions_view' item.slug %}">{{ item.title }}</a>
                 </h2>
                 <div class="questions-list-item-meta">
                     asked by
-                    <a href="{% url 'main:profile' request.user.profile.company.route item.author.username %}">
+                    <a href="{% url 'main:profile' item.author.username %}">
                         {{ item.author.username }}</a>
                     at {{ item.created_at }}
                 </div>

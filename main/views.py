@@ -31,6 +31,7 @@ from .forms import (
     ResourceForm,
     SubscriberForm,
     UserForm,
+    AnnounceForm,
 )
 from .helpers import (
     email_login_link,
@@ -50,21 +51,17 @@ def index(request):
         if not request.user.profile.company:
             return redirect("main:company_new")
         if request.user.profile.is_admin and not request.user.profile.stripe_id:
-            return redirect("main:billing_setup", request.user.profile.company.route)
-        return redirect("main:questions", request.user.profile.company.route)
+            return redirect("main:billing_setup")
+        return redirect("main:questions")
     else:
         return render(request, "main/landing.html")
 
 
-def company(request, route):
-    return redirect("main:index")
-
-
-def people(request, route):
+def people(request):
     if request.user.is_authenticated:
         if request.user.profile.is_admin and not request.user.profile.stripe_id:
-            return redirect("main:billing_setup", route)
-        company = Company.objects.get(route=route)
+            return redirect("main:billing_setup")
+        company = Company.objects.get(route=request.user.profile.company.route)
         people = User.objects.all().filter(
             profile__company=request.user.profile.company
         )
@@ -142,8 +139,8 @@ def logout(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def invite(request, route):
-    company = Company.objects.get(route=route)
+def invite(request):
+    company = Company.objects.get(route=request.user.profile.company.route)
     UserFormSet = formset_factory(UserForm, max_num=100, extra=100)
     if request.method == "POST":
         formset = UserFormSet(request.POST, prefix="user")
@@ -182,7 +179,7 @@ def invite_verify(request):
             if user is not None:
                 dj_login(request, user)
                 billing.subscription_upgrade(request.user)
-                return redirect("main:invite_setup", user.profile.company.route)
+                return redirect("main:invite_setup")
             else:
                 messages.error(
                     request,
@@ -199,9 +196,9 @@ def invite_verify(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def invite_setup(request, route):
+def invite_setup(request):
     if request.user.profile.name:
-        return redirect("main:profile", route, request.user.username)
+        return redirect("main:profile", request.user.username)
 
     if request.method == "POST":
         form = InviteSetupForm(request.POST, instance=request.user.profile)
@@ -232,7 +229,7 @@ def company_new(request):
             request.user.profile.company = new_company
             request.user.profile.is_admin = True
             request.user.save()
-            return redirect("main:billing_setup", request.user.profile.company.route)
+            return redirect("main:billing_setup")
     else:
         form = CompanyForm()
 
@@ -241,16 +238,14 @@ def company_new(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def billing_setup(request, route):
-    if route != request.user.profile.company.route:
-        return redirect("main:index")
+def billing_setup(request):
     stripe_public = settings.STRIPE_PUBLIC
     return render(request, "main/billing_setup.html", {"stripe_public": stripe_public})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def billing_customer(request, route):
+def billing_customer(request):
     if request.method == "POST":
         body = request.body.decode("utf-8")
         data = json.loads(body)
@@ -296,9 +291,9 @@ def subscribe_thanks(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def profile(request, route, username):
+def profile(request, username):
     if not username:
-        company = Company.objects.get(route=route)
+        company = Company.objects.get(route=request.user.profile.company.route)
         return render(request, "main/profile.html", {"company": company})
     else:
         user = User.objects.get(username=username)
@@ -336,7 +331,7 @@ def profile(request, route, username):
             user.profile.work_end = localized.astimezone(
                 pytz.timezone(request.user.profile.time_zone)
             )
-        company = Company.objects.get(route=route)
+        company = Company.objects.get(route=request.user.profile.company.route)
         return render(
             request,
             "main/profile.html",
@@ -351,31 +346,31 @@ def profile(request, route, username):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def profile_photo(request, route):
+def profile_photo(request):
     if request.method == "POST":
         body = request.body.decode("utf-8")
         data = json.loads(body)
         request.user.profile.photo = data["photo_url"]
         request.user.save()
         return redirect(
-            "main:profile", request.user.profile.company.route, request.user.username
+            "main:profile", request.user.username
         )
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def company_logo(request, route):
+def company_logo(request):
     if request.method == "POST":
         body = request.body.decode("utf-8")
         data = json.loads(body)
         request.user.profile.company.logo = data["logo_url"]
         request.user.profile.company.save()
-        return redirect("main:settings_company", request.user.profile.company.route)
+        return redirect("main:settings_company")
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def settings_user(request, route):
+def settings_user(request):
     if request.method == "POST":
         form = ProfileForm(
             request.POST,
@@ -386,10 +381,10 @@ def settings_user(request, route):
             request.user.email = form.cleaned_data["email"]
             request.user.save()
             messages.success(request, "Settings updated successfully")
-            return redirect("main:profile", route, request.user.username)
+            return redirect("main:profile", request.user.username)
         else:
             messages.success(request, "Settings update failed")
-            return redirect("main:profile", route, request.user.username)
+            return redirect("main:profile", request.user.username)
     else:
         initial_data = {"email": request.user.email}
         if request.user.profile.work_start and request.user.profile.work_end:
@@ -408,16 +403,16 @@ def settings_user(request, route):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def settings_company(request, route):
+def settings_company(request):
     if not request.user.profile.is_admin:
-        return redirect("main:settings_user", request.user.profile.company.route)
+        return redirect("main:settings_user")
 
     if request.method == "POST":
         form = CompanySettingsForm(request.POST, instance=request.user.profile.company)
         if form.is_valid():
             request.user.profile.company.save()
             messages.success(request, "Settings updated successfully")
-            return redirect("main:profile", route, request.user.username)
+            return redirect("main:profile", request.user.username)
     else:
         form = CompanySettingsForm(instance=request.user.profile.company)
 
@@ -426,7 +421,7 @@ def settings_company(request, route):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def resources(request, route):
+def resources(request):
     resources = Resource.objects.filter(company=request.user.profile.company).order_by(
         "title"
     )
@@ -435,14 +430,14 @@ def resources(request, route):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def resources_view(request, route, resource_slug):
+def resources_view(request, resource_slug):
     resource = Resource.objects.get(slug=resource_slug)
     return render(request, "main/resources_view.html", {"resource": resource})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def resources_create(request, route):
+def resources_create(request):
     if request.method == "POST":
         form = ResourceForm(request.POST)
         if form.is_valid():
@@ -457,10 +452,10 @@ def resources_create(request, route):
                 if tag_text.strip():
                     tag, created = Tag.objects.get_or_create(text=tag_text)
                     tag.resources.add(resource)
-            return redirect("main:resources", route)
+            return redirect("main:resources")
         else:
             messages.error(request, "Resource creation failed.")
-            return redirect("main:resources", route)
+            return redirect("main:resources")
     else:
         form = ResourceForm()
 
@@ -469,7 +464,7 @@ def resources_create(request, route):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def resources_edit(request, route, resource_slug):
+def resources_edit(request, resource_slug):
     resource = Resource.objects.get(slug=resource_slug)
     if request.method == "POST":
         form = ResourceForm(
@@ -488,10 +483,10 @@ def resources_edit(request, route, resource_slug):
                 if tag_text.strip():
                     tag, created = Tag.objects.get_or_create(text=tag_text)
                     tag.resources.add(resource)
-            return redirect("main:resources_view", route, resource.slug)
+            return redirect("main:resources_view", resource.slug)
         else:
             messages.error(request, "Resource editing failed.")
-            return redirect("main:resources_view", route, resource_slug)
+            return redirect("main:resources_view", resource_slug)
     else:
         resource = Resource.objects.get(slug=resource_slug)
         form = ResourceForm(instance=resource, initial={"tags": resource.tags})
@@ -503,23 +498,21 @@ def resources_edit(request, route, resource_slug):
 
 @require_http_methods(["HEAD", "POST"])
 @login_required
-def resources_delete(request, route, resource_slug):
+def resources_delete(request, resource_slug):
     if request.method == "POST":
         resource = Resource.objects.get(slug=resource_slug)
         form = DeleteResourceForm(request.POST, instance=resource)
         if form.is_valid():
             resource.delete()
-            return redirect("main:resources", route)
+            return redirect("main:resources")
         else:
             messages.error(request, "Resource deletion failed.")
-            return redirect("main:resources_view", route, resource_slug)
+            return redirect("main:resources_view", resource_slug)
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def questions(request, route):
-    if route != request.user.profile.company.route:
-        return redirect("main:questions", request.user.profile.company.route)
+def questions(request):
     questions = Question.objects.filter(company=request.user.profile.company).order_by(
         "-updated_at"
     )
@@ -528,7 +521,7 @@ def questions(request, route):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def questions_create(request, route):
+def questions_create(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
         if form.is_valid():
@@ -540,10 +533,10 @@ def questions_create(request, route):
                 "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
             ).random(length=6)
             question.save()
-            return redirect("main:questions_view", route, question.slug)
+            return redirect("main:questions_view", question.slug)
         else:
             messages.error(request, "Question posting failed.")
-            return redirect("main:questions", route)
+            return redirect("main:questions")
     else:
         form = QuestionForm()
 
@@ -552,7 +545,7 @@ def questions_create(request, route):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def questions_view(request, route, question_slug):
+def questions_view(request, question_slug):
     question = Question.objects.get(slug=question_slug)
     if request.method == "POST":
         form = AnswerForm(request.POST)
@@ -561,10 +554,10 @@ def questions_view(request, route, question_slug):
             answer.author = request.user
             answer.question = question
             answer.save()
-            return redirect("main:questions_view", route, question_slug)
+            return redirect("main:questions_view", question_slug)
         else:
             messages.error(request, "Question posting failed.")
-            return redirect("main:questions_view", route, question_slug)
+            return redirect("main:questions_view", question_slug)
     else:
         form = AnswerForm()
         answers = Answer.objects.filter(question=question).order_by("created_at")
@@ -616,9 +609,11 @@ def google_verify(request):
     return render(request, "main/googlef6b7b346eca71466.html")
 
 
+@require_safe
 def terms(request):
     return render(request, "main/terms.html")
 
 
+@require_safe
 def privacy(request):
     return render(request, "main/privacy.html")

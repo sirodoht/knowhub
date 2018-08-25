@@ -22,51 +22,50 @@ urlpatterns = [
     path("blog/", views.blog, name="blog"),
     path("blog/subscribe/", views.blog_subscribe, name="blog_subscribe"),
     path("blog/<slug:post_slug>/", views.blog_post, name="blog_post"),
-    path("<slug:route>/", views.company, name="company"),
-    path("<slug:route>/setup/", views.invite_setup, name="invite_setup"),
-    path("<slug:route>/people/", views.people, name="people"),
-    path("<slug:route>/resources/", views.resources, name="resources"),
+    path("setup/", views.invite_setup, name="invite_setup"),
+    path("people/", views.people, name="people"),
+    path("resources/", views.resources, name="resources"),
     path(
-        "<slug:route>/resources/new/", views.resources_create, name="resources_create"
+        "resources/new/", views.resources_create, name="resources_create"
     ),
     path(
-        "<slug:route>/resources/<slug:resource_slug>/",
+        "resources/<slug:resource_slug>/",
         views.resources_view,
         name="resources_view",
     ),
     path(
-        "<slug:route>/resources/<slug:resource_slug>/edit/",
+        "resources/<slug:resource_slug>/edit/",
         views.resources_edit,
         name="resources_edit",
     ),
     path(
-        "<slug:route>/resources/<slug:resource_slug>/delete/",
+        "resources/<slug:resource_slug>/delete/",
         views.resources_delete,
         name="resources_delete",
     ),
-    path("<slug:route>/questions/", views.questions, name="questions"),
-    path("<slug:route>/questions/ask", views.questions_create, name="questions_create"),
+    path("questions/", views.questions, name="questions"),
+    path("questions/ask", views.questions_create, name="questions_create"),
     path(
-        "<slug:route>/questions/<slug:question_slug>/",
+        "questions/<slug:question_slug>/",
         views.questions_view,
         name="questions_view",
     ),
-    path("<slug:route>/billing/", views.billing_setup, name="billing_setup"),
+    path("billing/", views.billing_setup, name="billing_setup"),
     path(
-        "<slug:route>/billing/customer/",
+        "billing/customer/",
         views.billing_customer,
         name="billing_customer",
     ),
-    path("<slug:route>/invite/", views.invite, name="invite"),
-    path("<slug:route>/settings/", views.settings_user, name="settings_user"),
+    path("invite/", views.invite, name="invite"),
+    path("settings/", views.settings_user, name="settings_user"),
     path(
-        "<slug:route>/settings/company/",
+        "settings/company/",
         views.settings_company,
         name="settings_company",
     ),
     path(
-        "<slug:route>/settings/company/logo/", views.company_logo, name="company_logo"
+        "settings/company/logo/", views.company_logo, name="company_logo"
     ),
-    path("<slug:route>/settings/photo/", views.profile_photo, name="profile_photo"),
-    path("<slug:route>/profile/<slug:username>/", views.profile, name="profile"),
+    path("settings/photo/", views.profile_photo, name="profile_photo"),
+    path("profile/<slug:username>/", views.profile, name="profile"),
 ]

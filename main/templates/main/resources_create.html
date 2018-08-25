@@ -48,7 +48,7 @@
             <h1>Create resource</h1>
         </header>
         <div class="resources-create-content">
-            <form action="{% url 'main:resources_create' request.user.profile.company.route %}"
+            <form action="{% url 'main:resources_create' %}"
                 method="post"
                 class="resources-create-content-form"
                 onsubmit="return attachTags();">

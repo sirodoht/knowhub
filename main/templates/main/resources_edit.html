@@ -47,18 +47,18 @@
         <header>
             <div class="resources-edit-title">
                 <h1>Edit resource</h1>
-                <form action="{% url 'main:resources_delete' request.user.profile.company.route resource.slug %}"
+                <form action="{% url 'main:resources_delete' resource.slug %}"
                     method="post"
                     onsubmit="return confirm('Do you really want to delete this resource?');"
                     class="resources-edit-title-form">
                     {% csrf_token %}
                     <input type="submit" value="Delete" class="resources-edit-title-form-delete">
                 </form>
-                <a href="{% url 'main:resources_create' request.user.profile.company.route %}" class="resources-view-title-create">Create</a>
+                <a href="{% url 'main:resources_create' %}" class="resources-view-title-create">Create</a>
             </div>
         </header>
         <div class="resources-edit-content">
-            <form action="{% url 'main:resources_edit' request.user.profile.company.route resource.slug %}"
+            <form action="{% url 'main:resources_edit' resource.slug %}"
                 method="post"
                 class="resources-edit-content-form"
                 onsubmit="return attachTags();">

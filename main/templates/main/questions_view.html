@@ -51,12 +51,12 @@
         <div class="questions-view">
             <header>
                 <h1>{{ question.title }}</h1>
-                <a href="{% url 'main:questions_create' request.user.profile.company.route %}">Ask a Question</a>
+                <a href="{% url 'main:questions_create' %}">Ask a Question</a>
             </header>
             <div class="questions-view-content">
                 <div class="questions-view-content-body">
                     <a class="questions-view-content-body-author" title="{{ question.author.profile.name }} ({{question.author.username }})"
-                        href="{% url 'main:profile' question.author.profile.company.route question.author.username %}">
+                        href="{% url 'main:profile' question.author.username %}">
                         <img src="{{ question.author.profile.photo }}" alt="{{ question.author.username }} photo" width="32px">
                     </a>
                     <div class="questions-view-content-body-text">{{ question.as_markdown|safe }}</div>
@@ -68,7 +68,7 @@
                 {% for item in answers %}
                 <div class="questions-view-answers-item">
                     <a class="questions-view-answers-item-author" title="{{ item.author.profile.name }} ({{item.author.username }})"
-                        href="{% url 'main:profile' item.author.profile.company.route item.author.username %}">
+                        href="{% url 'main:profile' item.author.username %}">
                         <img src="{{ item.author.profile.photo }}" alt="{{ item.author.username }} photo" width="32px">
                     </a>
                     <div class="questions-view-answers-item-body">
@@ -84,7 +84,7 @@
             </div>
             <div class="questions-view-post">
                 <div class="questions-view-post-title">Your Answer</div>
-                <form action="{% url 'main:questions_view' request.user.profile.company.route question.slug %}" method="post">
+                <form action="{% url 'main:questions_view' question.slug %}" method="post">
                     {{ form.non_field_errors }}
 
                     {% if form.body.errors %}

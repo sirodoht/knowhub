@@ -48,7 +48,7 @@
             <h1>Ask a Question</h1>
         </header>
         <div class="questions-create">
-            <form action="{% url 'main:questions_create' request.user.profile.company.route %}" method="post">
+            <form action="{% url 'main:questions_create' %}" method="post">
                 {{ form.non_field_errors }}
 
                 {% if form.title.errors %}

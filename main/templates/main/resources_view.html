@@ -10,8 +10,8 @@
             <header>
                 <div class="resources-view-title">
                     <h1>{{ resource.title }}</h1>
-                    <a href="{% url 'main:resources_edit' request.user.profile.company.route resource.slug %}" class="resources-view-title-edit">Edit</a>
-                    <a href="{% url 'main:resources_create' request.user.profile.company.route %}" class="resources-view-title-create">Create</a>
+                    <a href="{% url 'main:resources_edit' resource.slug %}" class="resources-view-title-edit">Edit</a>
+                    <a href="{% url 'main:resources_create' %}" class="resources-view-title-create">Create</a>
                 </div>
             </header>
             <div class="resources-view-content">

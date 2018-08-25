@@ -16,13 +16,13 @@
 
         <header>
             <h1>Resources</h1>
-            <a href="{% url 'main:resources_create' request.user.profile.company.route %}">Create</a>
+            <a href="{% url 'main:resources_create' %}">Create</a>
         </header>
         <div class="resources-list">
             {% for item in resources %}
             <div class="resources-list-item">
                 <h2 class="resources-list-item-title">
-                    <a href="{% url 'main:resources_view' request.user.profile.company.route item.slug %}">{{ item.title }}</a>
+                    <a href="{% url 'main:resources_view' item.slug %}">{{ item.title }}</a>
                 </h2>
                 <div class="resources-list-item-tags">
                     {% for tag in item.tag_set.all %}
