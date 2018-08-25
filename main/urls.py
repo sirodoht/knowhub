@@ -24,14 +24,11 @@ urlpatterns = [
     path("blog/<slug:post_slug>/", views.blog_post, name="blog_post"),
     path("setup/", views.invite_setup, name="invite_setup"),
     path("people/", views.people, name="people"),
+    path("announce/", views.announce, name="announce"),
     path("resources/", views.resources, name="resources"),
+    path("resources/new/", views.resources_create, name="resources_create"),
     path(
-        "resources/new/", views.resources_create, name="resources_create"
-    ),
-    path(
-        "resources/<slug:resource_slug>/",
-        views.resources_view,
-        name="resources_view",
+        "resources/<slug:resource_slug>/", views.resources_view, name="resources_view"
     ),
     path(
         "resources/<slug:resource_slug>/edit/",
@@ -46,26 +43,14 @@ urlpatterns = [
     path("questions/", views.questions, name="questions"),
     path("questions/ask", views.questions_create, name="questions_create"),
     path(
-        "questions/<slug:question_slug>/",
-        views.questions_view,
-        name="questions_view",
+        "questions/<slug:question_slug>/", views.questions_view, name="questions_view"
     ),
     path("billing/", views.billing_setup, name="billing_setup"),
-    path(
-        "billing/customer/",
-        views.billing_customer,
-        name="billing_customer",
-    ),
+    path("billing/customer/", views.billing_customer, name="billing_customer"),
     path("invite/", views.invite, name="invite"),
     path("settings/", views.settings_user, name="settings_user"),
-    path(
-        "settings/company/",
-        views.settings_company,
-        name="settings_company",
-    ),
-    path(
-        "settings/company/logo/", views.company_logo, name="company_logo"
-    ),
+    path("settings/company/", views.settings_company, name="settings_company"),
+    path("settings/company/logo/", views.company_logo, name="company_logo"),
     path("settings/photo/", views.profile_photo, name="profile_photo"),
     path("profile/<slug:username>/", views.profile, name="profile"),
 ]

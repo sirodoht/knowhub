@@ -42,7 +42,7 @@ from .helpers import (
     verify_invite_data,
 )
 from .models import Answer, Company, Post, Question, Resource, Subscriber, Tag
-from .tasks import invite_task, announce_task
+from .tasks import announce_task, invite_task
 
 
 def index(request):
