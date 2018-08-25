@@ -1,0 +1,35 @@
+{% extends 'main/layout_auth.html' %}
+
+{% load static %}
+
+{% block title %}Make an announcement - {{ request.user.profile.company.name }}{% endblock %}
+
+{% block content %}
+    <section class="addition">
+        <h1>Make an announcement</h1>
+        <div class="addition-subtitle">Send an email to all team members</div>
+
+        <form action="{% url 'main:announce' %}" method="post" class="addition-form" onsubmit="return confirm('Send message to all team members?');">
+            {{ form.non_field_errors }}
+
+            <label for="id_subject" class="addition-label">Subject</label>
+            {% if form.subject.errors %}
+                {% for error in form.subject.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="text" class="addition-input" name="subject" maxlength="300" required id="id_subject">
+
+            <label for="id_body" class="addition-label">Body</label>
+            {% if form.body.errors %}
+                {% for error in form.body.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <textarea name="body" rows="10" required id="id_body" class="addition-textarea">Hi team,</textarea>
+
+            {% csrf_token %}
+            <input type="submit" value="Send Announcement" class="addition-input-center">
+        </form>
+    </section>
+{% endblock %}
