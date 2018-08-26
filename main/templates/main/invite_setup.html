@@ -5,30 +5,30 @@
 {% block title %}Setup your profile - {{ request.user.profile.company.name }}{% endblock %}
 
 {% block content %}
-    <section class="generic">
-        <h1 class="generic-title">Setup your profile</h1>
-        <form action="{% url 'main:invite_setup' %}" method="post">
+    <section class="addition">
+        <h1>Setup your profile</h1>
+
+        <form action="{% url 'main:invite_setup' %}" method="post" class="addition-form">
             {{ form.non_field_errors }}
 
-            <label for="id_name">{{ form.name.label }}</label>
+            <label for="id_name" class="addition-label">{{ form.name.label }}</label>
             {% if form.name.errors %}
                 {% for error in form.name.errors %}
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="name" maxlength="300" required id="id_name" value="{{ form.name.value|default:"" }}">
+            <input type="text" name="name" maxlength="300" required id="id_name" class="addition-input" value="{{ form.name.value|default:"" }}">
 
-            <label for="id_role">Role</label>
+            <label for="id_role" class="addition-label">Role at {{ request.user.profile.company.name }}</label>
             {% if form.role.errors %}
                 {% for error in form.role.errors %}
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="role" maxlength="300" id="id_role" value="{{ form.role.value|default:"" }}">
+            <input type="text" name="role" maxlength="300" id="id_role" class="addition-input" value="{{ form.role.value|default:"" }}">
 
             {% csrf_token %}
-
-            <input type="submit" value="Save and go to dashboard">
+            <input type="submit" value="Save and go to dashboard" class="addition-input-center">
         </form>
     </section>
 {% endblock %}
