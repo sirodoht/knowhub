@@ -2,25 +2,28 @@
 
 {% load static %}
 
-{% block title %}Sign in - KnowHub.app{% endblock %}
+{% block title %}Billing Setup - KnowHub.app{% endblock %}
 
 {% block layout %}
     <section class="ritual">
         <img src="{% static 'images/logo.svg' %}" alt="logo" width="48px" height="48px">
 
-        <h1>Add your billing info</h1>
+        <h1>Billing Setup</h1>
 
         {% csrf_token %}
 
         <div class="ritual-body">
-            <div class="ritual-notice">
-                You need to setup your billing info in order to start your 30 days trial.
-                <br>
-                <br>
-                You will be charged exactly 30 days from now.
-                <br>
-                <br>
-                You can cancel anytime.
+            <div class="ritual-notice" style="text-align: left;">
+                <p>
+                    Please add your billing info in order to start your 30 days trial.
+                </p>
+                <p>
+                    You will be charged in exactly 30 days from today.
+                    We will send you a reminder 3 days before the end of your trial.
+                </p>
+                <p>
+                    You can cancel anytime.
+                </p>
             </div>
             <button id="add-card">Add card</button>
         </div>
