@@ -15,6 +15,7 @@
         </header>
         <div class="people-grid">
             {% for person in people %}
+            {% if person.profile.name %}
             <a class="people-grid-item" href="{% url 'main:profile' person.username %}">
                 <div class="people-grid-item-text">
                     <div class="people-grid-item-text-name">{{ person.profile.name }}</div>
@@ -24,6 +25,7 @@
                     <img src="{{ person.profile.photo }}" alt="user photo" width="48px">
                 </div>
             </a>
+            {% endif %}
             {% endfor %}
         </div>
     </section>
