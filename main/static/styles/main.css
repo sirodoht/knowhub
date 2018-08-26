@@ -962,6 +962,7 @@ button:hover {
     background-color: #fff;
     border: 1px solid #d1d5da;
     border-radius: 2px;
+    -webkit-appearance: none;
 }
 
 .addition-input[type="text"]::placeholder,
@@ -1237,6 +1238,7 @@ button:hover {
     padding-bottom: 4px;
     padding-left: 8px;
     padding-right: 8px;
+    -webkit-appearance: none;
 }
 
 .settings input[type="time"] {
@@ -1527,6 +1529,7 @@ button:hover {
     padding-bottom: 6px;
     padding-left: 7px;
     padding-right: 7px;
+    -webkit-appearance: none;
 }
 
 .resources-create-content-side-input input[type="text"]::placeholder {
@@ -1796,6 +1799,7 @@ button:hover {
     padding-bottom: 4px;
     padding-left: 8px;
     padding-right: 8px;
+    -webkit-appearance: none;
 }
 
 .generic input[type="submit"] {
@@ -1871,6 +1875,7 @@ button:hover {
     padding-bottom: 7px;
     padding-left: 8px;
     padding-right: 8px;
+    -webkit-appearance: none;
 }
 
 .questions input[type="text"]::placeholder {
