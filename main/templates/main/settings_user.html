@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Settings - KnowHub.app{% endblock %}
+{% block title %}Settings - {{ request.user.profile.company.name }}{% endblock %}
 
 {% block content %}
     <section class="settings">
