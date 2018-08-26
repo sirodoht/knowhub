@@ -373,10 +373,11 @@ def settings_user(request):
         form = ProfileForm(
             request.POST,
             instance=request.user.profile,
-            initial={"email": request.user.email},
+            initial={"email": request.user.email, "username": request.user.username},
         )
         if form.is_valid():
             request.user.email = form.cleaned_data["email"]
+            request.user.username = form.cleaned_data["username"]
             request.user.save()
             messages.success(request, "Settings updated successfully")
             return redirect("main:profile", request.user.username)
@@ -384,7 +385,7 @@ def settings_user(request):
             messages.success(request, "Settings update failed")
             return redirect("main:profile", request.user.username)
     else:
-        initial_data = {"email": request.user.email}
+        initial_data = {"email": request.user.email, "username": request.user.username}
         if request.user.profile.work_start and request.user.profile.work_end:
             initial_data["work_start"] = request.user.profile.work_start.strftime(
                 "%H:%M"
