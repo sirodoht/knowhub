@@ -39,7 +39,7 @@ class ProfileForm(forms.ModelForm):
 class InviteSetupForm(forms.ModelForm):
     class Meta:
         model = models.Profile
-        fields = ["name", "role", "slack"]
+        fields = ["name", "role"]
 
 
 class CompanySettingsForm(forms.ModelForm):

@@ -24,15 +24,7 @@
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="role" maxlength="300" required id="id_role" value="{{ form.role.value|default:"" }}">
-
-            <label for="id_slack">{{ form.slack.label }}</label>
-            {% if form.slack.errors %}
-                {% for error in form.slack.errors %}
-                    <div class="form-error">{{ error|escape }}</div>
-                {% endfor %}
-            {% endif %}
-            <input type="text" name="slack" maxlength="300" required id="id_slack" value="{{ form.slack.value|default:"" }}">
+            <input type="text" name="role" maxlength="300" id="id_role" value="{{ form.role.value|default:"" }}">
 
             {% csrf_token %}
 
