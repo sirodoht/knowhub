@@ -63,6 +63,12 @@ class DeleteResourceForm(forms.ModelForm):
         fields = []
 
 
+class DeleteQuestionForm(forms.ModelForm):
+    class Meta:
+        model = models.Question
+        fields = []
+
+
 class SubscriberForm(forms.ModelForm):
     class Meta:
         model = models.Subscriber
