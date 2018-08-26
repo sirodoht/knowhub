@@ -50,8 +50,11 @@
     <section class="questions">
         <div class="questions-view">
             <header>
-                <h1>{{ question.title }}</h1>
-                <a href="{% url 'main:questions_create' %}">Ask a Question</a>
+                <div class="questions-view-title">
+                    <h1>{{ question.title }}</h1>
+                    <a href="{% url 'main:questions_edit' question.slug %}" class="questions-view-title-edit">Edit</a>
+                    <a href="{% url 'main:questions_create' %}" class="questions-view-title-create">Ask a Question</a>
+                </div>
             </header>
             <div class="questions-view-content">
                 <div class="questions-view-content-body">
@@ -96,7 +99,7 @@
 
                     {% csrf_token %}
 
-                    <input type="submit" value="Post Answer">
+                    <input type="submit" value="Post Answer" class="questions-view-post-submit">
                 </form>
             </div>
         </div>
