@@ -290,6 +290,17 @@ body > header {
     transition: all 0.15 ease-in-out;
 }
 
+.header-content-brand-link > span {
+    display: flex;
+    font-weight: 500;
+    margin-top: 4px;
+    margin-left: 10px;
+}
+
+.header-content-brand-link-img {
+    border-radius: 100%;
+}
+
 .header-content-brand-company {
     display: flex;
     font-size: 20px;
@@ -302,19 +313,12 @@ body > header {
     }
 }
 
-.header-content-brand-link:focus {
+.header-content-brand-company:focus {
     transform: scale(0.99);
 }
 
-.header-content-brand-link > img {
+.header-content-brand-company-img {
     border-radius: 100%;
-}
-
-.header-content-brand-link > span {
-    display: flex;
-    font-weight: 500;
-    margin-top: 4px;
-    margin-left: 10px;
 }
 
 nav {
