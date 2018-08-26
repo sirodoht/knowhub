@@ -92,30 +92,40 @@ def login(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 def token_post(request):
     if request.user.is_authenticated:
-        messages.error(request, "You are already signed in.")
+        messages.error(request, "You are already signed in")
         return redirect(settings.LOGIN_REDIRECT_URL)
 
     if request.GET.get("d"):
-        # The user has clicked a login link.
         user = authenticate(request, token=request.GET["d"])
         if user is not None:
             dj_login(request, user)
-            messages.success(request, "Sign in successful.")
+            messages.success(request, "Sign in successful")
             return redirect(settings.LOGIN_REDIRECT_URL)
         else:
             messages.error(
                 request,
-                "The sign in link was invalid or has expired. Please try to sign in again.",
+                "The sign in link was invalid. Please try to sign in again.",
             )
     elif request.method == "POST":
-        # The user has submitted the email form.
         form = EmailForm(request.POST)
         if form.is_valid():
+            if '/signin/' in request.META['HTTP_REFERER'] and not User.objects.filter(email=form.cleaned_data["email"]).exists():
+                messages.success(
+                    request,
+                    "It seems there is no account with this email address. Please try again.",
+                )
+                return redirect(settings.LOGIN_URL)
             email_login_link(request, form.cleaned_data["email"])
-            messages.success(
-                request,
-                "Email sent! Please check your inbox and click on the link to sign in.",
-            )
+            if User.objects.filter(email=form.cleaned_data["email"]).exists():
+                messages.success(
+                    request,
+                    "Email sent! Check your inbox and click on the link to sign in.",
+                )
+            else:
+                messages.success(
+                    request,
+                    "Email sent! Check your inbox to get started.",
+                )
         else:
             messages.error(
                 request,
@@ -124,7 +134,7 @@ def token_post(request):
     else:
         messages.error(
             request,
-            "The sign in link was invalid or has expired. Please try to sign in again.",
+            "The sign in link was invalid. Please try to sign in again.",
         )
 
     return redirect(settings.LOGIN_URL)
@@ -452,7 +462,7 @@ def resources_create(request):
                 if tag_text.strip():
                     tag, created = Tag.objects.get_or_create(text=tag_text)
                     tag.resources.add(resource)
-            return redirect("main:resources")
+            return redirect("main:resources_view", resource.slug)
         else:
             messages.error(request, "Resource creation failed")
             return redirect("main:resources")
