@@ -64,7 +64,10 @@
                     </a>
                     <div class="questions-view-content-body-text">{{ question.as_markdown|safe }}</div>
                 </div>
-                <div class="questions-view-content-meta">asked at {{ question.created_at }}</div>
+                <div class="questions-view-content-meta">
+                    updated at {{ question.updated_at }} |
+                    asked at {{ question.created_at }}
+                </div>
             </div>
             <div class="questions-view-answers">
                 <div class="questions-view-answers-title">Answers</div>
