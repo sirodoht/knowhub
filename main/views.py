@@ -505,6 +505,7 @@ def resources_delete(request, resource_slug):
         if form.is_valid():
             resource.delete()
             return redirect("main:resources")
+            messages.success(request, "Resource deleted successfully")
         else:
             messages.error(request, "Resource deletion failed")
             return redirect("main:resources_view", resource_slug)
@@ -601,6 +602,7 @@ def questions_delete(request, question_slug):
         form = DeleteQuestionForm(request.POST, instance=question)
         if form.is_valid():
             question.delete()
+            messages.success(request, "Question deleted successfully")
             return redirect("main:questions")
         else:
             messages.error(request, "Question deletion failed")
