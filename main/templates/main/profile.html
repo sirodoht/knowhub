@@ -35,8 +35,13 @@
                 <div class="profile-details-line-value" title="{{ local_datetime }}">{{ local_time }}</div>
             </div>
             <div class="profile-details-line">
-                <div class="profile-details-line-key">Location</div>
-                <div class="profile-details-line-value">{{ user.profile.location }} – {{ user.profile.time_zone|tz_offset }}</div>
+            {% if user.profile.location %}
+            <div class="profile-details-line-key">Location</div>
+            <div class="profile-details-line-value">{{ user.profile.location }} – {{ user.profile.time_zone|tz_offset }}</div>
+            {% else %}
+            <div class="profile-details-line-key">Time Zone</div>
+            <div class="profile-details-line-value">{{ user.profile.time_zone|tz_offset }}</div>
+            {% endif %}
             </div>
         </div>
 
