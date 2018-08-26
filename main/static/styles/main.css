@@ -925,7 +925,7 @@ button:hover {
 }
 
 .addition {
-    width: 400px;
+    max-width: 400px;
     margin: auto auto 100px;
 }
 
