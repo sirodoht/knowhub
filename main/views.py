@@ -32,6 +32,7 @@ from .forms import (
     ResourceForm,
     SubscriberForm,
     UserForm,
+    DeleteQuestionForm,
 )
 from .helpers import (
     email_login_link,
@@ -520,6 +521,32 @@ def questions(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
+def questions_view(request, question_slug):
+    question = Question.objects.get(slug=question_slug)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.author = request.user
+            answer.question = question
+            answer.save()
+            return redirect("main:questions_view", question_slug)
+        else:
+            messages.error(request, "Question posting failed")
+            return redirect("main:questions_view", question_slug)
+    else:
+        form = AnswerForm()
+        answers = Answer.objects.filter(question=question).order_by("created_at")
+
+    return render(
+        request,
+        "main/questions_view.html",
+        {"form": form, "question": question, "answers": answers},
+    )
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
 def questions_create(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
@@ -544,28 +571,40 @@ def questions_create(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def questions_view(request, question_slug):
+def questions_edit(request, question_slug):
     question = Question.objects.get(slug=question_slug)
     if request.method == "POST":
-        form = AnswerForm(request.POST)
+        form = QuestionForm(request.POST, instance=question)
         if form.is_valid():
-            answer = form.save(commit=False)
-            answer.author = request.user
-            answer.question = question
-            answer.save()
-            return redirect("main:questions_view", question_slug)
+            question = form.save(commit=False)
+            if "title" in form.changed_data:
+                question.slug = slugify(form.cleaned_data["title"])
+                question.slug += "-" + shortuuid.ShortUUID(
+                    "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
+                ).random(length=6)
+            question.save()
+            return redirect("main:questions_view", question.slug)
         else:
             messages.error(request, "Question posting failed")
-            return redirect("main:questions_view", question_slug)
+            return redirect("main:questions")
     else:
-        form = AnswerForm()
-        answers = Answer.objects.filter(question=question).order_by("created_at")
+        form = QuestionForm(instance=question)
 
-    return render(
-        request,
-        "main/questions_view.html",
-        {"form": form, "question": question, "answers": answers},
-    )
+    return render(request, "main/questions_edit.html", {"form": form, "question": question})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def questions_delete(request, question_slug):
+    if request.method == "POST":
+        question = Question.objects.get(slug=question_slug)
+        form = DeleteQuestionForm(request.POST, instance=question)
+        if form.is_valid():
+            question.delete()
+            return redirect("main:questions")
+        else:
+            messages.error(request, "Question deletion failed")
+            return redirect("main:questions_view", question_slug)
 
 
 @require_safe
