@@ -11,4 +11,8 @@ register = template.Library()
 @stringfilter
 def tz_offset(value):
     offset = datetime.datetime.now(pytz.timezone(value)).strftime("%z")
-    return "UTC" + offset[:3] + ":" + offset[3:]
+    result = "UTC" + offset[:3] + ":" + offset[3:]
+    if result == "UTC+00:00":
+        return "UTC"
+    else:
+        return result
