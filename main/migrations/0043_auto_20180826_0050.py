@@ -5,35 +5,29 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('main', '0042_auto_20180824_2120'),
-    ]
+    dependencies = [("main", "0042_auto_20180824_2120")]
 
     operations = [
         migrations.AlterModelOptions(
-            name='answer',
-            options={'ordering': ['created_at']},
+            name="answer", options={"ordering": ["created_at"]}
         ),
+        migrations.AlterModelOptions(name="post", options={"ordering": ["-date"]}),
         migrations.AlterModelOptions(
-            name='post',
-            options={'ordering': ['-date']},
+            name="question", options={"ordering": ["-updated_at"]}
         ),
-        migrations.AlterModelOptions(
-            name='question',
-            options={'ordering': ['-updated_at']},
-        ),
-        migrations.AlterModelOptions(
-            name='resource',
-            options={'ordering': ['title']},
+        migrations.AlterModelOptions(name="resource", options={"ordering": ["title"]}),
+        migrations.AlterField(
+            model_name="company",
+            name="logo",
+            field=models.ImageField(
+                default="/static/images/logo.svg", max_length=300, upload_to=""
+            ),
         ),
         migrations.AlterField(
-            model_name='company',
-            name='logo',
-            field=models.ImageField(default='/static/images/logo.svg', max_length=300, upload_to=''),
-        ),
-        migrations.AlterField(
-            model_name='profile',
-            name='photo',
-            field=models.ImageField(default='/static/images/person.svg', max_length=300, upload_to=''),
+            model_name="profile",
+            name="photo",
+            field=models.ImageField(
+                default="/static/images/person.svg", max_length=300, upload_to=""
+            ),
         ),
     ]
