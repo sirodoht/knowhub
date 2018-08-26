@@ -1593,6 +1593,7 @@ button:hover {
     padding-bottom: 7px;
     padding-left: 8px;
     padding-right: 8px;
+    -webkit-appearance: none;
 }
 
 .resources-edit-content-form-input::placeholder,
