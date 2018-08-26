@@ -24,7 +24,7 @@
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="name" maxlength="300" required id="id_name" value="{{ form.name.value }}">
+            <input type="text" name="name" maxlength="300" required id="id_name" value="{{ form.name.value|default:"" }}">
 
             <label for="id_email">Email</label>
             {% if form.email.errors %}
@@ -40,7 +40,7 @@
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="role" maxlength="300" id="id_role" value="{{ form.role.value }}">
+            <input type="text" name="role" maxlength="300" id="id_role" value="{{ form.role.value|default:"" }}">
 
             <label for="id_slack">{{ form.slack.label }}</label>
             {% if form.slack.errors %}
@@ -48,7 +48,7 @@
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="slack" maxlength="300" id="id_slack" value="{{ form.slack.value }}">
+            <input type="text" name="slack" maxlength="300" id="id_slack" value="{{ form.slack.value|default:"" }}">
 
             <label for="id_work_start">{{ form.work_start.label }}</label>
             {% if form.work_start.errors %}
@@ -72,7 +72,7 @@
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="location" maxlength="300" id="id_location" value="{{ form.location.value }}">
+            <input type="text" name="location" maxlength="300" id="id_location" value="{{ form.location.value|default:"" }}">
 
             <label for="id_time_zone">Time Zone</label>
             {% if form.time_zone.errors %}
