@@ -9,7 +9,7 @@ from django.utils import timezone
 class Company(models.Model):
     name = models.CharField(max_length=300)
     route = models.CharField(max_length=50, unique=True, null=True, default=None)
-    logo = models.ImageField(default="/static/images/logo.svg")
+    logo = models.ImageField(default="/static/images/logo.svg", max_length=300)
 
     def __str__(self):
         return self.name
@@ -19,7 +19,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=300, blank=True, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
-    photo = models.ImageField(default="/static/images/person.svg")
+    photo = models.ImageField(default="/static/images/person.svg", max_length=300)
     is_admin = models.BooleanField(default=False)
     stripe_id = models.CharField(max_length=50, blank=True, null=True)
     role = models.CharField(max_length=300, blank=True, null=True)

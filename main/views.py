@@ -352,7 +352,7 @@ def profile_photo(request):
         data = json.loads(body)
         request.user.profile.photo = data["photo_url"]
         request.user.save()
-        return redirect("main:profile", request.user.username)
+        return JsonResponse(status=200, data={"message": "Success!"})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -363,7 +363,7 @@ def company_logo(request):
         data = json.loads(body)
         request.user.profile.company.logo = data["logo_url"]
         request.user.profile.company.save()
-        return redirect("main:settings_company")
+        return JsonResponse(status=200, data={"message": "Success!"})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
