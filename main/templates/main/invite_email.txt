@@ -1,9 +1,11 @@
 Howdy,
 
-{{ data.inviter_name }} ({{ data.inviter_email }}) has invited you to join {{ data.company_name|safe }} at KnowHub.
+{{ data.inviter_name|safe }} ({{ data.inviter_email }}) has invited you to join {{ data.company_name|safe }} at KnowHub.
 
 Click here to accept:
 {{ data.invitation_url|safe }}
 
-Later,
-<3
+Have a question or need help? Please contact us at support@knowhub.app and we’ll respond.
+
+Cheers,
+The team at KnowHub
