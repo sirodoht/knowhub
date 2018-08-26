@@ -203,7 +203,7 @@ def invite_setup(request):
     if request.method == "POST":
         form = InviteSetupForm(request.POST, instance=request.user.profile)
         if form.is_valid():
-            request.user.profile.save()
+            form.save()
             messages.success(request, "Welcome!")
             return redirect("main:index")
     else:
