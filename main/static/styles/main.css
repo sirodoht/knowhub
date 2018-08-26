@@ -1543,6 +1543,7 @@ button:hover {
 .resources-edit-title {
     display: flex;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .resources-edit-title-form {
@@ -1572,6 +1573,7 @@ button:hover {
 
 .resources-edit-content {
     display: flex;
+    flex-wrap: wrap-reverse;
     width: 100%;
     margin-top: 16px;
 }
