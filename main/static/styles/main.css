@@ -1939,6 +1939,7 @@ button:hover {
 
 .questions-view header {
     border-bottom: 1px solid #e4e6e8;
+    flex-wrap: wrap;
 }
 
 .questions-view h1 {
