@@ -1,0 +1,9 @@
+{{ body }}
+
+
+––
+You are receiving this because you asked a question on KnowHub.{% if 'localhost' in current_site.domain or '127.0.0.1' in current_site.domain %}
+http://{{ current_site.domain }}{{ question_link }}
+{% else %}
+https://{{ current_site.domain }}{{ question_link }}
+{% endif %}
