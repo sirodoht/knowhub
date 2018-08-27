@@ -52,8 +52,12 @@
             <header>
                 <div class="questions-view-title">
                     <h1>{{ question.title }}</h1>
+                    {% if request.user == question.author %}
                     <a href="{% url 'main:questions_edit' question.slug %}" class="questions-view-title-edit">Edit</a>
                     <a href="{% url 'main:questions_create' %}" class="questions-view-title-create">Ask a Question</a>
+                    {% else %}
+                    <a href="{% url 'main:questions_create' %}" class="questions-view-title-create" style="margin-left: auto;">Ask a Question</a>
+                    {% endif %}
                 </div>
             </header>
             <div class="questions-view-content">

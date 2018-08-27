@@ -603,6 +603,8 @@ def questions_create(request):
 @login_required
 def questions_edit(request, question_slug):
     question = Question.objects.get(slug=question_slug)
+    if request.user != question.author:
+        return redirect("main:questions")
     if request.method == "POST":
         form = QuestionForm(request.POST, instance=question)
         if form.is_valid():
@@ -620,7 +622,9 @@ def questions_edit(request, question_slug):
     else:
         form = QuestionForm(instance=question)
 
-    return render(request, "main/questions_edit.html", {"form": form, "question": question})
+    return render(
+        request, "main/questions_edit.html", {"form": form, "question": question}
+    )
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -628,6 +632,8 @@ def questions_edit(request, question_slug):
 def questions_delete(request, question_slug):
     if request.method == "POST":
         question = Question.objects.get(slug=question_slug)
+        if request.user != question.author:
+            return redirect("main:questions")
         form = DeleteQuestionForm(request.POST, instance=question)
         if form.is_valid():
             question.delete()
