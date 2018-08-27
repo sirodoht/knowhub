@@ -46,10 +46,14 @@ urlpatterns = [
         "questions/<slug:question_slug>/", views.questions_view, name="questions_view"
     ),
     path(
-        "questions/<slug:question_slug>/edit/", views.questions_edit, name="questions_edit"
+        "questions/<slug:question_slug>/edit/",
+        views.questions_edit,
+        name="questions_edit",
     ),
     path(
-        "questions/<slug:question_slug>/delete/", views.questions_delete, name="questions_delete"
+        "questions/<slug:question_slug>/delete/",
+        views.questions_delete,
+        name="questions_delete",
     ),
     path("billing/", views.billing_setup, name="billing_setup"),
     path("billing/customer/", views.billing_customer, name="billing_customer"),

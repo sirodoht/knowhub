@@ -7,10 +7,13 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.forms import formset_factory
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from django.views.decorators.http import require_http_methods, require_safe
@@ -23,6 +26,7 @@ from .forms import (
     AnswerForm,
     CompanyForm,
     CompanySettingsForm,
+    DeleteQuestionForm,
     DeleteResourceForm,
     EmailForm,
     ExplorerForm,
@@ -32,7 +36,6 @@ from .forms import (
     ResourceForm,
     SubscriberForm,
     UserForm,
-    DeleteQuestionForm,
 )
 from .helpers import (
     email_login_link,
@@ -103,13 +106,15 @@ def token_post(request):
             return redirect(settings.LOGIN_REDIRECT_URL)
         else:
             messages.error(
-                request,
-                "The sign in link was invalid. Please try to sign in again.",
+                request, "The sign in link was invalid. Please try to sign in again."
             )
     elif request.method == "POST":
         form = EmailForm(request.POST)
         if form.is_valid():
-            if '/signin/' in request.META['HTTP_REFERER'] and not User.objects.filter(email=form.cleaned_data["email"]).exists():
+            if (
+                "/signin/" in request.META["HTTP_REFERER"]
+                and not User.objects.filter(email=form.cleaned_data["email"]).exists()
+            ):
                 messages.success(
                     request,
                     "It seems there is no account with this email address. Please try again.",
@@ -123,8 +128,7 @@ def token_post(request):
                 )
             else:
                 messages.success(
-                    request,
-                    "Email sent! Check your inbox to get started.",
+                    request, "Email sent! Check your inbox to get started."
                 )
         else:
             messages.error(
@@ -133,8 +137,7 @@ def token_post(request):
             )
     else:
         messages.error(
-            request,
-            "The sign in link was invalid. Please try to sign in again.",
+            request, "The sign in link was invalid. Please try to sign in again."
         )
 
     return redirect(settings.LOGIN_URL)
@@ -541,6 +544,22 @@ def questions_view(request, question_slug):
             answer.author = request.user
             answer.question = question
             answer.save()
+            send_mail(
+                "Re: " + question.title,
+                render_to_string(
+                    "main/answer_notification_email.txt",
+                    {
+                        "current_site": get_current_site(request),
+                        "body": answer.body,
+                        "question_link": reverse(
+                            "main:questions_view", args=[question.slug]
+                        ),
+                    },
+                    request=request,
+                ),
+                settings.DEFAULT_FROM_EMAIL,
+                [question.author.email],
+            )
             return redirect("main:questions_view", question_slug)
         else:
             messages.error(request, "Question posting failed")
