@@ -124,7 +124,7 @@
                     var url = response.secure_url;
                     // Create a thumbnail of the uploaded image, with 250px width
                     var tokens = url.split('/');
-                    tokens.splice(-2, 0, 'c_scale,w_500/c_crop,g_center,h_500,w_500');
+                    tokens.splice(-2, 0, 'c_fill,g_center,h_500,w_500');
                     // var img = new Image(); // HTML5 Constructor
                     // img.src = tokens.join('/');
                     // img.alt = response.public_id;
