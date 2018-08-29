@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Edit Resource - {{ request.user.profile.company.name }}{% endblock %}
+{% block title %}Edit Document - {{ request.user.profile.company.name }}{% endblock %}
 
 {% block head_extra %}
     <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
@@ -46,10 +46,10 @@
     <section class="resources">
         <header>
             <div class="resources-edit-title">
-                <h1>Edit Resource</h1>
+                <h1>Edit Document</h1>
                 <form action="{% url 'main:resources_delete' resource.slug %}"
                     method="post"
-                    onsubmit="return confirm('Do you really want to delete this resource?');"
+                    onsubmit="return confirm('Do you really want to delete this document?');"
                     class="resources-edit-title-form">
                     {% csrf_token %}
                     <input type="submit" value="Delete" class="resources-edit-title-form-delete">

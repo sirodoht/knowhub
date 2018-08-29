@@ -2,12 +2,12 @@
 
 {% load static %}
 
-{% block title %}Resources - {{ request.user.profile.company.name }}{% endblock %}
+{% block title %}Documents - {{ request.user.profile.company.name }}{% endblock %}
 
 {% block content %}
     <section class="resources">
         <header class="resources-header">
-            <h1>Resources</h1>
+            <h1>Documents</h1>
             <div class="resources-header-control">
                 <a href="{% url 'main:resources_pins' %}" class="resources-header-control-pins">
                     <img src="{% static 'images/cog.svg' %}" alt="cog icon" width="32px">

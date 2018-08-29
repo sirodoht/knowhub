@@ -25,19 +25,19 @@ urlpatterns = [
     path("setup/", views.invite_setup, name="invite_setup"),
     path("people/", views.people, name="people"),
     path("announce/", views.announce, name="announce"),
-    path("resources/", views.resources, name="resources"),
-    path("resources/pins/", views.resources_pins, name="resources_pins"),
-    path("resources/new/", views.resources_create, name="resources_create"),
+    path("documents/", views.resources, name="resources"),
+    path("documents/pins/", views.resources_pins, name="resources_pins"),
+    path("documents/new/", views.resources_create, name="resources_create"),
     path(
-        "resources/<slug:resource_slug>/", views.resources_view, name="resources_view"
+        "documents/<slug:resource_slug>/", views.resources_view, name="resources_view"
     ),
     path(
-        "resources/<slug:resource_slug>/edit/",
+        "documents/<slug:resource_slug>/edit/",
         views.resources_edit,
         name="resources_edit",
     ),
     path(
-        "resources/<slug:resource_slug>/delete/",
+        "documents/<slug:resource_slug>/delete/",
         views.resources_delete,
         name="resources_delete",
     ),

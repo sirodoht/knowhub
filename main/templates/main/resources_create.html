@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Create Resource - {{ request.user.profile.company.name }}{% endblock %}
+{% block title %}Create Document - {{ request.user.profile.company.name }}{% endblock %}
 
 {% block head_extra %}
     <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
@@ -45,7 +45,7 @@
 {% block content %}
     <section class="resources">
         <header>
-            <h1>Create Resource</h1>
+            <h1>Create Document</h1>
         </header>
         <div class="resources-create-content">
             <form action="{% url 'main:resources_create' %}"
