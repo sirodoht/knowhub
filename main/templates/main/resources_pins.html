@@ -1,0 +1,90 @@
+{% extends 'main/layout_auth.html' %}
+
+{% load static %}
+
+{% block title %}Resources - {{ request.user.profile.company.name }}{% endblock %}
+
+{% block content %}
+    <section class="resources">
+        <header>
+            <h1>Resource Pinned Groups</h1>
+            <a href="{% url 'main:resources_create' %}">Create</a>
+        </header>
+        <div class="resources-pins">
+            <form action="{% url 'main:resources_pins' %}" method="post" onsubmit="return jsonSubmit(event);">
+                {{ form.non_field_errors }}
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tag</th>
+                            <th>Is Pinned?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in companytags %}
+                        <tr>
+                            <td>
+                                {{ item.tag.text }}
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" class="js-companytag" name="{{ item.id }}" {% if item.is_pinned %}checked{% endif %}>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% csrf_token %}
+                <input type="submit" value="Save" class="resources-pins-submit">
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function getCsrf() {
+        var inputElems = document.querySelectorAll('input');
+        var csrfToken = '';
+        var i = 0;
+        for (i = 0; i < inputElems.length; i++) {
+            if (inputElems[i].name === 'csrfmiddlewaretoken') {
+                csrfToken = inputElems[i].value;
+                break;
+            }
+        }
+        return csrfToken;
+    }
+
+    function jsonSubmit(event) {
+        event.preventDefault();
+
+        var elems = document.getElementsByClassName('js-companytag');
+        var data = {};
+        var i = 0;
+        for (i = 0; i < elems.length; i++) {
+            data[elems[i].name] = elems[i].checked;
+        }
+        console.log('data:', data);
+
+        var url = document.location.href;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('X-CSRFToken', getCsrf());
+
+        xhr.onreadystatechange = function(e) {
+            if (xhr.readyState === 4) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.error) {
+                    window.alert(response.message);
+                } else {
+                    window.location.href = origin + '/resources/';
+                }
+            }
+        };
+
+        xhr.send(JSON.stringify(data));
+    }
+</script>
+{% endblock %}
