@@ -45,7 +45,17 @@ from .helpers import (
     log_analytic,
     verify_invite_data,
 )
-from .models import Answer, Company, Post, Question, Resource, Subscriber, Tag
+from .models import (
+    Answer,
+    Company,
+    CompanyTag,
+    Post,
+    Question,
+    Resource,
+    Subscriber,
+    Tag,
+    TagResource,
+)
 from .tasks import announce_task, invite_task
 
 
@@ -435,10 +445,22 @@ def settings_company(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def resources(request):
+    companytags = (
+        CompanyTag.objects.all()
+        .filter(company=request.user.profile.company)
+        .order_by("tag__text")
+    )
     resources = Resource.objects.filter(company=request.user.profile.company).order_by(
         "title"
     )
-    return render(request, "main/resources.html", {"resources": resources})
+    return render(
+        request,
+        "main/resources.html",
+        {
+            "resources": resources,
+            "companytags": companytags,
+        },
+    )
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -464,7 +486,10 @@ def resources_create(request):
             for tag_text in form.cleaned_data["tags"].split(","):
                 if tag_text.strip():
                     tag, created = Tag.objects.get_or_create(text=tag_text)
-                    tag.resources.add(resource)
+                    TagResource.objects.create(tag=tag, resource=resource)
+                    CompanyTag.objects.create(
+                        company=request.user.profile.company, tag=tag
+                    )
             return redirect("main:resources_view", resource.slug)
         else:
             messages.error(request, "Resource creation failed")
@@ -491,11 +516,14 @@ def resources_edit(request, resource_slug):
                     "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
                 ).random(length=6)
             resource.save()
-            resource.tag_set.clear()
+            TagResource.objects.filter(resource=resource).delete()
             for tag_text in form.cleaned_data["tags"].split(","):
                 if tag_text.strip():
                     tag, created = Tag.objects.get_or_create(text=tag_text)
-                    tag.resources.add(resource)
+                    TagResource.objects.get_or_create(tag=tag, resource=resource)
+                    CompanyTag.objects.get_or_create(
+                        company=request.user.profile.company, tag=tag
+                    )
             return redirect("main:resources_view", resource.slug)
         else:
             messages.error(request, "Resource editing failed")
@@ -522,6 +550,30 @@ def resources_delete(request, resource_slug):
         else:
             messages.error(request, "Resource deletion failed")
             return redirect("main:resources_view", resource_slug)
+
+
+def resources_pins(request):
+    companytags = (
+        CompanyTag.objects.all()
+        .filter(company=request.user.profile.company)
+        .order_by("tag__text")
+    )
+    if request.method == "POST":
+        body = request.body.decode("utf-8")
+        try:
+            data = json.loads(body)
+        except json.JSONDecodeError:
+            return JsonResponse(
+                status=400, data={"message": "Invalid input data", "error": True}
+            )
+
+        for key, value in data.items():
+            companytag, created = CompanyTag.objects.get_or_create(id=key)
+            companytag.is_pinned = value
+            companytag.save()
+        return JsonResponse(status=200, data={"message": "Success", "error": False})
+
+    return render(request, "main/resources_pins.html", {"companytags": companytags})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])

@@ -26,6 +26,7 @@ urlpatterns = [
     path("people/", views.people, name="people"),
     path("announce/", views.announce, name="announce"),
     path("resources/", views.resources, name="resources"),
+    path("resources/pins/", views.resources_pins, name="resources_pins"),
     path("resources/new/", views.resources_create, name="resources_create"),
     path(
         "resources/<slug:resource_slug>/", views.resources_view, name="resources_view"
