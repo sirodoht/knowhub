@@ -156,7 +156,7 @@
 
         function addTag(value) {
             var tagValue = value;
-            if (!tagValue) {
+            if (!tagValue || typeof tagValue === "object") {
                 tagValue = document.getElementById('tags-input').value.trim().replace(/\s+/g, '-');
             }
             if (tagValue === '' || exists(tagValue) || tagValue.length > 30) {
@@ -182,7 +182,7 @@
             }
         });
 
-        // setup delete
+        // setup delete on existing tags
         var tagElems = document.getElementsByClassName('tags-item');
         var i = 0;
         for (i = 0; i < tagElems.length; i++) {
