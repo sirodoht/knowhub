@@ -6,19 +6,42 @@
 
 {% block content %}
     <section class="resources">
-        {% if messages %}
-        <div class="alert">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <header>
+        <header class="resources-header">
             <h1>Resources</h1>
-            <a href="{% url 'main:resources_create' %}">Create</a>
+            <div class="resources-header-control">
+                <a href="{% url 'main:resources_pins' %}" class="resources-header-control-pins">
+                    <img src="{% static 'images/cog.svg' %}" alt="cog icon" width="32px">
+                </a>
+                <a href="{% url 'main:resources_create' %}" class="resources-header-control-create">Create</a>
+            </div>
         </header>
         <div class="resources-list">
+            <div class="resources-list-pinned">
+                {% regroup companytags by tag as list %}
+                {% for tag in list %}
+                {% if tag.list.0.is_pinned %}
+                <section class="resources-list-pinned-section">
+                    <h2 class="resources-list-pinned-section-title">{{ tag.grouper.text }}</h2>
+                    <div class="resources-list-pinned-section-list">
+                        {% for item in tag.list.0.tag.resources.all %}
+                        <div class="resources-list-pinned-section-list-item">
+                            <a href="{% url 'main:resources_view' item.slug %}">
+                                {{ item.title }}
+                            </a>
+                            <div class="resources-list-pinned-section-list-item-tags">
+                            {% for inner_tag in item.tag_set.all %}
+                            {% if inner_tag.text != tag.grouper.text %}
+                                <div class="resources-list-pinned-section-list-item-tags-item">{{ inner_tag.text }}</div>
+                            {% endif %}
+                            {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
+                {% endfor %}
+            </div>
             {% for item in resources %}
             <div class="resources-list-item">
                 <h2 class="resources-list-item-title">
