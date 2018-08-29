@@ -485,7 +485,7 @@ def resources_create(request):
             resource.save()
             for tag_text in form.cleaned_data["tags"].split(","):
                 if tag_text.strip():
-                    tag, created = Tag.objects.get_or_create(text=tag_text)
+                    tag, created = Tag.objects.get_or_create(text=slugify(tag_text))
                     TagResource.objects.create(tag=tag, resource=resource)
                     CompanyTag.objects.create(
                         company=request.user.profile.company, tag=tag
@@ -519,7 +519,7 @@ def resources_edit(request, resource_slug):
             TagResource.objects.filter(resource=resource).delete()
             for tag_text in form.cleaned_data["tags"].split(","):
                 if tag_text.strip():
-                    tag, created = Tag.objects.get_or_create(text=tag_text)
+                    tag, created = Tag.objects.get_or_create(text=slugify(tag_text))
                     TagResource.objects.get_or_create(tag=tag, resource=resource)
                     CompanyTag.objects.get_or_create(
                         company=request.user.profile.company, tag=tag
