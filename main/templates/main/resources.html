@@ -21,7 +21,7 @@
                 {% for tag in list %}
                 {% if tag.list.0.is_pinned %}
                 <section class="resources-list-pinned-section">
-                    <h2 class="resources-list-pinned-section-title">{{ tag.grouper.text }}</h2>
+                    <h2 class="resources-list-pinned-section-title">{{ tag.grouper.text|capfirst }}</h2>
                     <div class="resources-list-pinned-section-list">
                         {% for item in tag.list.0.tag.resources.all %}
                         <div class="resources-list-pinned-section-list-item">
