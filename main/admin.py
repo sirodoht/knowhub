@@ -92,3 +92,19 @@ class TagAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Tag, TagAdmin)
+
+
+# TagResource
+class TagResourceAdmin(admin.ModelAdmin):
+    list_display = ("id", "tag", "resource")
+
+
+admin.site.register(models.TagResource, TagResourceAdmin)
+
+
+# CompanyTag
+class CompanyTagAdmin(admin.ModelAdmin):
+    list_display = ("id", "tag", "company")
+
+
+admin.site.register(models.CompanyTag, CompanyTagAdmin)
