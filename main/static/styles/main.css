@@ -251,6 +251,36 @@ h2 {
     }
 }
 
+table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+    background-color: #f6f8fa;
+}
+
+table th {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5;
+    font-weight: 600;
+}
+
+table td {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5;
+}
+
 body > header {
     background-color: #272e24;
     padding-top: 12px;
