@@ -19,7 +19,7 @@
                 <div class="questions-list-item-meta">
                     asked by
                     <a href="{% url 'main:profile' item.author.username %}">
-                        {{ item.author.username }}</a>
+                        {{ item.author.profile.name }}</a>
                     at {{ item.created_at }}
                 </div>
             </div>
