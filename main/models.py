@@ -52,6 +52,7 @@ class Resource(models.Model):
     body = models.TextField(blank=True, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
     updated_at = models.DateTimeField(auto_now=True)
+    tags = models.ManyToManyField("Tag", through="CompanyTag")
 
     @property
     def tags(self):
@@ -60,7 +61,11 @@ class Resource(models.Model):
     @property
     def as_markdown(self):
         return markdown.markdown(
-            self.body, extensions=["markdown.extensions.fenced_code"]
+            self.body,
+            extensions=[
+                "markdown.extensions.fenced_code",
+                "markdown.extensions.tables",
+            ],
         )
 
     def __str__(self):
@@ -80,7 +85,11 @@ class Post(models.Model):
     @property
     def as_markdown(self):
         return markdown.markdown(
-            self.body, extensions=["markdown.extensions.fenced_code"]
+            self.body,
+            extensions=[
+                "markdown.extensions.fenced_code",
+                "markdown.extensions.tables",
+            ],
         )
 
     def __str__(self):
@@ -131,7 +140,11 @@ class Question(models.Model):
     @property
     def as_markdown(self):
         return markdown.markdown(
-            self.body, extensions=["markdown.extensions.fenced_code"]
+            self.body,
+            extensions=[
+                "markdown.extensions.fenced_code",
+                "markdown.extensions.tables",
+            ],
         )
 
     def __str__(self):
@@ -151,7 +164,11 @@ class Answer(models.Model):
     @property
     def as_markdown(self):
         return markdown.markdown(
-            self.body, extensions=["markdown.extensions.fenced_code"]
+            self.body,
+            extensions=[
+                "markdown.extensions.fenced_code",
+                "markdown.extensions.tables",
+            ],
         )
 
     def __str__(self):
@@ -162,8 +179,25 @@ class Answer(models.Model):
 
 
 class Tag(models.Model):
-    resources = models.ManyToManyField(Resource)
+    resources = models.ManyToManyField(Resource, through="TagResource")
     text = models.CharField(max_length=100)
 
     def __str__(self):
         return self.text
+
+
+class TagResource(models.Model):
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.tag.text + "-" + self.resource.title
+
+
+class CompanyTag(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    is_pinned = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.company.name + "-" + self.tag.text
