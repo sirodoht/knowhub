@@ -227,7 +227,7 @@ pre code {
 }
 
 h1 {
-    font-size: 56px;
+    font-size: 40px;
     font-weight: 400;
     margin-top: 16px;
     margin-bottom: 40px;
@@ -1328,16 +1328,104 @@ button:hover {
     display: flex;
     align-self: center;
     transition: all 0.15s ease;
-    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1);
 }
 
 .resources header > a:hover {
     background: #fe9f00;
-    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1), 0 0 0 1px rgba(43,45,80,.1);
+    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1), 0 0 0 1px rgba(43, 45, 80, 0.1);
+}
+
+.resources-header {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.resources-header-control {
+    display: flex;
+    margin-left: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.resources-header-control-pins {
+    padding: 8px 13px;
+}
+
+.resources-header-control-pins > img {
+    display: flex;
+    align-self: center;
+}
+
+.resources-header-control-create {
+    margin-left: 16px;
+    padding: 10px 15px;
+    border-radius: 3px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+    display: flex;
+    align-self: center;
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
+}
+
+.resources-header-control-create:hover {
+    background: #fe9f00;
+    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1), 0 0 0 1px rgba(43, 45, 80, 0.1);
 }
 
 .resources-list {
     margin-top: 16px;
+}
+
+.resources-list-pinned {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 16px;
+    grid-row-gap: 32px;
+    margin-bottom: 32px;
+}
+
+.resources-list-pinned-section {
+    border: 1px solid #ffa918;
+    border-radius: 2px;
+    padding: 20px 24px;
+}
+
+.resources-list-pinned-section-title {
+    font-size: 28px;
+    margin-top: 0;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.resources-list-pinned-section-list-item {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 21px;
+}
+
+.resources-list-pinned-section-list-item a {
+    color: inherit;
+}
+
+.resources-list-pinned-section-list-item-tags {
+    display: inline-block;
+    margin-left: 8px;
+    transform: translateY(-2px);
+}
+
+.resources-list-pinned-section-list-item-tags-item {
+    display: inline-block;
+    font-size: 14px;
+    border: 1px solid #0d9086;
+    color: #0d9086;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    opacity: 0.8;
 }
 
 .resources-list-item {
@@ -1650,6 +1738,26 @@ button:hover {
 .resources-edit-content-form-submit:hover {
     background: #fe9f00;
     box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1), 0 0 0 1px rgba(43,45,80,.1);
+}
+
+.resources-pins {
+    max-width: 350px;
+}
+
+.resources-pins-submit {
+    cursor: pointer;
+    padding-top: 8px;
+    padding-bottom: 7px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 8px;
+    background: #ffa918;
+    color: #fff;
+    border: none;
+}
+
+.resources-pins-submit:hover {
+    background: #fe9f00;
 }
 
 .blog {
