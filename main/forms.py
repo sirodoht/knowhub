@@ -93,6 +93,12 @@ class AnswerForm(forms.ModelForm):
         fields = ["body"]
 
 
+class DeleteAnswerForm(forms.ModelForm):
+    class Meta:
+        model = models.Answer
+        fields = []
+
+
 class AnnounceForm(forms.Form):
     subject = forms.CharField(label="Subject", strip=True, max_length=300)
     body = forms.CharField(label="Body", widget=forms.Textarea)

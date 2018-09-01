@@ -36,6 +36,7 @@ from .forms import (
     ResourceForm,
     SubscriberForm,
     UserForm,
+    DeleteAnswerForm,
 )
 from .helpers import (
     email_login_link,
@@ -679,7 +680,7 @@ def questions_edit(request, question_slug):
     )
 
 
-@require_http_methods(["HEAD", "GET", "POST"])
+@require_http_methods(["POST"])
 @login_required
 def questions_delete(request, question_slug):
     if request.method == "POST":
@@ -693,6 +694,49 @@ def questions_delete(request, question_slug):
             return redirect("main:questions")
         else:
             messages.error(request, "Question deletion failed")
+            return redirect("main:questions_view", question_slug)
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def questions_edit_answer(request, question_slug, answer_id):
+    question = Question.objects.get(slug=question_slug)
+    answer = Answer.objects.get(id=answer_id)
+    if request.user != answer.author or question != answer.question:
+        return redirect("main:questions_view", question_slug)
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            form.save()
+            return redirect("main:questions_view", question.slug)
+        else:
+            messages.error(request, "Answer editing failed")
+            return redirect("main:questions_view", question_slug)
+    else:
+        form = AnswerForm(instance=answer)
+
+    return render(
+        request, "main/questions_edit_answer.html", {"form": form, "answer": answer}
+    )
+
+
+@require_http_methods(["POST"])
+@login_required
+def questions_delete_answer(request, question_slug, answer_id):
+    if request.method == "POST":
+        question = Question.objects.get(slug=question_slug)
+        answer = Answer.objects.get(id=answer_id)
+        if request.user != answer.author or question != answer.question:
+            return redirect("main:questions_view", question_slug)
+        if request.user != question.author:
+            return redirect("main:questions")
+        form = DeleteAnswerForm(request.POST, instance=question)
+        if form.is_valid():
+            answer.delete()
+            messages.success(request, "Answer deleted successfully")
+            return redirect("main:questions_view", question_slug)
+        else:
+            messages.error(request, "Answer deletion failed")
             return redirect("main:questions_view", question_slug)
 
 

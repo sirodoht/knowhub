@@ -56,6 +56,16 @@ urlpatterns = [
         views.questions_delete,
         name="questions_delete",
     ),
+    path(
+        "questions/<slug:question_slug>/edit/<int:answer_id>",
+        views.questions_edit_answer,
+        name="questions_edit_answer",
+    ),
+    path(
+        "questions/<slug:question_slug>/delete/<int:answer_id>",
+        views.questions_delete_answer,
+        name="questions_delete_answer",
+    ),
     path("billing/", views.billing_setup, name="billing_setup"),
     path("billing/customer/", views.billing_customer, name="billing_customer"),
     path("invite/", views.invite, name="invite"),
