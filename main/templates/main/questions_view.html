@@ -49,26 +49,30 @@
 {% block content %}
     <section class="questions">
         <div class="questions-view">
-            <header>
-                <div class="questions-view-title">
-                    <h1>{{ question.title }}</h1>
+            <header class="questions-view-header">
+                <h1>{{ question.title }}</h1>
+                <div class="questions-view-header-control">
                     {% if request.user == question.author %}
-                    <a href="{% url 'main:questions_edit' question.slug %}" class="questions-view-title-edit">Edit</a>
-                    <a href="{% url 'main:questions_create' %}" class="questions-view-title-create">Ask a Question</a>
+                    <a href="{% url 'main:questions_edit' question.slug %}" class="questions-view-header-control-edit">Edit</a>
+                    <a href="{% url 'main:questions_create' %}" class="questions-view-header-control-create">Ask a Question</a>
                     {% else %}
-                    <a href="{% url 'main:questions_create' %}" class="questions-view-title-create" style="margin-left: auto;">Ask a Question</a>
+                    <a href="{% url 'main:questions_create' %}" class="questions-view-header-control-create">Ask a Question</a>
                     {% endif %}
                 </div>
             </header>
-            <div class="questions-view-content">
-                <div class="questions-view-content-body">
-                    <a class="questions-view-content-body-author" title="{{ question.author.profile.name }} ({{question.author.username }})"
-                        href="{% url 'main:profile' question.author.username %}">
-                        <img src="{{ question.author.profile.photo }}" alt="{{ question.author.username }} photo" width="32px">
-                    </a>
+            <div class="questions-view-inquiry">
+                <div class="questions-view-inquiry-author">
+                    <div class="questions-view-content-body-author">
+                        <a href="{% url 'main:profile' question.author.username %}" title="{{ question.author.profile.name }} ({{question.author.username }})">
+                            <img src="{{ question.author.profile.photo }}" alt="{{ question.author.username }} photo" width="32px" height="32px">
+                            {{ question.author.profile.name }}
+                        </a>
+                    </div>
+                </div>
+                <div class="questions-view-inquiry-body">
                     <div class="questions-view-content-body-text">{{ question.as_markdown|safe }}</div>
                 </div>
-                <div class="questions-view-content-meta">
+                <div class="questions-view-inquiry-meta">
                     updated at {{ question.updated_at }} |
                     asked at {{ question.created_at }}
                 </div>
@@ -77,17 +81,17 @@
                 <div class="questions-view-answers-title">Answers</div>
                 {% for item in answers %}
                 <div class="questions-view-answers-item">
-                    <a class="questions-view-answers-item-author" title="{{ item.author.profile.name }} ({{item.author.username }})"
-                        href="{% url 'main:profile' item.author.username %}">
-                        <img src="{{ item.author.profile.photo }}" alt="{{ item.author.username }} photo" width="32px">
-                    </a>
+                    <div class="questions-view-answers-item-author">
+                        <a href="{% url 'main:profile' item.author.username %}" title="{{ item.author.profile.name }} ({{item.author.username }})">
+                            <img src="{{ item.author.profile.photo }}" alt="{{ item.author.username }} photo" width="32px" height="32px">
+                            {{ item.author.profile.name }}
+                        </a>
+                    </div>
                     <div class="questions-view-answers-item-body">
-                        <div class="questions-view-answers-item-body-text">
-                            {{ item.as_markdown|safe }}
-                        </div>
-                        <div class="questions-view-answers-item-body-meta">
-                            answered at {{ item.created_at }}
-                        </div>
+                        {{ item.as_markdown|safe }}
+                    </div>
+                    <div class="questions-view-answers-item-meta">
+                        answered at {{ item.created_at }}
                     </div>
                 </div>
                 {% endfor %}

@@ -369,7 +369,7 @@ nav {
 }
 
 .nav-item:focus {
-    transform: scale(0.99);
+    transform: scale(0.98);
 }
 
 .nav-item-icon {
@@ -2080,27 +2080,28 @@ button:hover {
     color: #fe9f00;
 }
 
-.questions-view header {
-    border-bottom: 1px solid #e4e6e8;
-    flex-wrap: wrap;
-}
-
-.questions-view h1 {
-    font-size: 32px;
-    margin-bottom: 16px;
-}
-
-.questions-view-title {
+.questions-view-header {
     display: flex;
-    width: 100%;
     flex-wrap: wrap;
+    border-bottom: 1px solid #e4e6e8;
 }
 
-.questions-view-title-create {
-    cursor: pointer;
+.questions-view-header h1 {
+    font-size: 32px;
+}
+
+.questions-view-header-control {
+    display: flex;
+    margin-left: auto;
     margin-top: 16px;
     margin-bottom: 16px;
-    margin-left: 16px;
+}
+
+.questions-view-header-control-pins {
+    padding: 8px 13px;
+}
+
+.questions-view-header-control-create {
     padding: 10px 15px;
     border-radius: 3px;
     background: #ffa918;
@@ -2108,20 +2109,18 @@ button:hover {
     border: none;
     display: flex;
     align-self: center;
+    margin-left: 16px;
     transition: all 0.15s ease-in-out;
     box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
 }
 
-.questions-view-title-create:hover {
+.questions-view-header-control-create:hover {
     background: #fe9f00;
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 2px 2px 6px rgba(43, 45, 80, 0.2);
 }
 
-.questions-view-title-edit {
+.questions-view-header-control-edit {
     cursor: pointer;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    margin-left: auto;
     padding: 8px 13px;
     border: 2px solid #0d9086;
     border-radius: 3px;
@@ -2133,43 +2132,47 @@ button:hover {
     box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
 }
 
-.questions-view-title-edit:hover {
+.questions-view-header-control-edit:hover {
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 2px 2px 6px rgba(43, 45, 80, 0.2);
 }
 
-.questions-view-content {
+.questions-view-inquiry {
+    display: flex;
+    flex-direction: column;
     max-width: 700px;
+    box-sizing: border-box;
+    margin-top: 16px;
+}
+
+.questions-view-inquiry-author a {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.questions-view-inquiry-author a:hover {
+    text-decoration: underline;
+}
+
+.questions-view-inquiry-author img {
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.questions-view-inquiry-body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    line-height: 1.3;
+    border: 1px solid #ffa918;
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 16px;
-    margin-top: 16px;
-    box-sizing: border-box;
-    border: 1px solid #ffa918;
 }
 
-.questions-view-content-body {
-    display: flex;
-}
-
-.questions-view-content-body-author {
-    margin-top: 16px;
-}
-
-.questions-view-content-body-author > img {
-    border-radius: 50%;
-}
-
-.questions-view-content-body-text {
-    margin-left: 16px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    line-height: 1.3;
-}
-
-.questions-view-content-meta {
+.questions-view-inquiry-meta {
     text-align: right;
     color: #9199a1;
-    font-size: 14px;
-    margin-top: 32px;
+    font-size: 13px;
+    margin-top: 8px;
 }
 
 .questions-view-post {
@@ -2207,49 +2210,48 @@ button:hover {
 }
 
 .questions-view-answers-title {
-    font-size: 22px;
+    font-size: 24px;
     margin-top: 64px;
-    margin-bottom: 8px;
-}
-
-.questions-view-answers-item:nth-child(2) {
-    margin-top: 32px;
+    margin-bottom: 32px;
 }
 
 .questions-view-answers-item {
     display: flex;
-    margin-top: 64px;
+    flex-direction: column;
     max-width: 700px;
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-bottom: 16px;
     box-sizing: border-box;
-    border: 1px solid #ffa918;
+    margin-bottom: 48px;
 }
 
-.questions-view-answers-item-author {
-    margin-top: 16px;
+.questions-view-answers-item-author a {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
-.questions-view-answers-item-author > img {
+.questions-view-answers-item-author a:hover {
+    text-decoration: underline;
+}
+
+.questions-view-answers-item-author img {
     border-radius: 50%;
+    margin-right: 8px;
 }
 
 .questions-view-answers-item-body {
-    width: 668px;
-}
-
-.questions-view-answers-item-body-text {
-    margin-left: 16px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     line-height: 1.3;
+    border: 1px solid #ffa918;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
 }
 
-.questions-view-answers-item-body-meta {
+.questions-view-answers-item-meta {
     text-align: right;
     color: #9199a1;
-    font-size: 14px;
-    margin-top: 16px;
+    font-size: 13px;
+    margin-top: 8px;
 }
 
 .questions-edit-title {
