@@ -2144,6 +2144,10 @@ button:hover {
     margin-top: 16px;
 }
 
+.questions-view-inquiry-author {
+    display: flex;
+}
+
 .questions-view-inquiry-author a {
     display: flex;
     align-items: center;
@@ -2221,6 +2225,10 @@ button:hover {
     max-width: 700px;
     box-sizing: border-box;
     margin-bottom: 48px;
+}
+
+.questions-view-answers-item-author {
+    display: flex;
 }
 
 .questions-view-answers-item-author a {
