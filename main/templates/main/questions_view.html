@@ -86,7 +86,9 @@
                             <img src="{{ item.author.profile.photo }}" alt="{{ item.author.username }} photo" width="32px" height="32px">
                             {{ item.author.profile.name }}
                         </a>
+                        {% if item.author == request.user %}
                         <a href="{% url 'main:questions_edit_answer' question.slug item.id %}" style="margin-left: auto;">Edit</a>
+                        {% endif %}
                     </div>
                     <div class="questions-view-answers-item-body">
                         {{ item.as_markdown|safe }}
