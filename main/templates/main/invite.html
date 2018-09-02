@@ -6,9 +6,10 @@
 
 {% block content %}
     <section class="addition">
-        <h1>Invite team members</h1>
+        <h1>Invite People</h1>
+        <div class="addition-subtitle">Invite members to {{ request.user.profile.company.name }}</div>
 
-        <form action="{% url 'main:invite' %}" method="post">
+        <form action="{% url 'main:invite' %}" method="post" class="addition-form">
             {{ formset.management_form }}
 
             <label class="addition-label">Email addresses</label>
@@ -20,34 +21,48 @@
             {% csrf_token %}
             <input type="submit" value="Send Invitations" class="addition-input">
         </form>
+
+        <div class="addition-extra">
+            <div class="addition-extra-title">Invite Link</div>
+            <div class="addition-extra-subtitle">
+                Anyone can use this link to join {{ request.user.profile.company.name }} on KnowHub.
+            </div>
+            <input type="text" value="{{ open_invite_url }}" readonly class="addition-extra-input" id="invite-link">
+            <form action="{% url 'main:invite_open_refresh' %}"
+                method="post"
+                onsubmit="return confirm('Are you sure you want to change the invite link? This will make the current one invalid.');">
+                {% csrf_token %}
+                <input type="submit" value="Reset Link" class="addition-extra-danger">
+            </form>
+        </div>
     </section>
 {% endblock %}
 
 {% block scripts %}
     <script>
-        (function () {
-            function addField() {
-                var newNumber = document.querySelectorAll('.addition-input[type="email"]').length;
+        // Add extra email fields on click
+        function addField() {
+            var newNumber = document.querySelectorAll('.addition-input[type="email"]').length;
 
-                var newField = document.createElement('input');
-                newField.classList.add('addition-input');
-                newField.type = 'email';
-                newField.name = 'user-' + newNumber + '-email';
-                newField.maxLength = 254;
-                newField.placeholder = 'name@company.com';
+            var newField = document.createElement('input');
+            newField.classList.add('addition-input');
+            newField.type = 'email';
+            newField.name = 'user-' + newNumber + '-email';
+            newField.maxLength = 254;
+            newField.placeholder = 'name@company.com';
 
-                var separator = document.getElementById('add-more');
-                separator.parentNode.insertBefore(newField, separator);
-            }
+            var separator = document.getElementById('add-more');
+            separator.parentNode.insertBefore(newField, separator);
+        }
 
-            function setup() {
-                var button = document.getElementById('add-more');
-                button.addEventListener('click', function () {
-                    addField();
-                });
-            }
+        var button = document.getElementById('add-more');
+        button.addEventListener('click', function () {
+            addField();
+        });
 
-            setup();
-        })();
+        // Select invite link on click
+        document.getElementById('invite-link').addEventListener('click', function () {
+            document.getElementById('invite-link').select();
+        });
     </script>
 {% endblock %}
