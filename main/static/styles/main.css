@@ -860,10 +860,11 @@ button:hover {
     font-weight: 500;
     display: block;
     text-align: left;
-    margin-bottom: 7px;
+    margin-bottom: 3px;
 }
 
-.ritual input {
+.ritual input[type="email"],
+.ritual input[type="text"] {
     box-sizing: border-box;
     width: 100%;
     min-height: 34px;
@@ -871,18 +872,24 @@ button:hover {
     font-size: 16px;
     line-height: 20px;
     vertical-align: middle;
-    background-color: #fff;
+    background: #fff;
     border: 1px solid #d1d5da;
-    box-shadow: none;
-    border-radius: 3px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    -webkit-appearance: none;
 }
 
 .ritual input[type="submit"] {
     cursor: pointer;
-    margin-top: 15px;
     background: #ffa918;
     color: #fff;
     border: none;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 34px;
+    padding: 6px 8px;
+    font-size: 16px;
+    line-height: 20px;
 }
 
 .ritual input[type="submit"]:hover {
@@ -1026,10 +1033,12 @@ button:hover {
     background: #ffa918;
     color: #fff;
     border: none;
+    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
 }
 
 .addition-input[type="submit"]:hover {
     background: #fe9f00;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 2px 2px 6px rgba(43, 45, 80, 0.2);
 }
 
 .addition-input-center[type="submit"] {
@@ -1065,6 +1074,58 @@ button:hover {
 
 .addition-more:hover {
     text-decoration: underline;
+}
+
+.addition-extra {
+    margin-top: 64px;
+}
+
+.addition-extra-title {
+    font-size: 24px;
+}
+
+.addition-extra-subtitle {
+    line-height: 1.5;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.addition-extra-input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 34px;
+    padding: 3px 6px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    line-height: 20px;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    -webkit-appearance: none;
+
+}
+
+.addition-extra-danger {
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    margin-left: auto;
+    padding: 4px 8px;
+    border: 2px solid #d65050;
+    border-radius: 3px;
+    color: #d65050;
+    border-radius: 3px;
+    display: flex;
+    align-self: center;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
+}
+
+.addition-extra-danger:hover {
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 2px 2px 6px rgba(43, 45, 80, 0.2);
 }
 
 .people {
