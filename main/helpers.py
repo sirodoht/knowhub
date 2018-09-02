@@ -11,8 +11,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.core.signing import BadSignature, Signer
 from django.template.loader import render_to_string
-from django.utils.text import slugify
 from django.urls import reverse
+from django.utils.text import slugify
 
 from knowhub import settings
 
@@ -61,7 +61,7 @@ def get_invite_data(request, email, company):
     signed_info = Signer().sign(base64.b64encode(info).decode("utf8"))
 
     domain = get_current_site(request).domain
-    invitation_url = domain + reverse('main:invite_verify') + "?d=" + signed_info
+    invitation_url = domain + reverse("main:invite_verify") + "?d=" + signed_info
     if "localhost" in domain or "127.0.0.1" in domain:
         invitation_url = "http://" + invitation_url
     else:
@@ -147,10 +147,7 @@ def get_open_invite(request, refresh=False):
     company = request.user.profile.company
 
     if not company.invite_data or refresh:
-        data = {
-            "t": int(time.time()),
-            "c": company.route,
-        }
+        data = {"t": int(time.time()), "c": company.route}
 
         data = json.dumps(data).encode("utf8")
         data = Signer().sign(base64.b64encode(data).decode("utf8"))
@@ -159,7 +156,9 @@ def get_open_invite(request, refresh=False):
         company.save()
 
     domain = get_current_site(request).domain
-    open_invite_url = domain + reverse('main:invite_open_verify') + "?d=" + company.invite_data
+    open_invite_url = (
+        domain + reverse("main:invite_open_verify") + "?d=" + company.invite_data
+    )
     if "localhost" in domain or "127.0.0.1" in domain:
         open_invite_url = "http://" + open_invite_url
     else:
