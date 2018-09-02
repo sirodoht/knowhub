@@ -26,25 +26,29 @@ from .forms import (
     AnswerForm,
     CompanyForm,
     CompanySettingsForm,
+    DeleteAnswerForm,
     DeleteQuestionForm,
     DeleteResourceForm,
     EmailForm,
     ExplorerForm,
+    InviteOpenSetupForm,
     InviteSetupForm,
     ProfileForm,
     QuestionForm,
     ResourceForm,
     SubscriberForm,
     UserForm,
-    DeleteAnswerForm,
 )
 from .helpers import (
     email_login_link,
+    generate_username,
     get_client_ip,
     get_invite_data,
+    get_open_invite,
     get_timezones_form,
     log_analytic,
     verify_invite_data,
+    verify_open_invite_data,
 )
 from .models import (
     Answer,
@@ -180,26 +184,34 @@ def invite(request):
             for email in unique_emails:
                 data = get_invite_data(request, email, company)
                 invite_task.delay(data)
-            messages.success(request, "Invites sent!")
-            return redirect("main:index")
+            messages.success(request, "Invites emails have been sent")
+            return redirect("main:people")
         else:
-            messages.error(request, "Invalid email address.")
+            messages.error(request, "Invalid email address(es)")
     else:
         formset = UserFormSet(prefix="user")
 
-    return render(request, "main/invite.html", {"formset": formset, "company": company})
+    return render(
+        request,
+        "main/invite.html",
+        {
+            "formset": formset,
+            "company": company,
+            "open_invite_url": get_open_invite(request),
+        },
+    )
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
 def invite_verify(request):
     if request.user.is_authenticated:
-        messages.error(request, "You are already registered and logged in.")
+        messages.error(request, "You are already registered and logged in")
         return redirect(settings.LOGIN_REDIRECT_URL)
 
     if request.GET.get("d"):
         user = verify_invite_data(token=request.GET["d"])
         if user is not None:
-            messages.success(request, "Your account was created succesfully.")
+            messages.success(request, "Your account was created succesfully")
             user = authenticate(request, token=request.GET["d"])
             if user is not None:
                 dj_login(request, user)
@@ -212,11 +224,19 @@ def invite_verify(request):
                 )
             return redirect(settings.LOGIN_URL)
         else:
-            messages.error(request, "Invalid invite link.")
+            messages.error(request, "Invalid invite")
     else:
-        messages.error(request, "Invalid invite link.")
+        messages.error(request, "Invalid invite")
 
     return redirect(settings.LOGIN_URL)
+
+
+@require_http_methods(["POST"])
+@login_required
+def invite_open_refresh(request):
+    if request.method == "POST":
+        get_open_invite(request, True)
+        return redirect("main:invite")
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -235,6 +255,64 @@ def invite_setup(request):
         form = InviteSetupForm(instance=request.user.profile)
 
     return render(request, "main/invite_setup.html", {"form": form})
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+def invite_open_verify(request):
+    if request.user.is_authenticated:
+        messages.error(request, "You are already registered and logged in")
+        return redirect(settings.LOGIN_REDIRECT_URL)
+
+    if request.method == "POST":
+        form = InviteOpenSetupForm(request.POST)
+        if form.is_valid():
+            company_route = verify_open_invite_data(
+                token=form.cleaned_data["invite_token"]
+            )
+            if company_route is not None:
+                company = Company.objects.get(route=company_route)
+                user, created = User.objects.get_or_create(
+                    email=form.cleaned_data["email"]
+                )
+                if created:
+                    user.username = generate_username(form.cleaned_data["email"])
+                    user.profile.name = form.cleaned_data["name"]
+                    user.profile.role = form.cleaned_data["role"]
+                    user.profile.company = company
+                    user.save()
+                email_login_link(request, form.cleaned_data["email"])
+                messages.success(
+                    request, "Thank you! Please check your inbox to verify your email."
+                )
+                return render(request, "main/invite_open_setup.html", {"no_chat": True})
+            else:
+                messages.error(request, "Invalid invitation. Please try again.")
+                return redirect("main:index")
+        else:
+            messages.error(request, "Invalid input. Please try again.")
+            return redirect("main:index")
+
+    elif request.method == "GET":
+        if request.GET.get("d"):
+            company_route = verify_open_invite_data(token=request.GET["d"])
+            if company_route is not None:
+                company = Company.objects.get(route=company_route)
+                messages.success(request, "Invitation for " + company.name)
+                form = InviteOpenSetupForm(initial={"invite_token": request.GET["d"]})
+                return render(
+                    request,
+                    "main/invite_open_setup.html",
+                    {"form": form, "company": company, "no_chat": True},
+                )
+            else:
+                messages.error(request, "This invitation is invalid")
+                return redirect("main:index")
+        else:
+            return redirect("main:index")
+
+    return render(
+        request, "main/invite_open_setup.html", {"form": form, "no_chat": True}
+    )
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -457,10 +535,7 @@ def resources(request):
     return render(
         request,
         "main/resources.html",
-        {
-            "resources": resources,
-            "companytags": companytags,
-        },
+        {"resources": resources, "companytags": companytags},
     )
 
 
