@@ -24,7 +24,7 @@
                     <div class="form-error">{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <input type="text" name="name" maxlength="300" required id="id_name" value="{{ form.name.value|default:"" }}">
+            <input type="text" name="name" maxlength="300" required id="id_name" value="{{ form.name.value }}">
 
             <label for="id_email">Email</label>
             {% if form.email.errors %}
@@ -95,9 +95,6 @@
             </select>
 
             {% csrf_token %}
-
-            <input type="hidden" name="next" value="{{ next }}">
-
             <input type="submit" value="Save changes">
         </form>
     </section>
