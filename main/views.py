@@ -82,8 +82,17 @@ def people(request):
             return redirect("main:billing_setup")
         company = Company.objects.get(route=request.user.profile.company.route)
         people = User.objects.all().filter(
-            profile__company=request.user.profile.company
+            profile__company=request.user.profile.company,
+            is_active=True,
         )
+        if request.user.profile.is_admin:
+            deactivated_people = User.objects.all().filter(
+                profile__company=request.user.profile.company,
+                is_active=False,
+            )
+            return render(
+                request, "main/people.html", {"company": company, "people": people, "deactivated_people": deactivated_people}
+            )
         return render(
             request, "main/people.html", {"company": company, "people": people}
         )
@@ -116,6 +125,9 @@ def token_post(request):
     if request.GET.get("d"):
         user = authenticate(request, token=request.GET["d"])
         if user is not None:
+            if not user.is_active:
+                messages.error(request, "This user is deactivated")
+                return redirect("main:index")
             dj_login(request, user)
             messages.success(request, "Sign in successful")
             return redirect(settings.LOGIN_REDIRECT_URL)
@@ -137,6 +149,9 @@ def token_post(request):
                 return redirect(settings.LOGIN_URL)
             email_login_link(request, form.cleaned_data["email"])
             if User.objects.filter(email=form.cleaned_data["email"]).exists():
+                if not User.objects.get(email=form.cleaned_data["email"]).is_active:
+                    messages.error(request, "This user is deactivated")
+                    return redirect("main:index")
                 messages.success(
                     request,
                     "Email sent! Check your inbox and click on the link to sign in.",
@@ -400,6 +415,9 @@ def profile(request, username):
         return render(request, "main/profile.html", {"company": company})
     else:
         user = User.objects.get(username=username)
+        if not user.is_active and not request.user.profile.is_admin:
+            messages.error(request, "This user has been deactivated")
+            return redirect("main:people")
         local_time = datetime.datetime.now(
             pytz.timezone(user.profile.time_zone)
         ).strftime("%H:%M")
@@ -888,3 +906,75 @@ def announce(request):
         form = AnnounceForm()
 
     return render(request, "main/announce.html", {"form": form})
+
+
+@require_http_methods(["POST"])
+@login_required
+def users_deactivate(request):
+    if not request.user.profile.is_admin:
+        return redirect("main:people")
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = User.objects.get(email=form.cleaned_data["email"])
+            user.is_active = False
+            user.save()
+            messages.success(request, "User has been deactivated")
+            return redirect("main:people")
+        else:
+            messages.error(request, "User deactivation unsuccessful")
+            return redirect("main:people")
+
+
+@require_http_methods(["POST"])
+@login_required
+def users_activate(request):
+    if not request.user.profile.is_admin:
+        return redirect("main:people")
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = User.objects.get(email=form.cleaned_data["email"])
+            user.is_active = True
+            user.save()
+            messages.success(request, "User has been activated")
+            return redirect("main:people")
+        else:
+            messages.error(request, "User activation unsuccessful")
+            return redirect("main:people")
+
+
+@require_http_methods(["POST"])
+@login_required
+def users_adminify(request):
+    if not request.user.profile.is_admin:
+        return redirect("main:people")
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = User.objects.get(email=form.cleaned_data["email"])
+            user.profile.is_admin = True
+            user.save()
+            messages.success(request, form.cleaned_data["email"] + " is now an admin")
+            return redirect("main:people")
+        else:
+            messages.error(request, "User adminification unsuccessful")
+            return redirect("main:people")
+
+
+@require_http_methods(["POST"])
+@login_required
+def users_deadminify(request):
+    if not request.user.profile.is_admin:
+        return redirect("main:people")
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = User.objects.get(email=form.cleaned_data["email"])
+            user.profile.is_admin = False
+            user.save()
+            messages.success(request, form.cleaned_data["email"] + " is no longer an admin")
+            return redirect("main:people")
+        else:
+            messages.error(request, "User deadminification unsuccessful")
+            return redirect("main:people")
