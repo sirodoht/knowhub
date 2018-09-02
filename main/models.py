@@ -10,6 +10,7 @@ class Company(models.Model):
     name = models.CharField(max_length=300)
     route = models.CharField(max_length=50, unique=True, null=True, default=None)
     logo = models.ImageField(default="/static/images/logo.svg", max_length=300)
+    invite_data = models.CharField(blank=True, null=True, max_length=700)
 
     def __str__(self):
         return self.name
