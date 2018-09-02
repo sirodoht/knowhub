@@ -1,0 +1,57 @@
+{% extends 'main/layout_public.html' %}
+
+{% load static %}
+
+{% block title %}Invitation for {{ company.name }} at KnowHub{% endblock %}
+
+{% block layout %}
+    <section class="ritual">
+        <a href="{% url 'main:index' %}">
+            <img src="{% static 'images/logo.svg' %}" alt="logo" width="48px" height="48px">
+        </a>
+        <h1>KnowHub</h1>
+
+        {% if messages %}
+        <div class="ritual-alert">
+            {% for message in messages %}
+                <strong>{{ message }}</strong>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if form %}
+        <form action="{% url 'main:invite_open_verify' %}" method="post">
+            {{ form.non_field_errors }}
+
+            <label for="id_name">{{ form.name.label }}</label>
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="text" name="name" maxlength="300" required id="id_name" value="{{ form.name.value|default:"" }}">
+
+            <label for="id_email">{{ form.email.label }}</label>
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="email" name="email" maxlength="300" required id="id_email" value="{{ form.email.value|default:"" }}">
+
+            <label for="id_role">Role at {{ company.name }}</label>
+            {% if form.role.errors %}
+                {% for error in form.role.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="text" name="role" maxlength="300" id="id_role" value="{{ form.role.value|default:"" }}">
+
+            <input type="hidden" name="invite_token" maxlength="300" id="id_invite_token" value="{{ form.invite_token.value }}">
+
+            {% csrf_token %}
+            <input type="submit" value="Accept Invitation">
+        </form>
+        {% endif %}
+    </section>
+{% endblock %}
