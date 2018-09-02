@@ -43,6 +43,15 @@ class InviteSetupForm(forms.ModelForm):
         fields = ["name", "role"]
 
 
+class InviteOpenSetupForm(forms.ModelForm):
+    email = forms.EmailField(label="Email")
+    invite_token = forms.CharField(max_length=300)
+
+    class Meta:
+        model = models.Profile
+        fields = ["name", "role"]
+
+
 class CompanySettingsForm(forms.ModelForm):
     class Meta:
         model = models.Company
