@@ -83,6 +83,7 @@
 
 
 {% block scripts %}
+    {% if request.user.profile.is_admin %}
     <script>
         var personElems = document.getElementsByClassName('people-grid-item');
         var i = 0;
@@ -97,4 +98,5 @@
             });
         }
     </script>
+    {% endif %}
 {% endblock %}
