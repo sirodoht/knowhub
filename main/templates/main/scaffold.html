@@ -63,6 +63,7 @@
     {% block scripts %}
     {% endblock %}
 
+    {% if not no_chat %}
     <!-- Chatra {literal} -->
     <script>
         window.ChatraSetup = {
@@ -83,5 +84,6 @@
         })(document, window, 'Chatra');
     </script>
     <!-- /Chatra {/literal} -->
+    {% endif %}
 </body>
 </html>
