@@ -1238,6 +1238,50 @@ button:hover {
     border-radius: 50%;
 }
 
+.people-grid-item-text-control {
+    color: #828282;
+    font-size: 14px;
+    display: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.people-grid-item-text-control form {
+    display: inline-block;
+}
+
+.people-grid-item-text-control-danger {
+    cursor: pointer;
+    color: #d65050;
+    border: none;
+    padding: 0;
+}
+
+.people-grid-item-text-control-danger:hover {
+    text-decoration: underline;
+}
+
+.people-grid-item-text-control-peace {
+    cursor: pointer;
+    color: #0d9086;
+    border: none;
+    padding: 0;
+}
+
+.people-grid-item-text-control-peace:hover {
+    text-decoration: underline;
+}
+
+.people-grid-item-text-control-link {
+    cursor: pointer;
+    color: #828282;
+    border: none;
+    padding: 0;
+}
+
+.people-grid-item-text-control-link:hover {
+    text-decoration: underline;
+}
+
 .profile {
     text-align: center;
 }

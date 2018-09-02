@@ -16,10 +16,36 @@
         <div class="people-grid">
             {% for person in people %}
             {% if person.profile.name %}
-            <a class="people-grid-item" href="{% url 'main:profile' person.username %}">
+            <a class="people-grid-item" href="{% url 'main:profile' person.username %}" title="{{ person.email }}">
                 <div class="people-grid-item-text">
                     <div class="people-grid-item-text-name">{{ person.profile.name }}</div>
                     <div class="people-grid-item-text-role">{{ person.profile.role|default:"&nbsp;" }}</div>
+                    {% if request.user.profile.is_admin %}
+                    <div class="people-grid-item-text-control">
+                        <form action="{% url 'main:users_deactivate' %}" method="post"
+                            onsubmit="return confirm('Are you sure you want to deactivate {{ person.profile.name }}?');">
+                            <input type="hidden" name="email" value="{{ person.email }}">
+                            {% csrf_token %}
+                            <input type="submit" value="Deactivate" class="people-grid-item-text-control-danger" title="Deactivate this user">
+                        </form>
+                        |
+                        {% if person.profile.is_admin %}
+                        <form action="{% url 'main:users_deadminify' %}" method="post"
+                            onsubmit="return confirm('Are you sure you want to downgrade {{ person.profile.name }} to non-admin status?');">
+                            <input type="hidden" name="email" value="{{ person.email }}">
+                            {% csrf_token %}
+                            <input type="submit" value="Downgrade" class="people-grid-item-text-control-link" title="Downgrade user to non-admin status">
+                        </form>
+                        {% else %}
+                        <form action="{% url 'main:users_adminify' %}" method="post"
+                            onsubmit="return confirm('Are you sure you want to make {{ person.profile.name }} an admin?');">
+                            <input type="hidden" name="email" value="{{ person.email }}">
+                            {% csrf_token %}
+                            <input type="submit" value="Make admin" class="people-grid-item-text-control-link" title="Upgrade user status to admin">
+                        </form>
+                        {% endif %}
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="people-grid-item-photo">
                     <img src="{{ person.profile.photo }}" alt="user photo" width="48px">
@@ -28,5 +54,47 @@
             {% endif %}
             {% endfor %}
         </div>
+        {% if request.user.profile.is_admin and deactivated_people %}
+        <h2 style="text-align: left; margin-top: 64px;">Deactivated</h2>
+        <div class="people-grid">
+            {% for person in deactivated_people %}
+            <a class="people-grid-item" href="{% url 'main:profile' person.username %}">
+                <div class="people-grid-item-text">
+                    <div class="people-grid-item-text-name">{{ person.profile.name }}</div>
+                    <div class="people-grid-item-text-role">{{ person.profile.role|default:"&nbsp;" }}</div>
+                    <div class="people-grid-item-text-control">
+                        <form action="{% url 'main:users_activate' %}" method="post"
+                            onsubmit="return confirm('Are you sure you want to activate this user?');">
+                            <input type="hidden" name="email" value="{{ person.email }}">
+                            {% csrf_token %}
+                            <input type="submit" value="Activate" class="people-grid-item-text-control-peace">
+                        </form>
+                    </div>
+                </div>
+                <div class="people-grid-item-photo">
+                    <img src="{{ person.profile.photo }}" alt="user photo" width="48px">
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
     </section>
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        var personElems = document.getElementsByClassName('people-grid-item');
+        var i = 0;
+        for (i = 0; i < personElems.length; i++) {
+            personElems[i].addEventListener('mouseenter', function (event) {
+                event.target.querySelector('.people-grid-item-text-role').style.display = 'none';
+                event.target.querySelector('.people-grid-item-text-control').style.display = 'block';
+            });
+            personElems[i].addEventListener('mouseleave', function (event) {
+                event.target.querySelector('.people-grid-item-text-role').style.display = 'block';
+                event.target.querySelector('.people-grid-item-text-control').style.display = 'none';
+            });
+        }
+    </script>
 {% endblock %}

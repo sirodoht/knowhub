@@ -50,14 +50,17 @@
         </div>
 
         {% if request.user == user %}
-        <div>
-            <br>
+        <br>
+        {% if request.user.profile.is_admin %}
+        <p>
+            <a href="{% url 'main:settings_company' %}">Company Settings</a>
+            | <a href="#">Billing</a>
+        </p>
+        {% endif %}
+        <p>
             <a href="{% url 'main:settings_user' %}">User Settings</a>
-            {% if request.user.profile.is_admin %}
-            | <a href="{% url 'main:settings_company' %}">Company Settings</a>
-            {% endif %}
             | <a href="{% url 'main:logout' %}">Sign out</a>
-        </div>
+        </p>
         {% endif %}
     </section>
 {% endblock %}
