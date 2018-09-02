@@ -82,16 +82,20 @@ def people(request):
             return redirect("main:billing_setup")
         company = Company.objects.get(route=request.user.profile.company.route)
         people = User.objects.all().filter(
-            profile__company=request.user.profile.company,
-            is_active=True,
+            profile__company=request.user.profile.company, is_active=True
         )
         if request.user.profile.is_admin:
             deactivated_people = User.objects.all().filter(
-                profile__company=request.user.profile.company,
-                is_active=False,
+                profile__company=request.user.profile.company, is_active=False
             )
             return render(
-                request, "main/people.html", {"company": company, "people": people, "deactivated_people": deactivated_people}
+                request,
+                "main/people.html",
+                {
+                    "company": company,
+                    "people": people,
+                    "deactivated_people": deactivated_people,
+                },
             )
         return render(
             request, "main/people.html", {"company": company, "people": people}
@@ -973,7 +977,9 @@ def users_deadminify(request):
             user = User.objects.get(email=form.cleaned_data["email"])
             user.profile.is_admin = False
             user.save()
-            messages.success(request, form.cleaned_data["email"] + " is no longer an admin")
+            messages.success(
+                request, form.cleaned_data["email"] + " is no longer an admin"
+            )
             return redirect("main:people")
         else:
             messages.error(request, "User deadminification unsuccessful")
