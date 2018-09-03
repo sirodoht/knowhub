@@ -2224,23 +2224,6 @@ button:hover {
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 2px 2px 6px rgba(43, 45, 80, 0.2);
 }
 
-.questions-view-header-control-edit {
-    cursor: pointer;
-    padding: 8px 13px;
-    border: 2px solid #0d9086;
-    border-radius: 3px;
-    color: #0d9086;
-    border-radius: 3px;
-    display: flex;
-    align-self: center;
-    transition: all 0.15s ease-in-out;
-    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
-}
-
-.questions-view-header-control-edit:hover {
-    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 2px 2px 6px rgba(43, 45, 80, 0.2);
-}
-
 .questions-view-inquiry {
     display: flex;
     flex-direction: column;
