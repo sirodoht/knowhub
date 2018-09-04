@@ -555,15 +555,14 @@ def resources(request):
         "title"
     )
     company_pinned_tags = [ct.tag for ct in companytags if ct.is_pinned]
-    resources_excl_pinned = []
     for resource_item in resources:
         for tag_item in resource_item.tag_set.all():
-            if tag_item not in company_pinned_tags:
-                resources_excl_pinned.append(resource_item)
+            if tag_item in company_pinned_tags:
+                resources = resources.exclude(id=resource_item.id)
     return render(
         request,
         "main/resources.html",
-        {"resources": resources_excl_pinned, "companytags": companytags},
+        {"resources": resources, "companytags": companytags},
     )
 
 
