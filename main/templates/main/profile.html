@@ -54,7 +54,7 @@
         {% if request.user.profile.is_admin %}
         <p>
             <a href="{% url 'main:settings_company' %}">Company Settings</a>
-            | <a href="#">Billing</a>
+            | <a href="{% url 'main:billing_settings' %}">Billing</a>
         </p>
         {% endif %}
         <p>
