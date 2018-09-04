@@ -1552,10 +1552,19 @@ button:hover {
 }
 
 .resources-list-pinned-section-title {
-    font-size: 28px;
-    margin-top: 0;
-    margin-bottom: 16px;
     text-align: center;
+}
+
+.resources-list-pinned-section-title h2 {
+    display: inline-block;
+    color: #0d9086;
+    font-size: 24px;
+    border: 1px solid #0d9086;
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding-left: 12px;
+    padding-right: 12px;
+    opacity: 0.8;
 }
 
 .resources-list-pinned-section-list-item {
