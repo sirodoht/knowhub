@@ -1586,8 +1586,8 @@ button:hover {
 .resources-list-pinned-section-list-item-tags-item {
     display: inline-block;
     font-size: 14px;
-    border: 1px solid #0d9086;
     color: #0d9086;
+    border: 1px solid #0d9086;
     padding-left: 3px;
     padding-right: 3px;
     padding-top: 1px;
@@ -1601,6 +1601,7 @@ button:hover {
 
 .resources-list-item-title {
     margin: 0;
+    font-size: 24px;
 }
 
 .resources-list-item-title a {
@@ -1609,11 +1610,12 @@ button:hover {
 
 .resources-list-item-tags-item {
     display: inline-block;
-    border: 1px solid #0d9086;
+    font-size: 14px;
     color: #0d9086;
-    padding-left: 6px;
-    padding-right: 6px;
-    padding-top: 3px;
+    border: 1px solid #0d9086;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 1px;
     padding-bottom: 2px;
     opacity: 0.8;
 }
