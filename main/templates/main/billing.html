@@ -19,6 +19,15 @@
             {% endif %}
         </div>
 
+        {% if billing_info.trial %}
+        <div class="addition-key">
+            Trial ends
+        </div>
+        <div class="addition-value">
+            {{ billing_info.trial_end|date }}
+        </div>
+        {% endif %}
+
         <div class="addition-key">
             Cost
         </div>
@@ -87,6 +96,9 @@
             email: '{{ request.user.email }}',
             panelLabel: 'Change card',
             locale: 'auto',
+            closed: function () {
+                document.getElementById('loading').style.display = 'none';
+            },
             token: function (token) {
                 var url = document.location.href;
                 axios

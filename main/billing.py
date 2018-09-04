@@ -1,3 +1,5 @@
+import datetime
+
 import stripe
 
 from knowhub import settings
@@ -48,6 +50,10 @@ def info_get(stripe_id):
     info["trial"] = False
     if customer["subscriptions"]["data"][0]["status"] == "trialing":
         info["trial"] = True
+    if customer["subscriptions"]["data"][0]["trial_end"]:
+        info["trial_end"] = datetime.datetime.fromtimestamp(
+            customer["subscriptions"]["data"][0]["trial_end"]
+        )
     return info
 
 
