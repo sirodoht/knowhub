@@ -705,6 +705,7 @@ def questions_view(request, question_slug):
                     "main/answer_notification_email.txt",
                     {
                         "current_site": get_current_site(request),
+                        "poster": answer.author.profile.name,
                         "body": answer.body,
                         "question_link": reverse(
                             "main:questions_view", args=[question.slug]

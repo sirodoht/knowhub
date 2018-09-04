@@ -1,3 +1,5 @@
+{{ poster }} just replied to your question at KnowHub:
+
 {{ body }}
 
 
