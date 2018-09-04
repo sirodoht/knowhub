@@ -584,8 +584,8 @@ def resources_create(request):
             for tag_text in form.cleaned_data["tags"].split(","):
                 if tag_text.strip():
                     tag, created = Tag.objects.get_or_create(text=slugify(tag_text))
-                    TagResource.objects.create(tag=tag, resource=resource)
-                    CompanyTag.objects.create(
+                    TagResource.objects.get_or_create(tag=tag, resource=resource)
+                    CompanyTag.objects.get_or_create(
                         company=request.user.profile.company, tag=tag
                     )
             return redirect("main:resources_view", resource.slug)
@@ -1004,10 +1004,11 @@ def billing_settings(request):
     else:
         stripe_public = settings.STRIPE_PUBLIC
         billing_info = billing.info_get(request.user.profile.stripe_id)
-        return render(request, "main/billing.html", {
-            "stripe_public": stripe_public,
-            "billing_info": billing_info,
-        })
+        return render(
+            request,
+            "main/billing.html",
+            {"stripe_public": stripe_public, "billing_info": billing_info},
+        )
 
 
 @require_http_methods(["POST"])
@@ -1024,8 +1025,13 @@ def account_delete(request):
                 settings.DEFAULT_FROM_EMAIL,
                 [form.cleaned_data["email"]],
             )
-            messages.success(request, "Your account will be deleted within 24 hours. Say goodbye.")
+            messages.success(
+                request, "Your account will be deleted within 24 hours. Say goodbye."
+            )
             return redirect("main:people")
         else:
-            messages.error(request, "Account deletion unsuccessful. Please contact us at support@knowhub.app.")
+            messages.error(
+                request,
+                "Account deletion unsuccessful. Please contact us at support@knowhub.app.",
+            )
             return redirect("main:people")
