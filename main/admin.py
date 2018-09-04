@@ -32,7 +32,7 @@ admin.site.register(models.Company, CompanyAdmin)
 
 # Resource
 class ResourceAdmin(admin.ModelAdmin):
-    list_display = ("title", "company")
+    list_display = ("title", "company", "slug")
 
 
 admin.site.register(models.Resource, ResourceAdmin)
