@@ -554,10 +554,16 @@ def resources(request):
     resources = Resource.objects.filter(company=request.user.profile.company).order_by(
         "title"
     )
+    company_pinned_tags = [ct.tag for ct in companytags if ct.is_pinned]
+    resources_excl_pinned = []
+    for resource_item in resources:
+        for tag_item in resource_item.tag_set.all():
+            if tag_item not in company_pinned_tags:
+                resources_excl_pinned.append(resource_item)
     return render(
         request,
         "main/resources.html",
-        {"resources": resources, "companytags": companytags},
+        {"resources": resources_excl_pinned, "companytags": companytags},
     )
 
 
