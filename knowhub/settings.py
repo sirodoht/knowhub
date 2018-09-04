@@ -149,8 +149,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 LOGIN_URL = "main:login"
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "main:index"
+LOGOUT_REDIRECT_URL = "main:index"
 
 AUTH_TOKEN_DURATION = 30 * 60  # = 1800 = 30 min in seconds
 
