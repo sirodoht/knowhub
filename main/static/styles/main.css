@@ -1304,6 +1304,7 @@ button:hover {
 
 .people-grid-item-text-control-danger {
     cursor: pointer;
+    background: none;
     color: #d65050;
     border: none;
     padding: 0;
@@ -1315,6 +1316,7 @@ button:hover {
 
 .people-grid-item-text-control-peace {
     cursor: pointer;
+    background: none;
     color: #0d9086;
     border: none;
     padding: 0;
@@ -1326,6 +1328,7 @@ button:hover {
 
 .people-grid-item-text-control-link {
     cursor: pointer;
+    background: none;
     color: #828282;
     border: none;
     padding: 0;
