@@ -22,9 +22,6 @@
             <input type="text" name="name" maxlength="300" required id="id_name">
 
             {% csrf_token %}
-
-            <input type="hidden" name="next" value="{{ next }}">
-
             <input type="submit" value="Continue">
         </form>
     </section>
