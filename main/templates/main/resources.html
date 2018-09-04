@@ -24,6 +24,7 @@
                     <h2 class="resources-list-pinned-section-title">{{ tag.grouper.text|capfirst }}</h2>
                     <div class="resources-list-pinned-section-list">
                         {% for item in tag.list.0.tag.resources.all %}
+                        {% if item.company == request.user.profile.company %}
                         <div class="resources-list-pinned-section-list-item">
                             <a href="{% url 'main:resources_view' item.slug %}">
                                 {{ item.title }}
@@ -36,6 +37,7 @@
                             {% endfor %}
                             </div>
                         </div>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </section>
