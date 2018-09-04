@@ -1,0 +1,133 @@
+{% extends 'main/layout_auth.html' %}
+
+{% load static %}
+
+{% block title %}Billing - {{ request.user.profile.company.name }}{% endblock %}
+
+{% block content %}
+    <section class="addition">
+        <h1>Billing</h1>
+
+        <div class="addition-key">
+            Status
+        </div>
+        <div class="addition-value">
+            {% if billing_info.trial %}
+            Trial
+            {% else %}
+            Nominal
+            {% endif %}
+        </div>
+
+        <div class="addition-key">
+            Cost
+        </div>
+        <div class="addition-value">
+            <strong>${{ billing_info.cost }}</strong> per month ({{ billing_info.quantity }} enabled users)
+        </div>
+
+        <div class="addition-key">
+            Payment
+        </div>
+        <div class="addition-value">
+            Mastercard **** **** **** {{ billing_info.last4 }}
+            <br>Expiration: {{ billing_info.exp_month }}/{{ billing_info.exp_year }}
+            <br><a href="#" id="change-card">Change</a>
+            {% csrf_token %}
+        </div>
+
+        <div style="display: inline-block; position: relative; top: -93px; left: -40px;">
+            <div class="loader-small" id="loading"></div>
+        </div>
+
+        <div class="addition-key" style="margin-top: 128px;">
+            Delete Company
+        </div>
+        <div class="addition-value">
+            Click
+            <form action="{% url 'main:account_delete' %}"
+                method="post"
+                class="lethal"
+                onsubmit="return confirm('Are your sure you want to delete your company account? This is irreversible.');">
+                <input type="hidden" name="email" value="{{ request.user.email }}">
+                {% csrf_token %}
+                <input type="submit" value="here">
+            </form>
+            if you want to close your company account and delete all your data from KnowHub.
+            <br>Need to talk to someone? <a href="mailto:ceo@knowhub.app">Contact us</a>—we’d love to help.
+        </div>
+
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script src="{% static 'scripts/axios.min.js' %}"></script>
+    <script>
+        function getCsrf() {
+            var inputElems = document.querySelectorAll('input');
+            var csrfToken = '';
+            var i = 0;
+            for (i = 0; i < inputElems.length; i++) {
+                if (inputElems[i].name === 'csrfmiddlewaretoken') {
+                    csrfToken = inputElems[i].value;
+                    break;
+                }
+            }
+            return csrfToken;
+        }
+
+        // Configure and instantiate Stripe Checkout
+        var checkout = StripeCheckout.configure({
+            key: '{{ stripe_public }}',
+            name: 'Fugue Stateless Ltd',
+            description: 'Subscription for KnowHub.app',
+            image: 'https://fuguestateless.com/mark-negative.png',
+            email: '{{ request.user.email }}',
+            panelLabel: 'Change card',
+            locale: 'auto',
+            token: function (token) {
+                var url = document.location.href;
+                axios
+                    .post(
+                        url,
+                        {
+                            token: token.id,
+                        },
+                        {
+                            headers: {
+                                'X-CSRFToken': getCsrf(),
+                            },
+                        },
+                    )
+                    .then(function (res) {
+                        if (res.status === 200) {
+                            window.location.reload();
+                        }
+                    })
+                    .catch(function (err) {
+                        console.log('Error:', err);
+                        console.log('Please contact us at support@knowhub.app or at @KnowHubApp on Twitter.');
+                        throw err;
+                    });
+            },
+        });
+
+        // Open Stripe Checkout on click
+        document.getElementById('change-card').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('loading').style.display = 'block';
+            checkout.open();
+        })
+
+        // Close Stripe Checkout on page navigation:
+        window.addEventListener('popstate', function () {
+            document.getElementById('loading').style.display = 'none';
+            checkout.close();
+        });
+
+        // Hide loading icon
+        document.getElementById('loading').style.display = 'none';
+    </script>
+{% endblock %}
