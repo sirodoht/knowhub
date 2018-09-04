@@ -365,7 +365,7 @@ def billing_setup(request):
     return render(request, "main/billing_setup.html", {"stripe_public": stripe_public})
 
 
-@require_http_methods(["HEAD", "GET", "POST"])
+@require_http_methods(["POST"])
 @login_required
 def billing_customer(request):
     if request.method == "POST":
@@ -983,4 +983,49 @@ def users_deadminify(request):
             return redirect("main:people")
         else:
             messages.error(request, "User deadminification unsuccessful")
+            return redirect("main:people")
+
+
+@require_http_methods(["HEAD", "GET", "POST"])
+@login_required
+def billing_settings(request):
+    if not request.user.profile.is_admin:
+        return redirect("main:settings_user")
+    if request.method == "POST":
+        body = request.body.decode("utf-8")
+        try:
+            data = json.loads(body)
+        except json.JSONDecodeError:
+            return JsonResponse(
+                status=400, data={"message": "Invalid http request data", "error": True}
+            )
+        billing.card_change(request.user.profile.stripe_id, data["token"])
+        return JsonResponse(status=200, data={"message": "Success!"})
+    else:
+        stripe_public = settings.STRIPE_PUBLIC
+        billing_info = billing.info_get(request.user.profile.stripe_id)
+        return render(request, "main/billing.html", {
+            "stripe_public": stripe_public,
+            "billing_info": billing_info,
+        })
+
+
+@require_http_methods(["POST"])
+@login_required
+def account_delete(request):
+    if not request.user.profile.is_admin:
+        return redirect("main:settings_user")
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            send_mail(
+                "Account deletion request at KnowHub",
+                request.user.email + " wants out.",
+                settings.DEFAULT_FROM_EMAIL,
+                [form.cleaned_data["email"]],
+            )
+            messages.success(request, "Your account will be deleted within 24 hours. Say goodbye.")
+            return redirect("main:people")
+        else:
+            messages.error(request, "Account deletion unsuccessful. Please contact us at support@knowhub.app.")
             return redirect("main:people")
