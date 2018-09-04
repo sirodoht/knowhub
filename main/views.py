@@ -11,7 +11,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.forms import formset_factory
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
@@ -564,7 +564,7 @@ def resources(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def resources_view(request, resource_slug):
-    resource = Resource.objects.get(slug=resource_slug)
+    resource = get_object_or_404(Resource, slug=resource_slug)
     return render(request, "main/resources_view.html", {"resource": resource})
 
 
@@ -847,7 +847,7 @@ def blog(request):
 @require_safe
 def blog_post(request, post_slug):
     log_analytic(request)
-    post = Post.objects.get(slug=post_slug)
+    post = get_object_or_404(Post, slug=post_slug)
     return render(request, "main/blog_post.html", {"post": post})
 
 
