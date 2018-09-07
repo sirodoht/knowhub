@@ -4,6 +4,8 @@ import pytz
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
 
+from .helpers import log_analytic
+
 
 class TimezoneMiddleware(MiddlewareMixin):
     def process_request(self, request):
@@ -21,3 +23,9 @@ class StatsMiddleware(MiddlewareMixin):
         total = time.time() - request.start_time
         response["X-Total-Time"] = int(total * 1000)
         return response
+
+
+class AnalyticsMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        if "pomplamoose" not in request.path:
+            log_analytic(request)

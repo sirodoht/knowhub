@@ -46,7 +46,6 @@ from .helpers import (
     get_invite_data,
     get_open_invite,
     get_timezones_form,
-    log_analytic,
     verify_invite_data,
     verify_open_invite_data,
 )
@@ -65,7 +64,6 @@ from .tasks import announce_task, invite_task
 
 
 def index(request):
-    log_analytic(request)
     if request.user.is_authenticated:
         if not request.user.profile.company:
             return redirect("main:company_new")
@@ -110,7 +108,6 @@ def people(request):
 
 @require_safe
 def register(request):
-    log_analytic(request)
     if request.user.is_authenticated:
         return redirect("main:index")
     return render(request, "main/register.html")
@@ -118,7 +115,6 @@ def register(request):
 
 @require_safe
 def login(request):
-    log_analytic(request)
     if request.user.is_authenticated:
         return redirect("main:index")
     return render(request, "main/login.html", {"next": request.GET.get("next")})
@@ -346,7 +342,6 @@ def invite_open_verify(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def company_new(request):
-    log_analytic(request)
     if request.method == "POST":
         form = CompanyForm(request.POST)
         if form.is_valid():
@@ -392,7 +387,6 @@ def subscribe(request):
     if request.user.is_authenticated:
         return redirect("main:index")
     if request.method == "POST":
-        log_analytic(request)
         form = ExplorerForm(request.POST)
         if form.is_valid():
             explorer = form.save(commit=False)
@@ -406,7 +400,6 @@ def subscribe(request):
             )
             return redirect("main:subscribe_thanks")
     else:
-        log_analytic(request)
         form = ExplorerForm()
 
     return render(request, "main/subscribe.html", {"form": form})
@@ -414,7 +407,6 @@ def subscribe(request):
 
 @require_safe
 def subscribe_thanks(request):
-    log_analytic(request)
     if request.user.is_authenticated:
         return redirect("main:index")
     return render(request, "main/subscribe_thanks.html")
@@ -902,21 +894,18 @@ def questions_delete_answer(request, question_slug, answer_id):
 
 @require_safe
 def blog(request):
-    log_analytic(request)
     posts = Post.objects.all().order_by("-date")
     return render(request, "main/blog.html", {"posts": posts})
 
 
 @require_safe
 def blog_post(request, post_slug):
-    log_analytic(request)
     post = get_object_or_404(Post, slug=post_slug)
     return render(request, "main/blog_post.html", {"post": post})
 
 
 @require_http_methods(["POST"])
 def blog_subscribe(request):
-    log_analytic(request)
     if request.method == "POST":
         form = SubscriberForm(request.POST)
         if form.is_valid():

@@ -57,6 +57,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "main.middleware.TimezoneMiddleware",
+    "main.middleware.AnalyticsMiddleware",
+    # "main.middleware.StatsMiddleware",
 ]
 
 if DEBUG:
