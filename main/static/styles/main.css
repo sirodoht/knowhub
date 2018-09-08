@@ -1712,6 +1712,10 @@ button:hover {
     margin-top: 0;
 }
 
+.resources-view-content-body img {
+    width: 100%;
+}
+
 .resources-view-content-body-date {
     font-size: 14px;
     color: #828282;
