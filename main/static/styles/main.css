@@ -1706,6 +1706,7 @@ button:hover {
     line-height: 1.5;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     margin-top: 16px;
+    overflow: auto;
 }
 
 .resources-view-content-body > article > p:first-child{
