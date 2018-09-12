@@ -9,6 +9,8 @@ class EmailForm(forms.Form):
 
 
 class CompanyForm(forms.ModelForm):
+    profile_name = forms.CharField(label="Your name", strip=True, max_length=300)
+
     class Meta:
         model = models.Company
         fields = ["name"]
@@ -22,7 +24,7 @@ class UserForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     email = forms.EmailField(label="Your email")
-    username = forms.CharField(label="Your email", strip=True, max_length=150)
+    username = forms.CharField(label="Your username", strip=True, max_length=150)
 
     class Meta:
         model = models.Profile
