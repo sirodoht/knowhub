@@ -26,6 +26,7 @@
                 </p>
             </div>
             <button id="add-card">Add card</button>
+            <div class="loader" id="loading"></div>
         </div>
     </section>
 {% endblock %}
@@ -54,6 +55,8 @@
                 image: 'https://fuguestateless.com/mark-negative.png',
                 locale: 'auto',
                 token: function (token) {
+                    document.getElementById('loading').style.display = 'block';
+
                     var url = document.location.href + 'customer/';
                     axios
                         .post(
@@ -69,7 +72,7 @@
                         )
                         .then(function (res) {
                             if (res.status === 200) {
-                                window.location.href = '/settings/';
+                                window.location.href = '/invite/';
                             }
                         })
                         .catch(function (err) {
@@ -94,6 +97,8 @@
                 document.getElementById('loading').style.display = 'none';
                 handler.close();
             });
+
+            document.getElementById('loading').style.display = 'none';
         })();
     </script>
 {% endblock %}
