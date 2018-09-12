@@ -12,14 +12,16 @@
         <form action="{% url 'main:invite' %}" method="post" class="addition-form">
             {{ formset.management_form }}
 
-            <label class="addition-label">Email addresses</label>
+            <div style="display: flex; justify-content: space-between;">
+                <label class="addition-label" style="display: flex;">Email addresses</label>
+                <a id="add-more" class="addition-more" style="display: flex;">+ Add another</a>
+            </div>
             <input class="addition-input" type="email" name="user-0-email" maxlength="254" placeholder="name@company.com">
             <input class="addition-input" type="email" name="user-1-email" maxlength="254" placeholder="name@company.com">
             <input class="addition-input" type="email" name="user-2-email" maxlength="254" placeholder="name@company.com">
-            <a id="add-more" class="addition-more">Add another</a>
 
             {% csrf_token %}
-            <input type="submit" value="Send Invitations" class="addition-input">
+            <input type="submit" value="Send Invitations" class="addition-input" id="add-more-submit">
         </form>
 
         <div class="addition-extra">
@@ -51,7 +53,7 @@
             newField.maxLength = 254;
             newField.placeholder = 'name@company.com';
 
-            var separator = document.getElementById('add-more');
+            var separator = document.getElementById('add-more-submit');
             separator.parentNode.insertBefore(newField, separator);
         }
 

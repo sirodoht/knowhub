@@ -1029,6 +1029,17 @@ button:hover {
     margin-bottom: 2px;
 }
 
+.addition-more {
+    cursor: pointer;
+    color: #ffa918;
+    margin-top: 16px;
+    margin-bottom: 2px;
+}
+
+.addition-more:hover {
+    text-decoration: underline;
+}
+
 .addition-input[type="text"],
 .addition-input[type="email"] {
     box-sizing: border-box;
@@ -1105,17 +1116,6 @@ button:hover {
 
 .addition-subtitle {
     text-align: center;
-}
-
-.addition-more {
-    cursor: pointer;
-    color: #ffa918;
-    display: inline-block;
-    margin-top: 8px;
-}
-
-.addition-more:hover {
-    text-decoration: underline;
 }
 
 .addition-extra {
