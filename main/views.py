@@ -350,6 +350,7 @@ def company_new(request):
             new_route = [new_route[i : i + 2] for i in range(0, len(new_route), 2)]
             new_company.route = "-".join(new_route)
             new_company.save()
+            request.user.profile.name = form.cleaned_data["profile_name"]
             request.user.profile.company = new_company
             request.user.profile.is_admin = True
             request.user.save()

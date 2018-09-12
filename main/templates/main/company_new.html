@@ -21,6 +21,14 @@
             {% endif %}
             <input type="text" name="name" maxlength="300" required id="id_name">
 
+            <label for="id_profile_name">Your name</label>
+            {% if form.profile_name.errors %}
+                {% for error in form.profile_name.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="text" name="profile_name" maxlength="300" required id="id_profile_name">
+
             {% csrf_token %}
             <input type="submit" value="Continue">
         </form>
