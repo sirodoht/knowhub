@@ -157,13 +157,11 @@ def token_post(request):
                     messages.error(request, "This user is deactivated")
                     return redirect("main:index")
                 messages.success(
-                    request,
-                    "Email sent! Check your inbox and click on the link to sign in.",
+                    request, "Check your inbox and click on the link to sign in."
                 )
             else:
-                messages.success(
-                    request, "Email sent! Check your inbox to get started."
-                )
+                # first time sign up
+                messages.success(request, "Check your inbox to get started.")
         else:
             messages.error(
                 request,
@@ -379,7 +377,10 @@ def billing_customer(request):
         billing.subscription_create(stripe_customer.id)
         request.user.profile.stripe_id = stripe_customer.id
         request.user.save()
-        return redirect("main:index")
+        messages.success(
+            request, "Welcome to KnowHub! Start by inviting some of your people"
+        )
+        return JsonResponse(status=200, data={"message": "Success"})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -481,7 +482,7 @@ def profile_photo(request):
         data = json.loads(body)
         request.user.profile.photo = data["photo_url"]
         request.user.save()
-        return JsonResponse(status=200, data={"message": "Success!"})
+        return JsonResponse(status=200, data={"message": "Success"})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -492,7 +493,7 @@ def company_logo(request):
         data = json.loads(body)
         request.user.profile.company.logo = data["logo_url"]
         request.user.profile.company.save()
-        return JsonResponse(status=200, data={"message": "Success!"})
+        return JsonResponse(status=200, data={"message": "Success"})
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -915,7 +916,7 @@ def blog_subscribe(request):
             if created:
                 subscriber.ip = get_client_ip(request)
                 subscriber.save()
-                return JsonResponse(status=200, data={"message": "Success!"})
+                return JsonResponse(status=200, data={"message": "Success"})
             else:
                 return JsonResponse(status=200, data={"message": "Already subscribed!"})
         else:
@@ -1067,7 +1068,7 @@ def billing_settings(request):
                 status=400, data={"message": "Invalid http request data", "error": True}
             )
         billing.card_change(request.user.profile.stripe_id, data["token"])
-        return JsonResponse(status=200, data={"message": "Success!"})
+        return JsonResponse(status=200, data={"message": "Success"})
     else:
         stripe_public = settings.STRIPE_PUBLIC
         billing_info = billing.info_get(request.user.profile.stripe_id)
