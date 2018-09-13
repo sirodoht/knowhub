@@ -1095,7 +1095,7 @@ def account_delete(request):
                 "Account deletion request at KnowHub",
                 request.user.email + " wants out.",
                 settings.DEFAULT_FROM_EMAIL,
-                [form.cleaned_data["email"]],
+                [settings.ADMINS[0][1]],
             )
             messages.success(
                 request, "Your account will be deleted within 24 hours. Say goodbye."
