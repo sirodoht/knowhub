@@ -288,11 +288,71 @@ body > header {
     box-shadow: 0px 2px 10px -4px rgba(0, 0, 0, 0.75);
 }
 
+::placeholder {
+    color: #bbb;
+}
+
 .flash {
     padding: 16px;
     text-align: center;
     background: #d5f4f2;
     color: #6e7f89;
+}
+
+.tooltip {
+    cursor: pointer;
+    vertical-align: middle;
+    opacity: 0.6;
+    position: relative;
+}
+
+.tooltip:hover {
+    opacity: 1;
+}
+
+.tooltip::before {
+    display: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    color: #000;
+    pointer-events: none;
+    content: "";
+    border: 6px solid transparent;
+    top: auto;
+    right: 50%;
+    bottom: -7px;
+    margin-right: -6px;
+    border-bottom-color: #000;
+}
+
+.tooltip::after {
+    display: none;
+    content: attr(data-info);
+    background: #000;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    font-size: 11px;
+    line-height: 1.5;
+    font-weight: 400;
+    padding: 5px 8px;
+    text-align: center;
+    border-radius: 3px;
+    white-space: pre;
+    position: absolute;
+    transform: translateX(50%);
+    top: 100%;
+    right: 50%;
+    margin-top: 6px;
+}
+
+.tooltip:hover::before,
+.tooltip:hover::after,
+.tooltip:active::before,
+.tooltip:active::after,
+.tooltip:focus::before,
+.tooltip:focus::after {
+    display: inline-block;
 }
 
 .muted {
@@ -1057,11 +1117,6 @@ button:hover {
     -webkit-appearance: none;
 }
 
-.addition-input[type="text"]::placeholder,
-.addition-input[type="email"]::placeholder {
-    color: #bbb;
-}
-
 .addition-textarea {
     box-sizing: border-box;
     width: 100%;
@@ -1731,12 +1786,17 @@ button:hover {
 .resources-view-content-side {
     max-width: 300px;
     box-sizing: border-box;
+    flex-grow: 1;
     padding-left: 32px;
     margin-top: 16px;
 }
 
 .resources-view-content-side-title {
     font-size: 24px;
+    margin-top: 32px;
+}
+
+.resources-view-content-side-title:first-child {
     margin-top: 3px;
 }
 
@@ -1758,6 +1818,39 @@ button:hover {
     padding-top: 3px;
     padding-bottom: 2px;
     opacity: 0.8;
+}
+
+.resources-view-content-side-infractions textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 7px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    line-height: 20px;
+    background-color: #fff;
+    border: 1px solid #d1d5da;
+    border-radius: 2px;
+    -webkit-appearance: none;
+}
+
+.resources-view-content-side-infractions input[type="submit"] {
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: auto;
+    padding: 4px 8px;
+    border: 2px solid #0d9086;
+    border-radius: 3px;
+    color: #0d9086;
+    border-radius: 3px;
+    display: flex;
+    align-self: center;
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 4px 6px rgba(50, 50, 93 , 0.1);
+}
+
+.resources-view-content-side-infractions input[type="submit"]:hover {
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 2px 2px 6px rgba(43, 45, 80, 0.2);
 }
 
 .resources-create-content {
@@ -1794,16 +1887,17 @@ button:hover {
 .resources-create-content-side {
     max-width: 300px;
     box-sizing: border-box;
+    flex-grow: 1;
     padding-left: 32px;
 }
 
 .resources-create-content-side-title {
     font-size: 24px;
-    margin-top: 3px;
+    margin-top: 32px;
 }
 
-.resources-create-content-side-title:not(:first-child) {
-    margin-top: 16px;
+.resources-create-content-side-title:first-child {
+    margin-top: 3px;
 }
 
 .resources-create-content-side-lead {
@@ -1815,7 +1909,6 @@ button:hover {
     display: block;
     font-size: 18px;
     margin-top: 16px;
-    margin-bottom: 32px;
 }
 
 .resources-create-content-side-lead-link:hover {
@@ -1827,17 +1920,12 @@ button:hover {
     width: 100%;
     font-size: 16px;
     margin-top: 3px;
-    margin-bottom: 16px;
     border: 1px solid #ddd;
     padding-top: 7px;
     padding-bottom: 6px;
     padding-left: 7px;
     padding-right: 7px;
     -webkit-appearance: none;
-}
-
-.resources-create-content-side-lead input[type="text"]::placeholder {
-    color: #bbb;
 }
 
 .resources-create-content-side-lead-adopt {
@@ -1867,7 +1955,7 @@ button:hover {
 
 .resources-create-content-side-tags-list {
     margin-top: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
 }
 
 .resources-create-content-side-tags-list > div {
@@ -1890,11 +1978,15 @@ button:hover {
     text-decoration: line-through;
 }
 
+.resources-create-content-side-input {
+    display: flex;
+}
+
 .resources-create-content-side-input input[type="text"] {
+    display: flex;
+    flex-grow: 1;
     box-sizing: border-box;
     font-size: 16px;
-    margin-top: 3px;
-    margin-bottom: 16px;
     border: 1px solid #ddd;
     padding-top: 7px;
     padding-bottom: 6px;
@@ -1903,8 +1995,8 @@ button:hover {
     -webkit-appearance: none;
 }
 
-.resources-create-content-side-input input[type="text"]::placeholder {
-    color: #bbb;
+.resources-create-content-side-input button {
+    margin-left: 8px;
 }
 
 .resources-edit-title {
@@ -1963,11 +2055,6 @@ button:hover {
     padding-left: 8px;
     padding-right: 8px;
     -webkit-appearance: none;
-}
-
-.resources-edit-content-form-input::placeholder,
-.resources-create-content-form-input::placeholder {
-    color: #bbb;
 }
 
 .resources-edit-content-form-submit {
@@ -2270,10 +2357,6 @@ button:hover {
     padding-left: 8px;
     padding-right: 8px;
     -webkit-appearance: none;
-}
-
-.questions-create-form-input::placeholder {
-    color: #bbb;
 }
 
 .questions-create-form-submit {
