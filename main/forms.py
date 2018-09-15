@@ -61,6 +61,7 @@ class CompanySettingsForm(forms.ModelForm):
 
 class ResourceForm(forms.ModelForm):
     tags = forms.CharField(label="Tags", strip=True, max_length=300, required=False)
+    lead = forms.CharField(label="Lead", strip=True, max_length=300, required=False)
 
     class Meta:
         model = models.Resource
@@ -68,6 +69,12 @@ class ResourceForm(forms.ModelForm):
 
 
 class DeleteResourceForm(forms.ModelForm):
+    class Meta:
+        model = models.Resource
+        fields = []
+
+
+class AdoptResourceForm(forms.ModelForm):
     class Meta:
         model = models.Resource
         fields = []
