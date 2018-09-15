@@ -509,8 +509,12 @@ def settings_user(request):
             initial={"email": request.user.email},
         )
         if form.is_valid():
-            request.user.email = form.cleaned_data["email"]
-            request.user.username = form.cleaned_data["username"]
+            if "email" in form.changed_data:
+                request.user.email = form.cleaned_data["email"]
+                if request.user.profile.is_admin:
+                    billing.email_change(
+                        request.user.profile.stripe_id, form.cleaned_data["email"]
+                    )
             request.user.save()
             messages.success(request, "Settings updated successfully")
             return redirect("main:profile", request.user.profile.route)

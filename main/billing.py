@@ -63,3 +63,11 @@ def card_change(stripe_id, new_token):
     customer = stripe.Customer.retrieve(stripe_id)
     customer.source = new_token
     return customer.save()
+
+
+def email_change(stripe_id, new_email):
+    if stripe_id is None:
+        return
+    customer = stripe.Customer.retrieve(stripe_id)
+    customer.email = new_email
+    return customer.save()
