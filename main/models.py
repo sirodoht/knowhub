@@ -1,3 +1,5 @@
+import uuid
+
 import markdown
 from django.contrib.auth.models import User
 from django.db import models
@@ -19,6 +21,7 @@ class Company(models.Model):
 
 
 class Profile(models.Model):
+    route = models.UUIDField(default=uuid.uuid4)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=300, blank=True, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
