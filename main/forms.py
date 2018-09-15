@@ -119,3 +119,7 @@ class DeleteAnswerForm(forms.ModelForm):
 class AnnounceForm(forms.Form):
     subject = forms.CharField(label="Subject", strip=True, max_length=300)
     body = forms.CharField(label="Body", widget=forms.Textarea)
+
+
+class InfractionForm(forms.Form):
+    comment = forms.CharField(label="Comment", widget=forms.Textarea)
