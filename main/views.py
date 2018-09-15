@@ -79,8 +79,6 @@ def index(request):
 @require_safe
 @login_required
 def people(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
     if request.user.is_authenticated:
         if request.user.profile.is_admin and not request.user.profile.stripe_id:
             return redirect("main:billing_setup")
@@ -192,8 +190,6 @@ def logout(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def invite(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
     company = Company.objects.get(route=request.user.profile.company.route)
     UserFormSet = formset_factory(UserForm, max_num=100, extra=100)
     if request.method == "POST":
@@ -267,9 +263,6 @@ def invite_open_refresh(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def invite_setup(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if request.user.profile.name:
         return redirect("main:profile", request.user.profile.route)
 
@@ -423,9 +416,6 @@ def subscribe_thanks(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def profile(request, route):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if not route:
         company = Company.objects.get(route=request.user.profile.company.route)
         return render(request, "main/profile.html", {"company": company})
@@ -506,9 +496,6 @@ def company_logo(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def settings_user(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if request.method == "POST":
         form = ProfileForm(
             request.POST,
@@ -547,9 +534,6 @@ def settings_user(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def settings_company(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if not request.user.profile.is_admin:
         return redirect("main:settings_user")
 
@@ -568,9 +552,6 @@ def settings_company(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def resources(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     companytags = (
         CompanyTag.objects.all()
         .filter(company=request.user.profile.company)
@@ -594,9 +575,6 @@ def resources(request):
 @require_http_methods(["HEAD", "GET"])
 @login_required
 def resources_view(request, resource_slug):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     resource = get_object_or_404(Resource, slug=resource_slug)
     form = InfractionForm()
     return render(
@@ -607,9 +585,6 @@ def resources_view(request, resource_slug):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def resources_create(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if request.method == "POST":
         form = ResourceForm(request.POST)
         if form.is_valid():
@@ -641,9 +616,6 @@ def resources_create(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def resources_edit(request, resource_slug):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     resource = Resource.objects.get(slug=resource_slug)
     if request.user.profile.company != resource.company:
         raise Http404
@@ -691,9 +663,6 @@ def resources_edit(request, resource_slug):
 @require_http_methods(["HEAD", "POST"])
 @login_required
 def resources_delete(request, resource_slug):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if request.method == "POST":
         resource = Resource.objects.get(slug=resource_slug)
         form = DeleteResourceForm(request.POST, instance=resource)
@@ -707,9 +676,6 @@ def resources_delete(request, resource_slug):
 
 
 def resources_pins(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     companytags = (
         CompanyTag.objects.all()
         .filter(company=request.user.profile.company)
@@ -792,9 +758,6 @@ def resources_infraction(request, resource_slug):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def questions(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     questions = Question.objects.filter(company=request.user.profile.company).order_by(
         "-updated_at"
     )
@@ -804,9 +767,6 @@ def questions(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def questions_view(request, question_slug):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     question = Question.objects.get(slug=question_slug)
     if request.user.profile.company != question.company:
         raise Http404
@@ -853,9 +813,6 @@ def questions_view(request, question_slug):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def questions_create(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if request.method == "POST":
         form = QuestionForm(request.POST)
         if form.is_valid():
@@ -880,9 +837,6 @@ def questions_create(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def questions_edit(request, question_slug):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     question = Question.objects.get(slug=question_slug)
     if request.user.profile.company != question.company:
         raise Http404
@@ -914,9 +868,6 @@ def questions_edit(request, question_slug):
 @require_http_methods(["POST"])
 @login_required
 def questions_delete(request, question_slug):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if request.method == "POST":
         question = Question.objects.get(slug=question_slug)
         if request.user.profile.company != question.company:
@@ -937,9 +888,6 @@ def questions_delete(request, question_slug):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def questions_edit_answer(request, question_slug, answer_id):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     question = Question.objects.get(slug=question_slug)
     if request.user.profile.company != question.company:
         raise Http404
@@ -966,9 +914,6 @@ def questions_edit_answer(request, question_slug, answer_id):
 @require_http_methods(["POST"])
 @login_required
 def questions_delete_answer(request, question_slug, answer_id):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if request.method == "POST":
         question = Question.objects.get(slug=question_slug)
         if request.user.profile.company != question.company:
@@ -1039,9 +984,6 @@ def privacy(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def announce(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if request.method == "POST":
         form = AnnounceForm(request.POST)
         if form.is_valid():
@@ -1067,9 +1009,6 @@ def announce(request):
 @require_http_methods(["POST"])
 @login_required
 def users_deactivate(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if not request.user.profile.is_admin:
         return redirect("main:people")
     if request.method == "POST":
@@ -1091,9 +1030,6 @@ def users_deactivate(request):
 @require_http_methods(["POST"])
 @login_required
 def users_activate(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if not request.user.profile.is_admin:
         return redirect("main:people")
     if request.method == "POST":
@@ -1115,9 +1051,6 @@ def users_activate(request):
 @require_http_methods(["POST"])
 @login_required
 def users_adminify(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if not request.user.profile.is_admin:
         return redirect("main:people")
     if request.method == "POST":
@@ -1139,9 +1072,6 @@ def users_adminify(request):
 @require_http_methods(["POST"])
 @login_required
 def users_deadminify(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if not request.user.profile.is_admin:
         return redirect("main:people")
     if request.method == "POST":
@@ -1190,9 +1120,6 @@ def billing_settings(request):
 @require_http_methods(["POST"])
 @login_required
 def account_delete(request):
-    if request.user.profile.is_admin and not request.user.profile.stripe_id:
-        return redirect("main:billing_setup")
-
     if not request.user.profile.is_admin:
         return redirect("main:settings_user")
     if request.method == "POST":
