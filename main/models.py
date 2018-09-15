@@ -21,7 +21,7 @@ class Company(models.Model):
 
 
 class Profile(models.Model):
-    route = models.UUIDField(default=uuid.uuid4)
+    route = models.UUIDField(default=uuid.uuid4, unique=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=300, blank=True, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
@@ -39,6 +39,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.email
+
+    class Meta:
+        ordering = ["name"]
 
 
 @receiver(post_save, sender=User)
