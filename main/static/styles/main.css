@@ -1547,6 +1547,11 @@ button:hover {
     grid-row-gap: 32px;
     margin-bottom: 32px;
 }
+@media (max-width: 700px) {
+    .resources-list-pinned {
+        grid-template-columns: 1fr;
+    }
+}
 
 .resources-list-pinned-section {
     border: 1px solid #ffa918;
@@ -1732,6 +1737,7 @@ button:hover {
 
 .resources-view-content-side-title {
     font-size: 24px;
+    margin-top: 3px;
 }
 
 .resources-view-content-side-tags {
@@ -1796,6 +1802,69 @@ button:hover {
     margin-top: 3px;
 }
 
+.resources-create-content-side-title:not(:first-child) {
+    margin-top: 16px;
+}
+
+.resources-create-content-side-lead {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.resources-create-content-side-lead-link {
+    display: block;
+    font-size: 18px;
+    margin-top: 16px;
+    margin-bottom: 32px;
+}
+
+.resources-create-content-side-lead-link:hover {
+    text-decoration: underline;
+}
+
+.resources-create-content-side-lead input[type="text"] {
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 3px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    padding-top: 7px;
+    padding-bottom: 6px;
+    padding-left: 7px;
+    padding-right: 7px;
+    -webkit-appearance: none;
+}
+
+.resources-create-content-side-lead input[type="text"]::placeholder {
+    color: #bbb;
+}
+
+.resources-create-content-side-lead-adopt {
+    margin-top: 16px;
+    margin-bottom: 32px;
+}
+
+.resources-create-content-side-lead-adopt form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.resources-create-content-side-lead-adopt input[type="submit"] {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #0d9086;
+    font-style: italic;
+    -webkit-appearance: none;
+}
+
+.resources-create-content-side-lead-adopt input[type="submit"]:hover {
+    text-decoration: underline;
+}
+
 .resources-create-content-side-tags-list {
     margin-top: 16px;
     margin-bottom: 16px;
@@ -1807,7 +1876,10 @@ button:hover {
 
 .resources-create-content-side-tags-list .tags-item {
     cursor: pointer;
-    padding: 4px 8px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 3px;
+    padding-bottom: 2px;
     display: inline-block;
     border: 1px solid #0d9086;
     color: #0d9086;
