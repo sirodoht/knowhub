@@ -1709,7 +1709,7 @@ button:hover {
     overflow: auto;
 }
 
-.resources-view-content-body > article > p:first-child{
+.resources-view-content-body > article > :first-child{
     margin-top: 0;
 }
 
