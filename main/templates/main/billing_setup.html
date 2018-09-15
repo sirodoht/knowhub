@@ -2,19 +2,19 @@
 
 {% load static %}
 
-{% block title %}Billing Setup - KnowHub.app{% endblock %}
+{% block title %}Setup - KnowHub.app{% endblock %}
 
 {% block layout %}
     <section class="ritual">
         <img src="{% static 'images/logo.svg' %}" alt="logo" width="48px" height="48px">
 
-        <h1>Billing Setup</h1>
+        <h1>Setup your account</h1>
 
         {% csrf_token %}
 
         <div class="ritual-body">
             <div class="ritual-notice" style="text-align: left;">
-                <p>
+                <p style="margin-top: 0;">
                     Please add your billing info in order to start your 30 days trial.
                 </p>
                 <p>
