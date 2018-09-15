@@ -58,8 +58,8 @@
             <div class="questions-view-inquiry">
                 <div class="questions-view-inquiry-author">
                     <div class="questions-view-content-body-author">
-                        <a href="{% url 'main:profile' question.author.username %}" title="{{ question.author.profile.name }} ({{question.author.username }})">
-                            <img src="{{ question.author.profile.photo }}" alt="{{ question.author.username }} photo" width="32px" height="32px">
+                        <a href="{% url 'main:profile' question.author.profile.route %}" title="{{ question.author.profile.name }}">
+                            <img src="{{ question.author.profile.photo }}" alt="{{ question.author.email }} photo" width="32px" height="32px">
                             {{ question.author.profile.name }}
                         </a>
                     </div>
@@ -80,7 +80,7 @@
                 {% for item in answers %}
                 <div class="questions-view-answers-item">
                     <div class="questions-view-answers-item-author">
-                        <a href="{% url 'main:profile' item.author.username %}" title="{{ item.author.profile.name }} ({{item.author.username }})">
+                        <a href="{% url 'main:profile' item.author.profile.route %}" title="{{ item.author.profile.name }} ({{item.author.username }})">
                             <img src="{{ item.author.profile.photo }}" alt="{{ item.author.username }} photo" width="32px" height="32px">
                             {{ item.author.profile.name }}
                         </a>

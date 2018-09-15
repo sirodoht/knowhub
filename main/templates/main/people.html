@@ -16,7 +16,7 @@
         <div class="people-grid">
             {% for person in people %}
             {% if person.profile.name %}
-            <a class="people-grid-item" href="{% url 'main:profile' person.username %}" title="{{ person.email }}">
+            <a class="people-grid-item" href="{% url 'main:profile' person.profile.route %}" title="{{ person.email }}">
                 <div class="people-grid-item-text">
                     <div class="people-grid-item-text-name">{{ person.profile.name }}</div>
                     <div class="people-grid-item-text-role">{{ person.profile.role|default:"&nbsp;" }}</div>
@@ -58,7 +58,7 @@
         <h2 style="text-align: left; margin-top: 64px;">Deactivated</h2>
         <div class="people-grid">
             {% for person in deactivated_people %}
-            <a class="people-grid-item" href="{% url 'main:profile' person.username %}">
+            <a class="people-grid-item" href="{% url 'main:profile' person.profile.route %}">
                 <div class="people-grid-item-text">
                     <div class="people-grid-item-text-name">{{ person.profile.name }}</div>
                     <div class="people-grid-item-text-role">{{ person.profile.role|default:"&nbsp;" }}</div>

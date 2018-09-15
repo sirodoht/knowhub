@@ -24,7 +24,6 @@ class UserForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     email = forms.EmailField(label="Your email")
-    username = forms.CharField(label="Your username", strip=True, max_length=150)
 
     class Meta:
         model = models.Profile

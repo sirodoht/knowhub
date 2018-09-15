@@ -31,7 +31,7 @@
                 </a>
             </nav>
             <div class="header-content-profile">
-                <a href="{% url 'main:profile' request.user.username %}">
+                <a href="{% url 'main:profile' request.user.profile.route %}">
                     <img class="header-content-profile-photo" src="{{ request.user.profile.photo }}" alt="profile photo" width="32px" height="32px">
                 </a>
             </div>

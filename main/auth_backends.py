@@ -4,8 +4,6 @@ import json
 from django.contrib.auth import get_user_model
 from django.core.signing import BadSignature, Signer
 
-from .helpers import generate_username
-
 # from knowhub import settings
 # import time
 
@@ -36,7 +34,7 @@ class EmailTokenBackend:
 
         user, created = User.objects.get_or_create(email=data["e"])
         if created:
-            user.username = generate_username(data["e"])
+            user.username = data["e"]
             user.save()
 
         return user

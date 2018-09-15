@@ -41,7 +41,6 @@ from .forms import (
 )
 from .helpers import (
     email_login_link,
-    generate_username,
     get_client_ip,
     get_invite_data,
     get_open_invite,
@@ -265,7 +264,7 @@ def invite_setup(request):
         return redirect("main:billing_setup")
 
     if request.user.profile.name:
-        return redirect("main:profile", request.user.username)
+        return redirect("main:profile", request.user.profile.route)
 
     if request.method == "POST":
         form = InviteSetupForm(request.POST, instance=request.user.profile)
@@ -297,7 +296,7 @@ def invite_open_verify(request):
                     email=form.cleaned_data["email"]
                 )
                 if created:
-                    user.username = generate_username(form.cleaned_data["email"])
+                    user.username = form.cleaned_data["email"]
                     user.profile.name = form.cleaned_data["name"]
                     user.profile.role = form.cleaned_data["role"]
                     user.profile.company = company
@@ -416,15 +415,15 @@ def subscribe_thanks(request):
 
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
-def profile(request, username):
+def profile(request, route):
     if request.user.profile.is_admin and not request.user.profile.stripe_id:
         return redirect("main:billing_setup")
 
-    if not username:
+    if not route:
         company = Company.objects.get(route=request.user.profile.company.route)
         return render(request, "main/profile.html", {"company": company})
     else:
-        user = User.objects.get(username=username)
+        user = User.objects.filter(profile__route=route).first()
         if not user.is_active and not request.user.profile.is_admin:
             messages.error(request, "This user has been deactivated")
             return redirect("main:people")
@@ -507,19 +506,19 @@ def settings_user(request):
         form = ProfileForm(
             request.POST,
             instance=request.user.profile,
-            initial={"email": request.user.email, "username": request.user.username},
+            initial={"email": request.user.email},
         )
         if form.is_valid():
             request.user.email = form.cleaned_data["email"]
             request.user.username = form.cleaned_data["username"]
             request.user.save()
             messages.success(request, "Settings updated successfully")
-            return redirect("main:profile", request.user.username)
+            return redirect("main:profile", request.user.profile.route)
         else:
             messages.success(request, "Settings update failed")
-            return redirect("main:profile", request.user.username)
+            return redirect("main:profile", request.user.profile.route)
     else:
-        initial_data = {"email": request.user.email, "username": request.user.username}
+        initial_data = {"email": request.user.email}
         if request.user.profile.work_start and request.user.profile.work_end:
             initial_data["work_start"] = request.user.profile.work_start.strftime(
                 "%H:%M"
@@ -548,7 +547,7 @@ def settings_company(request):
         if form.is_valid():
             request.user.profile.company.save()
             messages.success(request, "Settings updated successfully")
-            return redirect("main:profile", request.user.username)
+            return redirect("main:profile", request.user.profile.route)
     else:
         form = CompanySettingsForm(instance=request.user.profile.company)
 

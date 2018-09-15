@@ -49,7 +49,7 @@ def generate_username(email):
         uuid = shortuuid.ShortUUID(
             "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
         ).random(length=12)
-        username += uuid
+        username += "-" + uuid
 
     return username
 
@@ -92,7 +92,7 @@ def verify_invite_data(token=None):
 
     user, created = User.objects.get_or_create(email=data["e"])
     if created:
-        user.username = generate_username(data["e"])
+        user.username = data["e"]
         user.profile.company = company
         user.save()
 

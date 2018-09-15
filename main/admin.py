@@ -7,7 +7,7 @@ from . import models
 
 # User
 class KnowhubAdmin(UserAdmin):
-    list_display = ("username", "email", "date_joined", "last_login", "id")
+    list_display = ("email", "date_joined", "last_login", "id")
 
 
 admin.site.unregister(User)
