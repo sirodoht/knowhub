@@ -62,6 +62,7 @@ class Resource(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField("Tag", through="CompanyTag")
+    lead = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     @property
     def tags(self):
