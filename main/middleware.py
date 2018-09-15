@@ -1,6 +1,7 @@
 import time
 
 import pytz
+from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
 
@@ -29,3 +30,14 @@ class AnalyticsMiddleware(MiddlewareMixin):
     def process_request(self, request):
         if "pomplamoose" not in request.path:
             log_analytic(request)
+
+
+class BillingMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        if (
+            request.user.is_authenticated
+            and request.path != "/billing/"
+            and request.path != "/billing/customer/"
+        ):
+            if request.user.profile.is_admin and not request.user.profile.stripe_id:
+                return redirect("main:billing_setup")

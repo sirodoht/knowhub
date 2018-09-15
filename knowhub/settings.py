@@ -58,6 +58,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "main.middleware.TimezoneMiddleware",
     "main.middleware.AnalyticsMiddleware",
+    "main.middleware.BillingMiddleware",
     # "main.middleware.StatsMiddleware",
 ]
 
