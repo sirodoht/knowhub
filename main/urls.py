@@ -57,6 +57,11 @@ urlpatterns = [
         views.resources_delete,
         name="resources_delete",
     ),
+    path(
+        "documents/<slug:resource_slug>/adopt/",
+        views.resources_adopt,
+        name="resources_adopt",
+    ),
     path("questions/", views.questions, name="questions"),
     path("questions/ask", views.questions_create, name="questions_create"),
     path(

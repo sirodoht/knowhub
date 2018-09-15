@@ -725,6 +725,22 @@ def resources_pins(request):
     return render(request, "main/resources_pins.html", {"companytags": companytags})
 
 
+@require_http_methods(["POST"])
+@login_required
+def resources_adopt(request, resource_slug):
+    if request.method == "POST":
+        resource = Resource.objects.get(slug=resource_slug)
+        form = AdoptResourceForm(request.POST, instance=resource)
+        if form.is_valid():
+            resource.lead = request.user
+            resource.save()
+            messages.success(request, "You are now the lead for this document")
+            return redirect("main:resources_view", resource_slug)
+        else:
+            messages.error(request, "Adoption failed. Please try again.")
+            return redirect("main:resources_view", resource_slug)
+
+
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def questions(request):
