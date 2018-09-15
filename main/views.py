@@ -82,12 +82,16 @@ def people(request):
         if request.user.profile.is_admin and not request.user.profile.stripe_id:
             return redirect("main:billing_setup")
         company = Company.objects.get(route=request.user.profile.company.route)
-        people = User.objects.all().filter(
-            profile__company=request.user.profile.company, is_active=True
+        people = (
+            User.objects.all()
+            .filter(profile__company=request.user.profile.company, is_active=True)
+            .order_by("email")
         )
         if request.user.profile.is_admin:
-            deactivated_people = User.objects.all().filter(
-                profile__company=request.user.profile.company, is_active=False
+            deactivated_people = (
+                User.objects.all()
+                .filter(profile__company=request.user.profile.company, is_active=False)
+                .order_by("email")
             )
             return render(
                 request,
