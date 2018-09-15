@@ -615,6 +615,7 @@ def resources_create(request):
             resource.slug += "-" + shortuuid.ShortUUID(
                 "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
             ).random(length=6)
+            resource.lead = request.user
             resource.save()
             for tag_text in form.cleaned_data["tags"].split(","):
                 if tag_text.strip():
