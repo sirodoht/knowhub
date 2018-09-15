@@ -47,6 +47,29 @@
                             <em class="muted">(none)</em>
                         {% endfor %}
                     </div>
+                    {% if resource.lead %}
+                    <div class="resources-view-content-side-title">
+                        Infractions
+                        <span class="tooltip" data-info="Did you find any issues with this document? Let the doc lead know.">
+                            <img src="{% static 'images/icon-info.svg' %}" alt="info icon" width="16px">
+                        </span>
+                    </div>
+                    <div class="resources-view-content-side-infractions">
+                        <form action="{% url 'main:resources_infraction' resource.slug %}" method="post">
+                            {{ form.non_field_errors }}
+
+                            {% if form.comment.errors %}
+                                {% for error in form.comment.errors %}
+                                    <div class="form-error">{{ error|escape }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            <textarea name="comment" id="id_comment" required placeholder="Type the issue...">{{ form.comment.value|default_if_none:"" }}</textarea>
+
+                            {% csrf_token %}
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
