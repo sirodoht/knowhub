@@ -96,9 +96,14 @@
                 <input type="submit" value="Save changes" class="resources-edit-content-form-submit">
             </form>
             <div class="resources-create-content-side">
-                <div class="resources-create-content-side-title" title="The person responsible for this document">Lead</div>
+                <div class="resources-create-content-side-title" title="The person responsible for this document">
+                    Lead
+                    <span class="tooltip" data-info="The lead of a doc is responsible for keeping it up-to-date.">
+                        <img src="{% static 'images/icon-info.svg' %}" alt="info icon" width="16px">
+                    </span>
+                </div>
                 <div class="resources-create-content-side-lead">
-                    <input type="text" name="lead" placeholder="Type a name..." id="lead-input" value="{{ form.lead.value|default:"" }}">
+                    <input type="text" name="lead" placeholder="Type the name of a member ..." id="lead-input" value="{{ form.lead.value|default:"" }}">
                 </div>
                 <div class="resources-create-content-side-title">Tags</div>
                 <div class="resources-create-content-side-tags">

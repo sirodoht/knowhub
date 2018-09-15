@@ -22,7 +22,12 @@
                     <div class="resources-view-content-body-date">Last update at {{ resource.updated_at }}</div>
                 </div>
                 <div class="resources-view-content-side">
-                    <div class="resources-create-content-side-title" title="The person responsible for this document">Lead</div>
+                    <div class="resources-create-content-side-title">
+                        Lead
+                        <span class="tooltip" data-info="The lead of a doc is responsible for keeping it up-to-date.">
+                            <img src="{% static 'images/icon-info.svg' %}" alt="info icon" width="16px">
+                        </span>
+                    </div>
                     <div class="resources-create-content-side-lead">
                         {% if resource.lead %}
                         <a href="{% url 'main:profile' resource.lead.profile.route %}" class="resources-create-content-side-lead-link">
