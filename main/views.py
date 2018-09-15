@@ -71,7 +71,7 @@ def index(request):
             return redirect("main:company_new")
         if request.user.profile.is_admin and not request.user.profile.stripe_id:
             return redirect("main:billing_setup")
-        return redirect("main:people")
+        return redirect("main:resources")
     else:
         return render(request, "main/landing.html")
 
