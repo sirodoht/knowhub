@@ -1,0 +1,11 @@
+{{ request.user.profile.name }} noticed some issues with "{{ resource.title }}" that you are lead of. Namely:
+
+{{ comment }}
+
+
+––
+See document at:{% if 'localhost' in current_site.domain or '127.0.0.1' in current_site.domain %}
+http://{{ current_site.domain }}{% url 'main:resources_view' resource.slug %}
+{% else %}
+https://{{ current_site.domain }}{% url 'main:resources_view' resource.slug %}
+{% endif %}
