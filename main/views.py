@@ -22,6 +22,7 @@ from knowhub import settings
 
 from . import billing
 from .forms import (
+    AdoptResourceForm,
     AnnounceForm,
     AnswerForm,
     CompanyForm,
@@ -53,6 +54,7 @@ from .models import (
     Company,
     CompanyTag,
     Post,
+    Profile,
     Question,
     Resource,
     Subscriber,
@@ -623,7 +625,7 @@ def resources_create(request):
                     )
             return redirect("main:resources_view", resource.slug)
         else:
-            messages.error(request, "Resource creation failed")
+            messages.error(request, "Document creation failed")
             return redirect("main:resources")
     else:
         form = ResourceForm()
@@ -638,10 +640,11 @@ def resources_edit(request, resource_slug):
         return redirect("main:billing_setup")
 
     resource = Resource.objects.get(slug=resource_slug)
+    initial_data = {"tags": resource.tags}
+    if resource.lead:
+        initial_data["lead"] = resource.lead.profile.name
     if request.method == "POST":
-        form = ResourceForm(
-            request.POST, instance=resource, initial={"tags": resource.tags}
-        )
+        form = ResourceForm(request.POST, instance=resource, initial=initial_data)
         if form.is_valid():
             resource = form.save(commit=False)
             if "title" in form.changed_data:
@@ -649,6 +652,13 @@ def resources_edit(request, resource_slug):
                 resource.slug += "-" + shortuuid.ShortUUID(
                     "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
                 ).random(length=6)
+            possible_leads = Profile.objects.filter(
+                name__contains=form.cleaned_data["lead"]
+            )
+            if possible_leads.count():
+                resource.lead = possible_leads.first().user
+            else:
+                resource.lead = None
             resource.save()
             TagResource.objects.filter(resource=resource).delete()
             for tag_text in form.cleaned_data["tags"].split(","):
@@ -660,11 +670,10 @@ def resources_edit(request, resource_slug):
                     )
             return redirect("main:resources_view", resource.slug)
         else:
-            messages.error(request, "Resource editing failed")
+            messages.error(request, "Document editing failed")
             return redirect("main:resources_view", resource_slug)
     else:
-        resource = Resource.objects.get(slug=resource_slug)
-        form = ResourceForm(instance=resource, initial={"tags": resource.tags})
+        form = ResourceForm(instance=resource, initial=initial_data)
 
     return render(
         request, "main/resources_edit.html", {"form": form, "resource": resource}
@@ -683,9 +692,9 @@ def resources_delete(request, resource_slug):
         if form.is_valid():
             resource.delete()
             return redirect("main:resources")
-            messages.success(request, "Resource deleted successfully")
+            messages.success(request, "Document deleted successfully")
         else:
-            messages.error(request, "Resource deletion failed")
+            messages.error(request, "Document deletion failed")
             return redirect("main:resources_view", resource_slug)
 
 

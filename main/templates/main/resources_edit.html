@@ -61,7 +61,7 @@
             <form action="{% url 'main:resources_edit' resource.slug %}"
                 method="post"
                 class="resources-edit-content-form"
-                onsubmit="return attachTags();">
+                onsubmit="return attachTagsAndLead();">
                 {{ form.non_field_errors }}
 
                 {% if form.title.errors %}
@@ -71,13 +71,6 @@
                 {% endif %}
                 <input type="text" name="title" maxlength="300" required id="id_title" placeholder="Title" value="{{ form.title.value }}" class="resources-edit-content-form-input">
 
-                {% if form.tags.errors %}
-                    {% for error in form.tags.errors %}
-                        <div class="form-error">{{ error|escape }}</div>
-                    {% endfor %}
-                {% endif %}
-                <input type="hidden" name="tags" maxlength="300" id="id_tags" value="{{ form.tags.value }}">
-
                 {% if form.body.errors %}
                     {% for error in form.body.errors %}
                         <div class="form-error">{{ error|escape }}</div>
@@ -85,11 +78,28 @@
                 {% endif %}
                 <textarea name="body" id="id_body">{{ form.body.value }}</textarea>
 
-                {% csrf_token %}
+                {% if form.tags.errors %}
+                    {% for error in form.tags.errors %}
+                        <div class="form-error">{{ error|escape }}</div>
+                    {% endfor %}
+                {% endif %}
+                <input type="hidden" name="tags" maxlength="300" id="id_tags" value="{{ form.tags.value }}">
 
+                {% if form.lead.errors %}
+                    {% for error in form.lead.errors %}
+                        <div class="form-error">{{ error|escape }}</div>
+                    {% endfor %}
+                {% endif %}
+                <input type="hidden" name="lead" maxlength="300" id="id_lead" value="{{ form.tags.lead }}">
+
+                {% csrf_token %}
                 <input type="submit" value="Save changes" class="resources-edit-content-form-submit">
             </form>
             <div class="resources-create-content-side">
+                <div class="resources-create-content-side-title" title="The person responsible for this document">Lead</div>
+                <div class="resources-create-content-side-lead">
+                    <input type="text" name="lead" placeholder="Type a name..." id="lead-input" value="{{ form.lead.value|default:"" }}">
+                </div>
                 <div class="resources-create-content-side-title">Tags</div>
                 <div class="resources-create-content-side-tags">
                     <div class="resources-create-content-side-tags-list" id="tags-list">
@@ -130,7 +140,7 @@
             },
         });
 
-        function attachTags() {
+        function attachTagsAndLead() {
             var tagsString = '';
             var tagElems = document.getElementsByClassName('tags-item');
             var i = 0;
@@ -139,6 +149,8 @@
                 tagsString += ',' + tagElems[i].innerText;
             }
             document.getElementById('id_tags').value = tagsString;
+
+            document.getElementById('id_lead').value = document.getElementById('lead-input').value.trim();
         }
 
         function exists(value) {
