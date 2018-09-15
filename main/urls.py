@@ -62,6 +62,11 @@ urlpatterns = [
         views.resources_adopt,
         name="resources_adopt",
     ),
+    path(
+        "documents/<slug:resource_slug>/infraction/",
+        views.resources_infraction,
+        name="resources_infraction",
+    ),
     path("questions/", views.questions, name="questions"),
     path("questions/ask", views.questions_create, name="questions_create"),
     path(

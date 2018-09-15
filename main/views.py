@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.forms import formset_factory
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -32,6 +32,7 @@ from .forms import (
     DeleteResourceForm,
     EmailForm,
     ExplorerForm,
+    InfractionForm,
     InviteOpenSetupForm,
     InviteSetupForm,
     ProfileForm,
@@ -590,14 +591,17 @@ def resources(request):
     )
 
 
-@require_http_methods(["HEAD", "GET", "POST"])
+@require_http_methods(["HEAD", "GET"])
 @login_required
 def resources_view(request, resource_slug):
     if request.user.profile.is_admin and not request.user.profile.stripe_id:
         return redirect("main:billing_setup")
 
     resource = get_object_or_404(Resource, slug=resource_slug)
-    return render(request, "main/resources_view.html", {"resource": resource})
+    form = InfractionForm()
+    return render(
+        request, "main/resources_view.html", {"resource": resource, "form": form}
+    )
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -641,6 +645,9 @@ def resources_edit(request, resource_slug):
         return redirect("main:billing_setup")
 
     resource = Resource.objects.get(slug=resource_slug)
+    if request.user.profile.company != resource.company:
+        raise Http404
+
     initial_data = {"tags": resource.tags}
     if resource.lead:
         initial_data["lead"] = resource.lead.profile.name
@@ -654,12 +661,12 @@ def resources_edit(request, resource_slug):
                     "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
                 ).random(length=6)
             possible_leads = Profile.objects.filter(
-                name__contains=form.cleaned_data["lead"]
+                name__icontains=form.cleaned_data["lead"]
             )
-            if possible_leads.count():
-                resource.lead = possible_leads.first().user
-            else:
+            if not possible_leads.exists() or not form.cleaned_data["lead"]:
                 resource.lead = None
+            else:
+                resource.lead = possible_leads.first().user
             resource.save()
             TagResource.objects.filter(resource=resource).delete()
             for tag_text in form.cleaned_data["tags"].split(","):
@@ -731,6 +738,9 @@ def resources_pins(request):
 def resources_adopt(request, resource_slug):
     if request.method == "POST":
         resource = Resource.objects.get(slug=resource_slug)
+        if request.user.profile.company != resource.company:
+            raise Http404
+
         form = AdoptResourceForm(request.POST, instance=resource)
         if form.is_valid():
             resource.lead = request.user
@@ -740,6 +750,43 @@ def resources_adopt(request, resource_slug):
         else:
             messages.error(request, "Adoption failed. Please try again.")
             return redirect("main:resources_view", resource_slug)
+
+
+@require_http_methods(["POST"])
+@login_required
+def resources_infraction(request, resource_slug):
+    if request.method == "POST":
+        resource = get_object_or_404(Resource, slug=resource_slug)
+        if request.user.profile.company != resource.company:
+            raise Http404
+
+        if not resource.lead:
+            messages.error(
+                request, "Infraction submission failed. There is no doc lead."
+            )
+            return redirect("main:resources_view", resource.slug)
+
+        form = InfractionForm(request.POST)
+        if form.is_valid():
+            send_mail(
+                f'[{request.user.profile.company.name}] There is an issue with "{resource.title}"',
+                render_to_string(
+                    "main/resource_infraction_email.txt",
+                    {
+                        "current_site": get_current_site(request),
+                        "comment": form.cleaned_data["comment"],
+                        "resource": resource,
+                    },
+                    request=request,
+                ),
+                settings.DEFAULT_FROM_EMAIL,
+                [resource.lead.email],
+            )
+            messages.success(request, "Your comment has been reported")
+            return redirect("main:resources_view", resource.slug)
+        else:
+            messages.error(request, "Infraction submission failed. Please try again.")
+            return redirect("main:resources_view", resource.slug)
 
 
 @require_http_methods(["HEAD", "GET", "POST"])
@@ -761,6 +808,9 @@ def questions_view(request, question_slug):
         return redirect("main:billing_setup")
 
     question = Question.objects.get(slug=question_slug)
+    if request.user.profile.company != question.company:
+        raise Http404
+
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
@@ -834,6 +884,9 @@ def questions_edit(request, question_slug):
         return redirect("main:billing_setup")
 
     question = Question.objects.get(slug=question_slug)
+    if request.user.profile.company != question.company:
+        raise Http404
+
     if request.user != question.author:
         return redirect("main:questions")
     if request.method == "POST":
@@ -866,6 +919,9 @@ def questions_delete(request, question_slug):
 
     if request.method == "POST":
         question = Question.objects.get(slug=question_slug)
+        if request.user.profile.company != question.company:
+            raise Http404
+
         if request.user != question.author:
             return redirect("main:questions")
         form = DeleteQuestionForm(request.POST, instance=question)
@@ -885,6 +941,9 @@ def questions_edit_answer(request, question_slug, answer_id):
         return redirect("main:billing_setup")
 
     question = Question.objects.get(slug=question_slug)
+    if request.user.profile.company != question.company:
+        raise Http404
+
     answer = Answer.objects.get(id=answer_id)
     if request.user != answer.author or question != answer.question:
         return redirect("main:questions_view", question_slug)
@@ -912,6 +971,9 @@ def questions_delete_answer(request, question_slug, answer_id):
 
     if request.method == "POST":
         question = Question.objects.get(slug=question_slug)
+        if request.user.profile.company != question.company:
+            raise Http404
+
         answer = Answer.objects.get(id=answer_id)
         if request.user != answer.author or question != answer.question:
             return redirect("main:questions_view", question_slug)
@@ -1014,6 +1076,9 @@ def users_deactivate(request):
         form = UserForm(request.POST)
         if form.is_valid():
             user = User.objects.get(email=form.cleaned_data["email"])
+            if request.user.profile.company != user.profile.company:
+                raise Http404
+
             user.is_active = False
             user.save()
             messages.success(request, "User has been deactivated")
@@ -1035,6 +1100,9 @@ def users_activate(request):
         form = UserForm(request.POST)
         if form.is_valid():
             user = User.objects.get(email=form.cleaned_data["email"])
+            if request.user.profile.company != user.profile.company:
+                raise Http404
+
             user.is_active = True
             user.save()
             messages.success(request, "User has been activated")
@@ -1056,6 +1124,9 @@ def users_adminify(request):
         form = UserForm(request.POST)
         if form.is_valid():
             user = User.objects.get(email=form.cleaned_data["email"])
+            if request.user.profile.company != user.profile.company:
+                raise Http404
+
             user.profile.is_admin = True
             user.save()
             messages.success(request, form.cleaned_data["email"] + " is now an admin")
@@ -1077,6 +1148,9 @@ def users_deadminify(request):
         form = UserForm(request.POST)
         if form.is_valid():
             user = User.objects.get(email=form.cleaned_data["email"])
+            if request.user.profile.company != user.profile.company:
+                raise Http404
+
             user.profile.is_admin = False
             user.save()
             messages.success(
