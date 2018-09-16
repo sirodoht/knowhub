@@ -343,11 +343,9 @@ def company_new(request):
         form = CompanyForm(request.POST)
         if form.is_valid():
             new_company = form.save(commit=False)
-            new_route = shortuuid.ShortUUID(
-                "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
-            ).random(length=6)
-            new_route = [new_route[i : i + 2] for i in range(0, len(new_route), 2)]
-            new_company.route = "-".join(new_route)
+            new_company.route = shortuuid.ShortUUID(
+                "abcdefghijkmlnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            ).random(length=12)
             new_company.save()
             request.user.profile.name = form.cleaned_data["profile_name"]
             request.user.profile.company = new_company
@@ -592,8 +590,8 @@ def resources_create(request):
             resource.company = request.user.profile.company
             resource.slug = slugify(form.cleaned_data["title"])
             resource.slug += "-" + shortuuid.ShortUUID(
-                "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
-            ).random(length=6)
+                "abcdefghijkmlnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            ).random(length=12)
             resource.lead = request.user
             resource.save()
             for tag_text in form.cleaned_data["tags"].split(","):
@@ -628,10 +626,9 @@ def resources_edit(request, resource_slug):
         if form.is_valid():
             resource = form.save(commit=False)
             if "title" in form.changed_data:
-                resource.slug = slugify(form.cleaned_data["title"])
-                resource.slug += "-" + shortuuid.ShortUUID(
-                    "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
-                ).random(length=6)
+                resource.slug = (
+                    slugify(form.cleaned_data["title"]) + resource.slug[-13:]
+                )
             possible_leads = Profile.objects.filter(
                 name__icontains=form.cleaned_data["lead"]
             )
@@ -821,8 +818,8 @@ def questions_create(request):
             question.company = request.user.profile.company
             question.slug = slugify(form.cleaned_data["title"])
             question.slug += "-" + shortuuid.ShortUUID(
-                "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
-            ).random(length=6)
+                "abcdefghijkmlnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            ).random(length=12)
             question.save()
             return redirect("main:questions_view", question.slug)
         else:
@@ -848,10 +845,9 @@ def questions_edit(request, question_slug):
         if form.is_valid():
             question = form.save(commit=False)
             if "title" in form.changed_data:
-                question.slug = slugify(form.cleaned_data["title"])
-                question.slug += "-" + shortuuid.ShortUUID(
-                    "abdcefghkmnpqrstuvwxyzABDCEFGHKMNPQRSTUVWXYZ23456789"
-                ).random(length=6)
+                question.slug = (
+                    slugify(form.cleaned_data["title"]) + question.slug[-13:]
+                )
             question.save()
             return redirect("main:questions_view", question.slug)
         else:
