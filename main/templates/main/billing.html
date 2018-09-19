@@ -41,7 +41,7 @@
         <div class="addition-value">
             Mastercard **** **** **** {{ billing_info.last4 }}
             <br>Expiration: {{ billing_info.exp_month }}/{{ billing_info.exp_year }}
-            <br><a href="#" id="change-card">Change</a>
+            <br><a href="#" id="change-card">Change Card</a>
             {% csrf_token %}
         </div>
 
