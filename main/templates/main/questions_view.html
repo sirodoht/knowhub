@@ -95,6 +95,8 @@
                         answered at {{ item.created_at }}
                     </div>
                 </div>
+                {% empty %}
+                <em class="muted">(none yet—be the first)</em>
                 {% endfor %}
             </div>
             <div class="questions-view-post">

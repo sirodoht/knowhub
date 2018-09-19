@@ -36,8 +36,7 @@
                         {% else %}
                         <div class="resources-create-content-side-lead-adopt">
                             <em class="muted">
-                                (none —
-                                <form action="{% url 'main:resources_adopt' resource.slug %}" method="post">{% csrf_token %}<input type="submit" value="adopt it"></form>)
+                                (no one—<form action="{% url 'main:resources_adopt' resource.slug %}" method="post">{% csrf_token %}<input type="submit" value="adopt it"></form>)
                             </em>
                         </div>
                         {% endif %}
