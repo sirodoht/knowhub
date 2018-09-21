@@ -2134,6 +2134,16 @@ button:hover {
     margin-bottom: 15px;
 }
 
+.blog-post li {
+    color: rgba(0, 0, 0, 0.84);
+    font-weight: 400;
+    font-style: normal;
+    font-size: 21px;
+    line-height: 1.58;
+    letter-spacing: -.003em;
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
 .blog-post-date {
     font-size: 14px;
     color: #828282;
