@@ -2143,6 +2143,17 @@ button:hover {
     letter-spacing: -.003em;
     font-family: Georgia, Cambria, "Times New Roman", Times, serif;
 }
+@media (max-width: 767px) {
+    .blog-post li {
+        font-size: 18px;
+        line-height: 1.58;
+        letter-spacing: -.004em;
+    }
+}
+
+.blog-post a:hover {
+    text-decoration: underline;
+}
 
 .blog-post-date {
     font-size: 14px;
