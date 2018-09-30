@@ -504,6 +504,7 @@ nav {
     padding-left: 10px;
     padding-right: 10px;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .hero-content-left {
@@ -511,6 +512,7 @@ nav {
     flex: 2;
     flex-direction: column;
     margin-bottom: 64px;
+    min-width: 327px;
 }
 
 .hero-content-left-title {
@@ -520,26 +522,33 @@ nav {
 }
 @media (max-width: 768px) {
     .hero-content-left-title {
-        margin-top: 80px;
-        margin-bottom: 80px;
-        font-size: 38px;
+        font-size: 48px;
+    }
+}
+@media (max-width: 679px) {
+    .hero-content-left-title {
+        font-size: 42px;
+        text-align: center;
+        margin-top: 128px;
+        margin-bottom: 128px;
     }
 }
 
 .hero-content-left-text {
     font-size: 18px;
     line-height: 1.5;
-    margin-bottom: 40px;
+    margin-bottom: 64px;
+    padding-right: 12px;
+    max-width: 460px;
 }
-@media (max-width: 768px) {
+@media (max-width: 679px) {
     .hero-content-left-text {
         font-size: 20px;
         margin-bottom: 0;
-    }
-}
-@media (max-width: 480px) {
-    .hero-content-left-text {
-        color: inherit;
+        max-width: 100%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
@@ -553,8 +562,14 @@ nav {
     flex-direction: column;
     text-align: center;
 }
+@media (max-width: 679px) {
+    .hero-content-right {
+        margin-bottom: 64px;
+    }
+}
 
 .hero-content-right-form {
+    min-width: 333px;
     color: #6e7f89;
     background: #0d9086;
     border-radius: 2px;
@@ -565,6 +580,11 @@ nav {
     padding-left: 32px;
     padding-right: 32px;
     box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.2);
+}
+@media (max-width: 679px) {
+    .hero-content-right-form {
+        margin-top: 32px;
+    }
 }
 
 .hero-content-right-form h2 {
@@ -586,6 +606,7 @@ nav {
     padding-right: 12px;
     width: 100%;
     margin-bottom: 15px;
+    -webkit-appearance: none;
 }
 
 .hero-content-right-form input[type="submit"] {
@@ -653,14 +674,8 @@ nav {
 }
 @media (max-width: 768px) {
     .pitch-content-text {
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-}
-@media (max-width: 480px) {
-    .pitch-content-text {
-        box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.2);
-        text-align: center;
+        padding-left: 32px;
+        padding-right: 32px;
     }
 }
 
@@ -808,7 +823,12 @@ section {
 .screenshots-content-item-text-title {
     font-size: 26px;
     color: #ffa918;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
+}
+@media (max-width: 769px) {
+    .screenshots-content-item-text-title {
+        margin-bottom: 24px;
+    }
 }
 
 .screenshots-content-item-text-body {
@@ -955,6 +975,7 @@ section {
     padding-right: 10px;
     width: 250px;
     margin-bottom: 15px;
+    -webkit-appearance: none;
 }
 
 .cta-form input[type="submit"] {
