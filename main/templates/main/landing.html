@@ -12,7 +12,7 @@
                 <br><span class="hero-content-text-lead">Create your company's knowledge repository.</span>
                 <br>Scattered info across Drive docs, repository READMEs, emails and&nbsp;chat&nbsp;history.
                 <br>Does this sound like your team?
-                Get started&nbsp;<a href="{% url 'main:subscribe' %}" style="text-decoration: underline;">here</a>.
+                Get started&nbsp;<a href="{% url 'main:register' %}" style="text-decoration: underline;">here</a>.
                 <br>
             </div>
         </div>
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="features-content-trial">
-                <a href="{% url 'main:subscribe' %}">Start a free 30 day trial →</a>
+                <a href="{% url 'main:register' %}">Start a free 30 day trial →</a>
             </div>
         </div>
     </section> -->
@@ -120,7 +120,7 @@
                 </div>
             </div>
             <div class="screenshots-content-trial">
-                <a href="{% url 'main:subscribe' %}">Start a free 30 day trial →</a>
+                <a href="{% url 'main:register' %}">Start a free 30 day trial →</a>
             </div>
         </div>
     </section>
@@ -168,10 +168,10 @@
 
     <section class="pricing" id="pricing">
         <div class="pricing-content">
-            <a class="pricing-content-lead" href="{% url 'main:subscribe' %}">
+            <a class="pricing-content-lead" href="{% url 'main:register' %}">
                 Pricing is $2/month per user. All&nbsp;features&nbsp;included. Cancel&nbsp;anytime.
             </a>
-            <a class="pricing-content-subtitle" href="{% url 'main:subscribe' %}">
+            <a class="pricing-content-subtitle" href="{% url 'main:register' %}">
                 Start a free 30 day trial →
             </a>
         </div>
@@ -183,13 +183,13 @@
     </section> -->
 
     <section class="cta">
-        <!-- <a href="{% url 'main:subscribe' %}" class="cta-link">
+        <!-- <a href="{% url 'main:register' %}" class="cta-link">
             Try KnowHub for free →
         </a> -->
 
         <h2>Get started for free</h2>
 
-        <form action="{% url 'main:subscribe' %}" method="post" class="cta-form">
+        <form action="{% url 'main:register' %}" method="post" class="cta-form">
             {{ form.non_field_errors }}
             {% if form.email.errors %}
                 {% for error in form.email.errors %}
