@@ -189,7 +189,7 @@
 
         <h2>Get started for free</h2>
 
-        <form action="{% url 'main:register' %}" method="post" class="cta-form">
+        <form action="{% url 'main:auth' %}" method="post" class="cta-form">
             {{ form.non_field_errors }}
             {% if form.email.errors %}
                 {% for error in form.email.errors %}
