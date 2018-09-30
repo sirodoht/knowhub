@@ -7,13 +7,33 @@
 {% block content %}
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-content-title">Docs for&nbsp;remote&nbsp;teams</h1>
-            <div class="hero-content-text">
-                <br><span class="hero-content-text-lead">Create your company's knowledge repository.</span>
-                <br>Scattered info across Drive docs, repository READMEs, emails and&nbsp;chat&nbsp;history.
-                <br>Does this sound like your team?
-                Get started&nbsp;<a href="{% url 'main:register' %}" style="text-decoration: underline;">here</a>.
-                <br>
+            <div class="hero-content-left">
+                <h1 class="hero-content-left-title">Docs&nbsp;for<br>remote&nbsp;teams</h1>
+                <div class="hero-content-left-text">
+                    Create your company's <a href="#features">knowledge repository</a>.
+                    <br>Scattered info across Drive docs, repository READMEs,
+                    <br>emails and&nbsp;chat&nbsp;history. Does this sound like your team?
+                    <br>Get started&nbsp;<a href="{% url 'main:register' %}" style="text-decoration: underline;">here</a>.
+                </div>
+            </div>
+            <div class="hero-content-right">
+                <form action="{% url 'main:auth' %}" method="post" class="hero-content-right-form">
+                    <h2>Get started for free</h2>
+                    {{ form.non_field_errors }}
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <div class="form-error">{{ error|escape }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <input type="email" name="email" maxlength="100" required id="id_email" placeholder="Your email address">
+                    {% csrf_token %}
+                    <input type="submit" value="Sign up for KnowHub">
+
+                    <div class="hero-content-right-form-info">
+                        By clicking “Sign up for KnowHub”, you agree to our
+                        <a href="{% url 'main:terms' %}">terms&nbsp;of&nbsp;service</a>&nbsp;and&nbsp;<a href="{% url 'main:privacy' %}">privacy&nbsp;policy</a>.
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -23,9 +43,6 @@
             <div class="pitch-content-text">
                 Asking questions is good.
                 <br>Getting answers in a disappearing chat might not be.
-            </div>
-            <div class="pitch-content-drawing">
-                <img src="{% static 'images/pitch-drawing.png' %}" alt="pitch drawing">
             </div>
         </div>
     </section>
@@ -198,11 +215,11 @@
             {% endif %}
             <input type="email" name="email" maxlength="100" required id="id_email" placeholder="Your email address">
             {% csrf_token %}
-            <input type="submit" value="Get started with KnowHub">
+            <input type="submit" value="Sign up for KnowHub">
         </form>
 
         <div class="cta-info">
-            By clicking “Get started with KnowHub”, you agree to our
+            By clicking “Sign up for KnowHub”, you agree to our
             <a href="{% url 'main:terms' %}">terms&nbsp;of&nbsp;service</a>&nbsp;and&nbsp;<a href="{% url 'main:privacy' %}">privacy&nbsp;policy</a>.
         </div>
     </section>
