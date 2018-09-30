@@ -137,7 +137,7 @@ def token_post(request):
                 messages.error(request, "This user is deactivated")
                 return redirect("main:index")
             dj_login(request, user)
-            messages.success(request, "Sign in successful")
+            # messages.success(request, "Sign in successful")
             return redirect(settings.LOGIN_REDIRECT_URL)
         else:
             messages.error(
@@ -161,7 +161,7 @@ def token_post(request):
                     messages.error(request, "This user is deactivated")
                     return redirect("main:index")
                 messages.success(
-                    request, "Check your inbox and click on the link to sign in."
+                    request, "Check your inbox and<br>click on the link to sign in."
                 )
             else:
                 # first time sign up
