@@ -945,6 +945,7 @@ section {
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 32px;
     grid-row-gap: 32px;
+    margin-bottom: 36px;
 }
 @media (max-width: 768px) {
     .pricing-content-grid {
@@ -961,12 +962,27 @@ section {
     border: 1px solid #e4e6e8;
 }
 
+.pricing-content-grid-col-premium {
+    border-color: #ffa918;
+    transform: scale(1.075);
+}
+@media (max-width: 768px) {
+    .pricing-content-grid-col-premium {
+        transform: none;
+    }
+}
+
 .pricing-content-grid-col-title {
     text-align: center;
     padding-top: 16px;
     padding-bottom: 16px;
     border-bottom: 1px solid #e4e6e8;
     font-size: 20px;
+}
+
+.pricing-content-grid-col-premium .pricing-content-grid-col-title,
+.pricing-content-grid-col-premium .pricing-content-grid-col-cta {
+    border-color: #ffa918;
 }
 
 .pricing-content-grid-col-price {
@@ -1006,17 +1022,32 @@ section {
     font-size: 20px;
 }
 
-.pricing-content-policy {
+.spiel {
     background: #d5f4f2;
     border-top: 1px solid #d7ebe9;
     border-bottom: 1px solid #d7ebe9;
 }
 
-.pricing-content-policy h2 {
-    color: #6e7f89;
+.spiel-content {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 32px;
+    padding-bottom: 40px;
+    border-top: 1px solid #d7ebe9;
+    border-bottom: 1px solid #d7ebe9;
+    background: #d5f4f2;
 }
 
-.pricing-content-policy p {
+.spiel-content h2 {
+    color: #6e7f89;
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
+.spiel-content p {
     color: #6e7f89;
     max-width: 700px;
     line-height: 1.4;
@@ -1024,6 +1055,7 @@ section {
 
 .pricing-content-faq {
     max-width: 700px;
+    margin-top: 64px;
 }
 
 .pricing-content-faq-question {

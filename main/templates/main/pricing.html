@@ -25,8 +25,8 @@
                         <a href="{% url 'main:register' %}">Get started now</a>
                     </div>
                 </div>
-                <div class="pricing-content-grid-col" style="border-color: #ffa918; transform: scale(1.05)">
-                    <div class="pricing-content-grid-col-title" style="border-color: #ffa918;">Premium</div>
+                <div class="pricing-content-grid-col pricing-content-grid-col-premium">
+                    <div class="pricing-content-grid-col-title">Premium</div>
                     <div class="pricing-content-grid-col-price">
                         $7
                         <span>per user / month</span>
@@ -36,7 +36,7 @@
                         <div class="pricing-content-grid-col-features-item">5GB storage per member</div>
                         <div class="pricing-content-grid-col-features-item">24/7 priority support</div>
                     </div>
-                    <div class="pricing-content-grid-col-cta" style="border-color: #ffa918;">
+                    <div class="pricing-content-grid-col-cta">
                         <a href="{% url 'main:register' %}">Get started now</a>
                     </div>
                 </div>
@@ -56,20 +56,18 @@
             </div>
         </section>
 
-        <section class="pricing" style="background: #d5f4f2; border-top: 1px solid #d7ebe9; border-bottom: 1px solid #d7ebe9;">
-            <div class="pricing-content">
-                <div class="pricing-content-policy">
-                    <h2>Transparent Billing</h2>
-                    <p>
-                        We do not plan on getting paid without our customer wanting us to. KnowHub is a bootstrapped
-                        company and we hope you will be eager to pay for our product because it makes your life easier
-                        and your business more efficient.
-                    </p>
-                    <p>
-                        At any point you can visit your account's <a href="{% url 'main:billing_settings' %}">billing page</a>
-                        and see the date and amount of the next charge. At the same page you can cancel your subscription.
-                    </p>
-                </div>
+        <section class="spiel">
+            <div class="spiel-content">
+                <h2>Transparent Billing</h2>
+                <p>
+                    We do not plan on getting paid without our customer wanting us to. KnowHub is a bootstrapped
+                    company and we hope you will be eager to pay for our product because it makes your life easier
+                    and your business more efficient.
+                </p>
+                <p>
+                    At any point you can visit your account's <a href="{% url 'main:billing_settings' %}">billing page</a>
+                    and see the date and amount of the next charge. At the same page you can cancel your subscription.
+                </p>
             </div>
         </section>
 
