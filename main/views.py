@@ -65,6 +65,7 @@ from .models import (
 from .tasks import announce_task, invite_task
 
 
+@require_safe
 def index(request):
     if request.user.is_authenticated:
         if not request.user.profile.company:
@@ -190,7 +191,6 @@ def token_post(request):
 
 
 @require_safe
-@login_required
 def logout(request):
     dj_logout(request)
     messages.success(request, "You have been logged out")
