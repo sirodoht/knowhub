@@ -1090,7 +1090,6 @@ section {
     padding-top: 32px;
     padding-bottom: 32px;
     display: flex;
-    cursor: pointer;
     border-top: 1px solid #d5f4f2;
     line-height: 2;
     user-select: none;
@@ -1099,6 +1098,11 @@ section {
 .pricing-content-faq-question-text {
     display: flex;
     flex-grow: 1;
+    cursor: pointer;
+}
+
+.pricing-content-faq-question-icon {
+    cursor: pointer;
 }
 
 .pricing-content-faq-question-icon img {
