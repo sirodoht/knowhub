@@ -8,6 +8,7 @@ app_name = "main"
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("features/", views.features, name="features"),
     path("subscribe/thanks/", views.subscribe_thanks, name="subscribe_thanks"),
     path("subscribe/", views.subscribe, name="subscribe"),
     path("join/", views.register, name="register"),

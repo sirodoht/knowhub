@@ -1,0 +1,103 @@
+{% extends 'main/layout_public.html' %}
+
+{% load static %}
+
+{% block title %}KnowHub Features{% endblock %}
+
+{% block content %}
+    <section class="features">
+        <div class="features-content">
+            <h1>Features</h1>
+
+            <div class="features-content-item">
+                <div class="features-content-item-text">
+                    <div class="features-content-item-text-title">
+                        Documents
+                    </div>
+                    <div class="features-content-item-text-body">
+                        Create Markdown docs ranging from tech architecture overview to business development tips.
+                    </div>
+                </div>
+                <div class="features-content-item-image">
+                    <img src="https://res.cloudinary.com/du9ja9zgm/image/upload/v1538059614/landing-docs.png" alt="screenshots docs" width="400px">
+                </div>
+            </div>
+            <div class="features-content-item">
+                <div class="features-content-item-image">
+                    <img src="https://res.cloudinary.com/du9ja9zgm/image/upload/v1537047919/docs-infractions.png" alt="screenshots docs infractions" width="300px">
+                </div>
+                <div class="features-content-item-text">
+                    <div class="features-content-item-text-title">
+                        Up-to-date
+                    </div>
+                    <div class="features-content-item-text-body">
+                        Keeping documentation up-to-date is hard. Doc Leads and Doc Infractions can help you find discrepancies.
+                    </div>
+                </div>
+            </div>
+            <div class="features-content-item">
+                <div class="features-content-item-text">
+                    <div class="features-content-item-text-title">
+                        Questions
+                    </div>
+                    <div class="features-content-item-text-body">
+                            Ask questions. Searchable, indexable, taggable. Unlike those that happen in a chat.
+                    </div>
+                </div>
+                <div class="features-content-item-image">
+                    <img src="https://res.cloudinary.com/du9ja9zgm/image/upload/v1538065176/landing-questions.png" alt="screenshots questions" width="400px">
+                </div>
+            </div>
+            <div class="features-content-item">
+                <div class="features-content-item-image">
+                    <img src="https://res.cloudinary.com/du9ja9zgm/image/upload/v1538335371/landing-people.png" alt="screenshots people" width="500px">
+                </div>
+                <div class="features-content-item-text">
+                    <div class="features-content-item-text-title">
+                        People directory
+                    </div>
+                    <div class="features-content-item-text-body">
+                        A list with everyone working in the company, their role, and profile.
+                    </div>
+                </div>
+            </div>
+            <div class="features-content-item">
+                <div class="features-content-item-text">
+                    <div class="features-content-item-text-title">
+                        Announcements
+                    </div>
+                    <div class="features-content-item-text-body">
+                        Make announcements, spread news. Make everyone feel included without interrupting their flow.
+                    </div>
+                </div>
+                <div class="features-content-item-image">
+                    <img src="https://res.cloudinary.com/du9ja9zgm/image/upload/v1538065176/landing-announcements.png" alt="screenshots announcements" width="400px">
+                </div>
+            </div>
+            <!-- <div class="features-content-trial">
+                <a href="{% url 'main:register' %}">Start a free 30 day trial →</a>
+            </div> -->
+        </div>
+    </section>
+
+    <section class="cta" style="border-top: 1px solid #ffa918; margin-top: 32px; padding-top: 64px;">
+        <h2>Get started for free</h2>
+
+        <form action="{% url 'main:auth' %}" method="post" class="cta-form">
+            {{ form.non_field_errors }}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="email" name="email" maxlength="100" required id="id_email" placeholder="Your email address">
+            {% csrf_token %}
+            <input type="submit" value="Sign up for KnowHub">
+        </form>
+
+        <div class="cta-info">
+            By clicking “Sign up for KnowHub”, you agree to our
+            <a href="{% url 'main:terms' %}">terms&nbsp;of&nbsp;service</a>&nbsp;and&nbsp;<a href="{% url 'main:privacy' %}">privacy&nbsp;policy</a>.
+        </div>
+    </section>
+{% endblock %}

@@ -77,6 +77,11 @@ def index(request):
 
 
 @require_safe
+def features(request):
+    return render(request, "main/features.html")
+
+
+@require_safe
 @login_required
 def people(request):
     if request.user.is_authenticated:
