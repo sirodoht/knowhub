@@ -1,0 +1,222 @@
+{% extends 'main/layout_public.html' %}
+
+{% load static %}
+
+{% block title %}KnowHub Pricing{% endblock %}
+
+{% block content %}
+    <section class="pricing">
+        <div class="pricing-content">
+            <h1>Pricing</h1>
+
+            <div class="pricing-content-grid">
+                <div class="pricing-content-grid-col">
+                    <div class="pricing-content-grid-col-title">Standard</div>
+                    <div class="pricing-content-grid-col-price">
+                        $3
+                        <span>per user / month</span>
+                    </div>
+                    <div class="pricing-content-grid-col-features">
+                        <div class="pricing-content-grid-col-features-item">500MB total storage</div>
+                        <div class="pricing-content-grid-col-features-item">&nbsp;</div>
+                    </div>
+                    <div class="pricing-content-grid-col-cta">
+                        <a href="{% url 'main:register' %}">Get started now</a>
+                    </div>
+                </div>
+                <div class="pricing-content-grid-col">
+                    <div class="pricing-content-grid-col-title">Premium</div>
+                    <div class="pricing-content-grid-col-price">
+                        $7
+                        <span>per user / month</span>
+                    </div>
+                    <div class="pricing-content-grid-col-features">
+                        <div class="pricing-content-grid-col-features-item">5GB storage per member</div>
+                        <div class="pricing-content-grid-col-features-item">24/7 support</div>
+                    </div>
+                    <div class="pricing-content-grid-col-cta">
+                        <a href="{% url 'main:register' %}">Get started now</a>
+                    </div>
+                </div>
+                <div class="pricing-content-grid-col">
+                    <div class="pricing-content-grid-col-title">Bespoke</div>
+                    <div class="pricing-content-grid-col-price" style="font-weight: 400; font-size: 32px; margin-bottom: 28px;">
+                        Call us
+                    </div>
+                    <div class="pricing-content-grid-col-features" style="margin-bottom: 14px;">
+                        Special needs?
+                        <br>Contact us to get a quote.
+                    </div>
+                    <div class="pricing-content-grid-col-cta">
+                        <a href="mailto:sales@knowhub.app">Email us now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing" style="background: #d5f4f2; border-top: 1px solid #d7ebe9; border-bottom: 1px solid #d7ebe9;">
+            <div class="pricing-content">
+                <div class="pricing-content-policy">
+                    <h2>Transparent Billing</h2>
+                    <p>
+                        We do not plan on getting paid without our customer wanting us to. KnowHub is a bootstrapped
+                        company and we hope you will be eager to pay for our product because it makes your life easier
+                        and your business more efficient.
+                    </p>
+                    <p>
+                        At any point you can visit your account's <a href="{% url 'main:billing_settings' %}">billing page</a>
+                        and see the date and amount of the next charge. At the same page you can cancel your subscription.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing">
+            <div class="pricing-content">
+                <div class="pricing-content-faq">
+                    <h2>Frequently Asked Questions</h2>
+
+                    <div class="pricing-content-faq-question" style="border-top: none;">
+                        <div class="pricing-content-faq-question-text">
+                            Can I try KnowHub for free?
+                        </div>
+                        <div class="pricing-content-faq-question-icon">
+                            <img src="{% static 'images/icon-arrow-down.svg' %}" alt="icon arrow down" width="28px" height="28px">
+                        </div>
+                    </div>
+                    <div class="pricing-content-faq-answer">
+                        Yes! You can sign up for KnowHub <a href="{% url 'main:register' %}">right now</a>
+                        and get a <strong>30 days free trial</strong>.
+                        We hope this will give you enough time to evaluate KnowHub for your company.
+                    </div>
+
+                    <div class="pricing-content-faq-question">
+                        <div class="pricing-content-faq-question-text">
+                            What happens if my trial expires and I want to cancel?
+                        </div>
+                        <div class="pricing-content-faq-question-icon">
+                            <img src="{% static 'images/icon-arrow-down.svg' %}" alt="icon arrow down" width="28px" height="28px">
+                        </div>
+                    </div>
+                    <div class="pricing-content-faq-answer">
+                        We do not plan on getting paid by accident. We will send you a reminder 3 days before your very
+                        first charge in case you want to cancel after your free trial. In addition,
+                        if <a href="mailto:support@knowhub.app">asked</a>, we will refund any
+                        subscription cycle that is in the first 3 days (out of the total 30).
+                    </div>
+
+                    <div class="pricing-content-faq-question">
+                        <div class="pricing-content-faq-question-text">
+                            How are users counted for billing?
+                        </div>
+                        <div class="pricing-content-faq-question-icon">
+                            <img src="{% static 'images/icon-arrow-down.svg' %}" alt="icon arrow down" width="28px" height="28px">
+                        </div>
+                    </div>
+                    <div class="pricing-content-faq-answer">
+                        You will be billed for the number of users who can log into KnowHub.
+                        Admins may deactivate users at any time.
+                    </div>
+
+                    <div class="pricing-content-faq-question">
+                        <div class="pricing-content-faq-question-text">
+                            What payment options are available?
+                        </div>
+                        <div class="pricing-content-faq-question-icon">
+                            <img src="{% static 'images/icon-arrow-down.svg' %}" alt="icon arrow down" width="28px" height="28px">
+                        </div>
+                    </div>
+                    <div class="pricing-content-faq-answer">
+                        We accept the following credit cards:
+                        <ul>
+                            <li>Visa</li>
+                            <li>MasterCard</li>
+                            <li>American Express</li>
+                            <li>Diners Club</li>
+                            <li>JCB</li>
+                            <li>Discover</li>
+                        </ul>
+                        If these do not cover your needs feel free to <a href="mailto:support@knowhub.app">contact us</a>.
+                    </div>
+
+                    <div class="pricing-content-faq-question">
+                        <div class="pricing-content-faq-question-text">
+                            Can I get a refund?
+                        </div>
+                        <div class="pricing-content-faq-question-icon">
+                            <img src="{% static 'images/icon-arrow-down.svg' %}" alt="icon arrow down" width="28px" height="28px">
+                        </div>
+                    </div>
+                    <div class="pricing-content-faq-answer">
+                        Our refund policy is based on the use of our product. All refunds are handled on a case-by-case
+                        basis. <a href="mailto:support@knowhub.app">Send us</a> an email with the details of your
+                        experience and we’ll work with you to make sure you’re happy.
+                    </div>
+
+                    <div class="pricing-content-faq-question">
+                        <div class="pricing-content-faq-question-text">
+                            Is there a free plan beyond the trial?
+                        </div>
+                        <div class="pricing-content-faq-question-icon">
+                            <img src="{% static 'images/icon-arrow-down.svg' %}" alt="icon arrow down" width="28px" height="28px">
+                        </div>
+                    </div>
+                    <div class="pricing-content-faq-answer">
+                        Currently there isn't one. Are you interested? <a href="mailto:support@knowhub.app">Tell us if so!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" style="border-top: 1px solid #ffa918; margin-top: 32px; padding-top: 64px;">
+        <h2>Get started for free</h2>
+
+        <form action="{% url 'main:auth' %}" method="post" class="cta-form">
+            {{ form.non_field_errors }}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <div class="form-error">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <input type="email" name="email" maxlength="100" required id="id_email" placeholder="Your email address">
+            {% csrf_token %}
+            <input type="submit" value="Sign up for KnowHub">
+        </form>
+
+        <div class="cta-info">
+            By clicking “Sign up for KnowHub”, you agree to our
+            <a href="{% url 'main:terms' %}">terms&nbsp;of&nbsp;service</a>&nbsp;and&nbsp;<a href="{% url 'main:privacy' %}">privacy&nbsp;policy</a>.
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var i = 0;
+
+        var answerElems = document.getElementsByClassName('pricing-content-faq-answer');
+        for (i = 0; i < answerElems.length; i++) {
+            answerElems[i].style.display = 'none';
+        }
+
+        var questionElems = document.getElementsByClassName('pricing-content-faq-question');
+        for (i = 0; i < questionElems.length; i++) {
+            questionElems[i].addEventListener('click', function (event) {
+                var answerElem = event.target.parentNode.nextSibling.nextSibling;
+                var questionElem = event.target.parentNode;
+                if (event.target.tagName === 'IMG') {
+                    var answerElem = event.target.parentNode.parentNode.nextSibling.nextSibling;
+                var questionElem = event.target.parentNode.parentNode;
+                }
+                if (answerElem.style.display === 'none') {
+                    questionElem.style.paddingBottom = '16px';
+                    answerElem.style.display = 'block';
+                } else {
+                    questionElem.style.paddingBottom = '32px';
+                    answerElem.style.display = 'none';
+                }
+            });
+        }
+    </script>
+{% endblock %}

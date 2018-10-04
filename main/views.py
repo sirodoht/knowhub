@@ -77,6 +77,11 @@ def index(request):
 
 
 @require_safe
+def pricing(request):
+    return render(request, "main/pricing.html")
+
+
+@require_safe
 def features(request):
     return render(request, "main/features.html")
 
