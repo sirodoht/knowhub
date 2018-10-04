@@ -46,7 +46,7 @@ def info_get(stripe_id):
     info["exp_year"] = customer["sources"]["data"][0]["exp_year"]
     info["last4"] = customer["sources"]["data"][0]["last4"]
     info["quantity"] = customer["subscriptions"]["data"][0]["quantity"]
-    info["cost"] = 2 * info["quantity"]
+    info["cost"] = 3 * info["quantity"]
     info["trial"] = False
     if customer["subscriptions"]["data"][0]["status"] == "trialing":
         info["trial"] = True
