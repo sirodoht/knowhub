@@ -471,11 +471,11 @@ nav {
 }
 
 .nav-item-special {
-    color: #ffa918;
+    color: #0d9086;
 }
 
 .nav-item-anchor {
-    color: #ffa918;
+    color: #0d9086;
     font-weight: 400;
 }
 @media (max-width: 480px) {
@@ -544,6 +544,7 @@ nav {
     margin-bottom: 64px;
     padding-right: 12px;
     max-width: 460px;
+    color: #828282;
 }
 @media (max-width: 679px) {
     .hero-content-left-text {
@@ -699,6 +700,16 @@ section {
     font-size: 54px;
     margin-top: 32px;
     margin-bottom: 64px;
+}
+@media (max-width: 768px) {
+    .features-content h1 {
+        font-size: 48px;
+    }
+}
+@media (max-width: 679px) {
+    .features-content h1 {
+        font-size: 42px;
+    }
 }
 
 .features-content-item {
@@ -934,6 +945,16 @@ section {
     margin-top: 32px;
     margin-bottom: 64px;
 }
+@media (max-width: 768px) {
+    .pricing-content h1 {
+        font-size: 48px;
+    }
+}
+@media (max-width: 679px) {
+    .pricing-content h1 {
+        font-size: 42px;
+    }
+}
 
 .pricing-content h2 {
     margin-top: 32px;
@@ -1022,6 +1043,15 @@ section {
     font-size: 20px;
 }
 
+.pricing-content-trial {
+    text-align: center;
+    margin-top: 64px;
+}
+
+.pricing-content-trial a {
+    font-size: 20px;
+}
+
 .spiel {
     background: #d5f4f2;
     border-top: 1px solid #d7ebe9;
@@ -1042,7 +1072,6 @@ section {
 }
 
 .spiel-content h2 {
-    color: #6e7f89;
     margin-top: 32px;
     margin-bottom: 16px;
 }
@@ -1081,6 +1110,7 @@ section {
 .pricing-content-faq-answer {
     line-height: 1.4;
     margin-bottom: 32px;
+    color: #828282;
 }
 
 .footer-content {
