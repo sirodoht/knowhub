@@ -228,9 +228,9 @@ LOGGING = {
 STRIPE_PUBLIC = os.environ.get("STRIPE_PUBLIC")
 STRIPE_SECRET = os.environ.get("STRIPE_SECRET")
 
-STRIPE_PLAN = "plan_DKzD7hxQmCsY3J"
+STRIPE_PLAN = "plan_DimJaxbaKOgt6m"
 if not DEBUG:
-    STRIPE_PLAN = "plan_DKzsEai5wOYBvP"
+    STRIPE_PLAN = "plan_DimH1uvZgYpww7"
 
 
 # Celery settings
