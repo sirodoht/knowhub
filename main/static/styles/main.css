@@ -708,7 +708,7 @@ section {
     margin-top: 64px;
     margin-bottom: 64px;
 }
-@media (max-width: 768px) {
+@media (max-width: 700px) {
     .features-content-item {
         margin-bottom: 128px;
     }
@@ -717,7 +717,7 @@ section {
 .features-content-item:nth-child(odd) {
     margin-top: 32px;
 }
-@media (max-width: 768px) {
+@media (max-width: 700px) {
     .features-content-item:nth-child(odd) {
         flex-wrap: wrap-reverse;
     }
@@ -726,13 +726,13 @@ section {
 .features-content-item:nth-child(even) {
     margin-bottom: 32px;
 }
-@media (max-width: 768px) {
+@media (max-width: 700px) {
     .features-content-item:nth-child(even) {
         flex-wrap: wrap;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
     .features-content-item-image {
         margin-left: auto;
         margin-right: auto;
@@ -741,16 +741,17 @@ section {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
     .features-content-item-image img {
         width: 80%;
+        max-width: 500px;
     }
 }
 
 .features-content-item-text:nth-child(odd) {
     margin-right: 64px;
 }
-@media (max-width: 768px) {
+@media (max-width: 700px) {
     .features-content-item-text:nth-child(odd) {
         margin-left: auto;
         margin-right: auto;
@@ -761,7 +762,7 @@ section {
 .features-content-item-text:nth-child(even) {
     margin-left: 64px;
 }
-@media (max-width: 768px) {
+@media (max-width: 700px) {
     .features-content-item-text:nth-child(even) {
         margin-left: auto;
         margin-right: auto;
@@ -774,16 +775,12 @@ section {
     color: #ffa918;
     margin-bottom: 16px;
 }
-@media (max-width: 769px) {
-    .features-content-item-text-title {
-        margin-bottom: 24px;
-    }
-}
 
 .features-content-item-text-body {
     color: #828282;
     font-size: 18px;
     line-height: 1.5;
+    margin-bottom: 16px;
 }
 
 .features-content-trial {
