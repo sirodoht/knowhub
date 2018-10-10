@@ -1284,6 +1284,10 @@ button:hover {
     line-height: 1.3;
 }
 
+.ritual-footer {
+    margin-top: 32px;
+}
+
 .loader,
 .loader:after {
     border-radius: 50%;

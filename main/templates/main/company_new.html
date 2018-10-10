@@ -32,5 +32,9 @@
             {% csrf_token %}
             <input type="submit" value="Continue">
         </form>
+
+        <div class="ritual-footer">
+            <a href="{% url 'main:logout' %}">Cancel registration</a>
+        </div>
     </section>
 {% endblock %}

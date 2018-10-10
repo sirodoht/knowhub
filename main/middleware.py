@@ -36,6 +36,7 @@ class BillingMiddleware(MiddlewareMixin):
     def process_request(self, request):
         if (
             request.user.is_authenticated
+            and request.path != "/logout/"
             and request.path != "/billing/"
             and request.path != "/billing/customer/"
         ):

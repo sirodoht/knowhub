@@ -193,7 +193,7 @@ def token_post(request):
 @require_safe
 def logout(request):
     dj_logout(request)
-    messages.success(request, "You have been logged out")
+    messages.success(request, "You have been signed out")
     return redirect(settings.LOGOUT_REDIRECT_URL)
 
 
