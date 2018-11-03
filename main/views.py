@@ -70,8 +70,8 @@ def index(request):
     if request.user.is_authenticated:
         if not request.user.profile.company:
             return redirect("main:company_new")
-        if request.user.profile.is_admin and not request.user.profile.stripe_id:
-            return redirect("main:billing_setup")
+        # if request.user.profile.is_admin and not request.user.profile.stripe_id:
+        #     return redirect("main:billing_setup")
         return redirect("main:resources")
     else:
         return render(request, "main/landing.html")
@@ -91,8 +91,8 @@ def features(request):
 @login_required
 def people(request):
     if request.user.is_authenticated:
-        if request.user.profile.is_admin and not request.user.profile.stripe_id:
-            return redirect("main:billing_setup")
+        # if request.user.profile.is_admin and not request.user.profile.stripe_id:
+        #     return redirect("main:billing_setup")
         company = Company.objects.get(route=request.user.profile.company.route)
         people = (
             User.objects.all()
@@ -246,7 +246,7 @@ def invite_verify(request):
             user = authenticate(request, token=request.GET["d"])
             if user is not None:
                 dj_login(request, user)
-                billing.subscription_upgrade(request.user)
+                # billing.subscription_upgrade(request.user)
                 return redirect("main:invite_setup")
             else:
                 messages.error(
@@ -361,7 +361,8 @@ def company_new(request):
             request.user.profile.company = new_company
             request.user.profile.is_admin = True
             request.user.save()
-            return redirect("main:billing_setup")
+            return redirect("main:index")
+            # return redirect("main:billing_setup")
     else:
         form = CompanyForm()
 
@@ -513,10 +514,10 @@ def settings_user(request):
         if form.is_valid():
             if "email" in form.changed_data:
                 request.user.email = form.cleaned_data["email"]
-                if request.user.profile.is_admin:
-                    billing.email_change(
-                        request.user.profile.stripe_id, form.cleaned_data["email"]
-                    )
+                # if request.user.profile.is_admin:
+                #     billing.email_change(
+                #         request.user.profile.stripe_id, form.cleaned_data["email"]
+                #     )
             request.user.save()
             messages.success(request, "Settings updated successfully")
             return redirect("main:profile", request.user.profile.route)
@@ -1101,26 +1102,27 @@ def users_deadminify(request):
 @require_http_methods(["HEAD", "GET", "POST"])
 @login_required
 def billing_settings(request):
-    if not request.user.profile.is_admin:
-        return redirect("main:settings_user")
-    if request.method == "POST":
-        body = request.body.decode("utf-8")
-        try:
-            data = json.loads(body)
-        except json.JSONDecodeError:
-            return JsonResponse(
-                status=400, data={"message": "Invalid http request data", "error": True}
-            )
-        billing.card_change(request.user.profile.stripe_id, data["token"])
-        return JsonResponse(status=200, data={"message": "Success"})
-    else:
-        stripe_public = settings.STRIPE_PUBLIC
-        billing_info = billing.info_get(request.user.profile.stripe_id)
-        return render(
-            request,
-            "main/billing.html",
-            {"stripe_public": stripe_public, "billing_info": billing_info},
-        )
+    return redirect("main:settings_user")
+    # if not request.user.profile.is_admin:
+    #     return redirect("main:settings_user")
+    # if request.method == "POST":
+    #     body = request.body.decode("utf-8")
+    #     try:
+    #         data = json.loads(body)
+    #     except json.JSONDecodeError:
+    #         return JsonResponse(
+    #             status=400, data={"message": "Invalid http request data", "error": True}
+    #         )
+    #     billing.card_change(request.user.profile.stripe_id, data["token"])
+    #     return JsonResponse(status=200, data={"message": "Success"})
+    # else:
+    #     stripe_public = settings.STRIPE_PUBLIC
+    #     billing_info = billing.info_get(request.user.profile.stripe_id)
+    #     return render(
+    #         request,
+    #         "main/billing.html",
+    #         {"stripe_public": stripe_public, "billing_info": billing_info},
+    #     )
 
 
 @require_http_methods(["POST"])

@@ -49,12 +49,12 @@
         <br>
         {% if request.user.profile.is_admin %}
         <p>
-            <a href="{% url 'main:settings_company' %}">Company Settings</a>
-            | <a href="{% url 'main:billing_settings' %}">Billing</a>
+            <!-- | <a href="{% url 'main:billing_settings' %}">Billing</a> -->
         </p>
         {% endif %}
         <p>
-            <a href="{% url 'main:settings_user' %}">User Settings</a>
+            <a href="{% url 'main:settings_company' %}">Company Settings</a>
+            | <a href="{% url 'main:settings_user' %}">User Settings</a>
             | <a href="{% url 'main:logout' %}">Sign out</a>
         </p>
         {% endif %}
