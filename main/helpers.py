@@ -28,16 +28,16 @@ def email_login_link(request, email):
     data = json.dumps(data).encode("utf8")
     data = Signer().sign(base64.b64encode(data).decode("utf8"))
 
-    send_mail(
-        "Sign in to KnowHub",
-        render_to_string(
-            "main/token_auth_email.txt",
-            {"current_site": current_site, "data": data},
-            request=request,
-        ),
-        settings.DEFAULT_FROM_EMAIL,
-        [email],
-    )
+    # send_mail(
+    #     "Sign in to KnowHub",
+    #     render_to_string(
+    #         "main/token_auth_email.txt",
+    #         {"current_site": current_site, "data": data},
+    #         request=request,
+    #     ),
+    #     settings.DEFAULT_FROM_EMAIL,
+    #     [email],
+    # )
 
 
 def generate_username(email):
